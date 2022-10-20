@@ -1,0 +1,6 @@
+indic-en-exp/
+indic-en/
+wandb/
+samanantar_data/
+benchmarks/
+*.out

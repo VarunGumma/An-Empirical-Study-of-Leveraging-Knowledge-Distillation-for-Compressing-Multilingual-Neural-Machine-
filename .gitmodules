@@ -1,0 +1,9 @@
+[submodule "indicTrans/indic_nlp_library"]
+	path = indicTrans/indic_nlp_library
+	url = https://github.com/anoopkunchukuttan/indic_nlp_library.git
+[submodule "indicTrans/indic_nlp_resources"]
+	path = indicTrans/indic_nlp_resources
+	url = https://github.com/anoopkunchukuttan/indic_nlp_resources.git
+[submodule "indicTrans/subword-nmt"]
+	path = indicTrans/subword-nmt
+	url = https://github.com/rsennrich/subword-nmt.git
