@@ -1,11 +1,11 @@
 #! /bin/bash
-#SBATCH --job-name eval
+#SBATCH --job-name evaluate
 #SBATCH --nodes 1
 #SBATCH --ntasks-per-node 1
-#SBATCH --gpus-per-task 2
+#SBATCH --gpus-per-task 1
 #SBATCH --partition ai4bp
 #SBATCH --time 00-12:00:00
-#SBATCH --cpus-per-task 32
+#SBATCH --cpus-per-task 64
 
 srun eval.sh \
      1x-gelu-norm \

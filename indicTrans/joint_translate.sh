@@ -12,8 +12,8 @@ SRC_PREFIX='SRC'
 TGT_PREFIX='TGT'
 
 SUBWORD_NMT_DIR='subword-nmt'
-model_dir=$exp_dir/model-${ext}/checkpoint_best.pt
 data_bin_dir=$exp_dir/final_bin
+model_dir=$exp_dir/model-$ext
 
 ### normalization and script conversion
 
@@ -25,7 +25,7 @@ echo -e "[INFO]\tNumber of sentences in input: $input_size"
 
 echo -e "[INFO]\tApplying BPE"
 python3 $SUBWORD_NMT_DIR/subword_nmt/apply_bpe.py \
-    -c $exp_dir/vocab/bpe_codes.32k.${SRC_PREFIX} \
+    -c $exp_dir/vocab/bpe_codes.32k.$SRC_PREFIX \
     --vocabulary $exp_dir/vocab/vocab.$SRC_PREFIX \
     --vocabulary-threshold 5 < $outfname.norm > $outfname._bpe
 
@@ -42,9 +42,9 @@ tgt_output_fname=$outfname
 
 fairseq-interactive $data_bin_dir \
     -s $SRC_PREFIX -t $TGT_PREFIX \
-    --distributed-world-size 2 \
-    --path $model_dir \
-    --batch-size 256 --buffer-size 2500 --beam 5 --remove-bpe \
+    --distributed-world-size 1 \
+    --path $model_dir/checkpoint_best.pt \
+    --batch-size 512 --buffer-size 2500 --beam 5 --remove-bpe \
     --skip-invalid-size-inputs-valid-test \
     --input $src_input_bpe_fname \
     --memory-efficient-fp16  >  $tgt_output_fname.log 2>&1
