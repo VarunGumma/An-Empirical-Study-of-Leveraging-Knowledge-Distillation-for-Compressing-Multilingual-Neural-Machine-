@@ -1,6 +1,6 @@
 indic-en-exp/
 indic-en/
+checkpoints/
 wandb/
 samanantar_data/
-benchmarks/
 *.out

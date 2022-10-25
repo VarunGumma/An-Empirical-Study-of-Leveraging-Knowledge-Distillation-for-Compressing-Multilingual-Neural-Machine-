@@ -1,0 +1,370 @@
+2022-10-25 20:10:03 | INFO | fairseq.distributed.utils | distributed init (rank 0): tcp://localhost:14422
+2022-10-25 20:10:03 | INFO | fairseq.distributed.utils | distributed init (rank 1): tcp://localhost:14422
+2022-10-25 20:10:03 | INFO | torch.distributed.distributed_c10d | Added key: store_based_barrier_key:1 to store for rank: 1
+2022-10-25 20:10:03 | INFO | fairseq.distributed.utils | distributed init (rank 2): tcp://localhost:14422
+2022-10-25 20:10:03 | INFO | torch.distributed.distributed_c10d | Added key: store_based_barrier_key:1 to store for rank: 2
+2022-10-25 20:10:03 | INFO | fairseq.distributed.utils | distributed init (rank 3): tcp://localhost:14422
+2022-10-25 20:10:03 | INFO | torch.distributed.distributed_c10d | Added key: store_based_barrier_key:1 to store for rank: 3
+2022-10-25 20:10:03 | INFO | torch.distributed.distributed_c10d | Added key: store_based_barrier_key:1 to store for rank: 0
+2022-10-25 20:10:03 | INFO | torch.distributed.distributed_c10d | Rank 0: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2022-10-25 20:10:03 | INFO | fairseq.distributed.utils | initialized host scn5-mn as rank 0
+2022-10-25 20:10:03 | INFO | torch.distributed.distributed_c10d | Rank 2: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2022-10-25 20:10:03 | INFO | fairseq.distributed.utils | initialized host scn5-mn as rank 2
+2022-10-25 20:10:03 | INFO | torch.distributed.distributed_c10d | Rank 3: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2022-10-25 20:10:03 | INFO | torch.distributed.distributed_c10d | Rank 1: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+2022-10-25 20:10:03 | INFO | fairseq.distributed.utils | initialized host scn5-mn as rank 3
+2022-10-25 20:10:03 | INFO | fairseq.distributed.utils | initialized host scn5-mn as rank 1
+2022-10-25 20:10:06 | INFO | fairseq_cli.train | {'_name': None, 'common': {'_name': None, 'no_progress_bar': False, 'log_interval': 100, 'log_format': None, 'log_file': None, 'aim_repo': None, 'aim_run_hash': None, 'tensorboard_logdir': None, 'wandb_project': 'Indic-En-Distillation', 'azureml_logging': False, 'seed': 1, 'cpu': False, 'tpu': False, 'bf16': False, 'memory_efficient_bf16': False, 'fp16': True, 'memory_efficient_fp16': False, 'fp16_no_flatten_grads': False, 'fp16_init_scale': 128, 'fp16_scale_window': None, 'fp16_scale_tolerance': 0.0, 'on_cpu_convert_precision': False, 'min_loss_scale': 0.0001, 'threshold_loss_scale': None, 'amp': False, 'amp_batch_retries': 2, 'amp_init_scale': 128, 'amp_scale_window': None, 'user_dir': 'indicTrans/model_configs', 'empty_cache_freq': 0, 'all_gather_list_size': 16384, 'model_parallel_size': 1, 'quantization_config_path': None, 'profile': False, 'reset_logging': False, 'suppress_crashes': False, 'use_plasma_view': False, 'plasma_path': '/tmp/plasma'}, 'common_eval': {'_name': None, 'path': None, 'post_process': None, 'quiet': False, 'model_overrides': '{}', 'results_path': None}, 'distributed_training': {'_name': None, 'distributed_world_size': 4, 'distributed_num_procs': 4, 'distributed_rank': 0, 'distributed_backend': 'nccl', 'distributed_init_method': 'tcp://localhost:14422', 'distributed_port': -1, 'device_id': 0, 'distributed_no_spawn': False, 'ddp_backend': 'pytorch_ddp', 'ddp_comm_hook': 'none', 'bucket_cap_mb': 25, 'fix_batches_to_gpus': False, 'find_unused_parameters': False, 'gradient_as_bucket_view': False, 'fast_stat_sync': False, 'heartbeat_timeout': -1, 'broadcast_buffers': False, 'slowmo_momentum': None, 'slowmo_base_algorithm': 'localsgd', 'localsgd_frequency': 3, 'nprocs_per_node': 4, 'pipeline_model_parallel': False, 'pipeline_balance': None, 'pipeline_devices': None, 'pipeline_chunks': 0, 'pipeline_encoder_balance': None, 'pipeline_encoder_devices': None, 'pipeline_decoder_balance': None, 'pipeline_decoder_devices': None, 'pipeline_checkpoint': 'never', 'zero_sharding': 'none', 'fp16': True, 'memory_efficient_fp16': False, 'tpu': False, 'no_reshard_after_forward': False, 'fp32_reduce_scatter': False, 'cpu_offload': False, 'use_sharded_state': False, 'not_fsdp_flatten_parameters': False}, 'dataset': {'_name': None, 'num_workers': 64, 'skip_invalid_size_inputs_valid_test': True, 'max_tokens': 16384, 'batch_size': None, 'required_batch_size_multiple': 8, 'required_seq_len_multiple': 1, 'dataset_impl': None, 'data_buffer_size': 10, 'train_subset': 'train', 'valid_subset': 'valid', 'combine_valid_subsets': None, 'ignore_unused_valid_subsets': False, 'validate_interval': 1, 'validate_interval_updates': 0, 'validate_after_updates': 0, 'fixed_validation_seed': None, 'disable_validation': False, 'max_tokens_valid': 16384, 'batch_size_valid': None, 'max_valid_steps': None, 'curriculum': 0, 'gen_subset': 'test', 'num_shards': 1, 'shard_id': 0, 'grouped_shuffling': False, 'update_epoch_batch_itr': False, 'update_ordered_indices_seed': False}, 'optimization': {'_name': None, 'max_epoch': 0, 'max_update': 1000000, 'stop_time_hours': 0.0, 'clip_norm': 1.0, 'sentence_avg': False, 'update_freq': [1], 'lr': [0.0005], 'stop_min_lr': -1.0, 'use_bmuf': False, 'skip_remainder_batch': False}, 'checkpoint': {'_name': None, 'save_dir': 'checkpoints/adaptive-distil', 'restore_file': 'checkpoint_last.pt', 'continue_once': None, 'finetune_from_model': None, 'reset_dataloader': False, 'reset_lr_scheduler': False, 'reset_meters': False, 'reset_optimizer': False, 'optimizer_overrides': '{}', 'save_interval': 1, 'save_interval_updates': 0, 'keep_interval_updates': -1, 'keep_interval_updates_pattern': -1, 'keep_last_epochs': 1, 'keep_best_checkpoints': -1, 'no_save': False, 'no_epoch_checkpoints': False, 'no_last_checkpoints': False, 'no_save_optimizer_state': False, 'best_checkpoint_metric': 'bleu', 'maximize_best_checkpoint_metric': True, 'patience': 5, 'checkpoint_suffix': '', 'checkpoint_shard_count': 1, 'load_checkpoint_on_all_dp_ranks': False, 'write_checkpoints_asynchronously': False, 'model_parallel_size': 1}, 'bmuf': {'_name': None, 'block_lr': 1.0, 'block_momentum': 0.875, 'global_sync_iter': 50, 'warmup_iterations': 500, 'use_nbm': False, 'average_sync': False, 'distributed_world_size': 4}, 'generation': {'_name': None, 'beam': 5, 'nbest': 1, 'max_len_a': 0.0, 'max_len_b': 200, 'min_len': 1, 'match_source_len': False, 'unnormalized': False, 'no_early_stop': False, 'no_beamable_mm': False, 'lenpen': 1.0, 'unkpen': 0.0, 'replace_unk': None, 'sacrebleu': False, 'score_reference': False, 'prefix_size': 0, 'no_repeat_ngram_size': 0, 'sampling': False, 'sampling_topk': -1, 'sampling_topp': -1.0, 'constraints': None, 'temperature': 1.0, 'diverse_beam_groups': -1, 'diverse_beam_strength': 0.5, 'diversity_rate': -1.0, 'print_alignment': None, 'print_step': False, 'lm_path': None, 'lm_weight': 0.0, 'iter_decode_eos_penalty': 0.0, 'iter_decode_max_iter': 10, 'iter_decode_force_max_iter': False, 'iter_decode_with_beam': 1, 'iter_decode_with_external_reranker': False, 'retain_iter_history': False, 'retain_dropout': False, 'retain_dropout_modules': None, 'decoding_format': None, 'no_seed_provided': False, 'eos_token': None}, 'eval_lm': {'_name': None, 'output_word_probs': False, 'output_word_stats': False, 'context_window': 0, 'softmax_batch': 9223372036854775807}, 'interactive': {'_name': None, 'buffer_size': 0, 'input': '-'}, 'model': Namespace(no_progress_bar=False, log_interval=100, log_format=None, log_file=None, aim_repo=None, aim_run_hash=None, tensorboard_logdir=None, wandb_project='Indic-En-Distillation', azureml_logging=False, seed=1, cpu=False, tpu=False, bf16=False, memory_efficient_bf16=False, fp16=True, memory_efficient_fp16=False, fp16_no_flatten_grads=False, fp16_init_scale=128, fp16_scale_window=None, fp16_scale_tolerance=0.0, on_cpu_convert_precision=False, min_loss_scale=0.0001, threshold_loss_scale=None, amp=False, amp_batch_retries=2, amp_init_scale=128, amp_scale_window=None, user_dir='indicTrans/model_configs', empty_cache_freq=0, all_gather_list_size=16384, model_parallel_size=1, quantization_config_path=None, profile=False, reset_logging=False, suppress_crashes=False, use_plasma_view=False, plasma_path='/tmp/plasma', criterion='kd_label_smoothed_cross_entropy', tokenizer=None, bpe=None, optimizer='adam', lr_scheduler='inverse_sqrt', scoring='bleu', task='kd_translation', num_workers=64, skip_invalid_size_inputs_valid_test=True, max_tokens=16384, batch_size=None, required_batch_size_multiple=8, required_seq_len_multiple=1, dataset_impl=None, data_buffer_size=10, train_subset='train', valid_subset='valid', combine_valid_subsets=None, ignore_unused_valid_subsets=False, validate_interval=1, validate_interval_updates=0, validate_after_updates=0, fixed_validation_seed=None, disable_validation=False, max_tokens_valid=16384, batch_size_valid=None, max_valid_steps=None, curriculum=0, gen_subset='test', num_shards=1, shard_id=0, grouped_shuffling=False, update_epoch_batch_itr=False, update_ordered_indices_seed=False, distributed_world_size=4, distributed_num_procs=4, distributed_rank=0, distributed_backend='nccl', distributed_init_method=None, distributed_port=-1, device_id=0, distributed_no_spawn=False, ddp_backend='pytorch_ddp', ddp_comm_hook='none', bucket_cap_mb=25, fix_batches_to_gpus=False, find_unused_parameters=False, gradient_as_bucket_view=False, fast_stat_sync=False, heartbeat_timeout=-1, broadcast_buffers=False, slowmo_momentum=None, slowmo_base_algorithm='localsgd', localsgd_frequency=3, nprocs_per_node=4, pipeline_model_parallel=False, pipeline_balance=None, pipeline_devices=None, pipeline_chunks=0, pipeline_encoder_balance=None, pipeline_encoder_devices=None, pipeline_decoder_balance=None, pipeline_decoder_devices=None, pipeline_checkpoint='never', zero_sharding='none', no_reshard_after_forward=False, fp32_reduce_scatter=False, cpu_offload=False, use_sharded_state=False, not_fsdp_flatten_parameters=False, arch='transformer', max_epoch=0, max_update=1000000, stop_time_hours=0, clip_norm=1.0, sentence_avg=False, update_freq=[1], lr=[0.0005], stop_min_lr=-1.0, use_bmuf=False, skip_remainder_batch=False, save_dir='checkpoints/adaptive-distil', restore_file='checkpoint_last.pt', continue_once=None, finetune_from_model=None, reset_dataloader=False, reset_lr_scheduler=False, reset_meters=False, reset_optimizer=False, optimizer_overrides='{}', save_interval=1, save_interval_updates=0, keep_interval_updates=-1, keep_interval_updates_pattern=-1, keep_last_epochs=1, keep_best_checkpoints=-1, no_save=False, no_epoch_checkpoints=False, no_last_checkpoints=False, no_save_optimizer_state=False, best_checkpoint_metric='bleu', maximize_best_checkpoint_metric=True, patience=5, checkpoint_suffix='', checkpoint_shard_count=1, load_checkpoint_on_all_dp_ranks=False, write_checkpoints_asynchronously=False, store_ema=False, ema_decay=0.9999, ema_start_update=0, ema_seed_model=None, ema_update_freq=1, ema_fp32=False, data='indic-en-exp/final_bin', source_lang='SRC', target_lang='TGT', load_alignments=False, left_pad_source=True, left_pad_target=False, upsample_primary=-1, truncate_source=False, num_batch_buckets=0, eval_bleu=True, eval_bleu_args='{"beam": 1, "lenpen": 1.0}', eval_bleu_detok='moses', eval_bleu_detok_args='{}', eval_tokenized_bleu=False, eval_bleu_remove_bpe='@@ ', eval_bleu_print_samples=True, kd_strategy='word_and_seq_level', teacher_checkpoint_path='checkpoints/indicTrans/checkpoint_best.pt', label_smoothing=0.1, report_accuracy=False, ignore_prefix_size=0, kd_rate=None, kd_queue_size=20000, student_temp=1, teacher_temp=1, alpha=None, use_adaptive_weightage=True, adaptive_smoothing=0.5, use_adaptive_kd_rates=False, kd_selection_temp=None, adam_betas='(0.9, 0.98)', adam_eps=1e-08, weight_decay=0.0, use_old_adam=False, fp16_adam_stats=False, warmup_updates=4000, warmup_init_lr=1e-07, pad=1, eos=2, unk=3, max_source_positions=210, max_target_positions=210, activation_fn='gelu', layernorm_embedding=True, decoder_normalize_before=True, encoder_normalize_before=True, dropout=0.2, no_seed_provided=False, encoder_embed_path=None, encoder_embed_dim=512, encoder_ffn_embed_dim=2048, encoder_layers=6, encoder_attention_heads=8, encoder_learned_pos=False, decoder_embed_path=None, decoder_embed_dim=512, decoder_ffn_embed_dim=2048, decoder_layers=6, decoder_attention_heads=8, decoder_learned_pos=False, attention_dropout=0.0, activation_dropout=0.0, adaptive_softmax_cutoff=None, adaptive_softmax_dropout=0, share_decoder_input_output_embed=False, share_all_embeddings=False, merge_src_tgt_embed=False, no_token_positional_embeddings=False, adaptive_input=False, no_cross_attention=False, cross_self_attention=False, decoder_output_dim=512, decoder_input_dim=512, no_scale_embedding=False, tie_adaptive_weights=False, checkpoint_activations=False, offload_activations=False, encoder_layers_to_keep=None, decoder_layers_to_keep=None, encoder_layerdrop=0, decoder_layerdrop=0, quant_noise_pq=0, quant_noise_pq_block_size=8, quant_noise_scalar=0, _name='transformer'), 'task': {'_name': 'kd_translation', 'data': 'indic-en-exp/final_bin', 'source_lang': 'SRC', 'target_lang': 'TGT', 'load_alignments': False, 'left_pad_source': True, 'left_pad_target': False, 'max_source_positions': 210, 'max_target_positions': 210, 'upsample_primary': -1, 'truncate_source': False, 'num_batch_buckets': 0, 'train_subset': 'train', 'dataset_impl': None, 'required_seq_len_multiple': 1, 'eval_bleu': True, 'eval_bleu_args': '{"beam": 1, "lenpen": 1.0}', 'eval_bleu_detok': 'moses', 'eval_bleu_detok_args': '{}', 'eval_tokenized_bleu': False, 'eval_bleu_remove_bpe': '@@ ', 'eval_bleu_print_samples': True, 'kd_strategy': 'word_and_seq_level', 'teacher_checkpoint_path': 'checkpoints/indicTrans/checkpoint_best.pt'}, 'criterion': {'_name': 'kd_label_smoothed_cross_entropy', 'label_smoothing': 0.1, 'report_accuracy': False, 'ignore_prefix_size': 0, 'kd_rate': None, 'kd_queue_size': 20000, 'student_temp': 1.0, 'teacher_temp': 1.0, 'alpha': None, 'use_adaptive_weightage': True, 'adaptive_smoothing': 0.5, 'use_adaptive_kd_rates': False, 'kd_selection_temp': None, 'sentence_avg': False}, 'optimizer': {'_name': 'adam', 'adam_betas': '(0.9, 0.98)', 'adam_eps': 1e-08, 'weight_decay': 0.0, 'use_old_adam': False, 'fp16_adam_stats': False, 'tpu': False, 'lr': [0.0005]}, 'lr_scheduler': {'_name': 'inverse_sqrt', 'warmup_updates': 4000, 'warmup_init_lr': 1e-07, 'lr': [0.0005]}, 'scoring': {'_name': 'bleu', 'pad': 1, 'eos': 2, 'unk': 3}, 'bpe': None, 'tokenizer': None, 'ema': {'_name': None, 'store_ema': False, 'ema_decay': 0.9999, 'ema_start_update': 0, 'ema_seed_model': None, 'ema_update_freq': 1, 'ema_fp32': False}}
+2022-10-25 20:10:06 | INFO | fairseq.tasks.translation | [SRC] dictionary: 35904 types
+2022-10-25 20:10:06 | INFO | fairseq.tasks.translation | [TGT] dictionary: 32088 types
+2022-10-25 20:10:08 | INFO | fairseq_cli.train | TransformerModel(
+  (encoder): TransformerEncoderBase(
+    (dropout_module): FairseqDropout()
+    (embed_tokens): Embedding(35904, 512, padding_idx=1)
+    (embed_positions): SinusoidalPositionalEmbedding()
+    (layernorm_embedding): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+    (layers): ModuleList(
+      (0): TransformerEncoderLayerBase(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+      (1): TransformerEncoderLayerBase(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+      (2): TransformerEncoderLayerBase(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+      (3): TransformerEncoderLayerBase(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+      (4): TransformerEncoderLayerBase(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+      (5): TransformerEncoderLayerBase(
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (dropout_module): FairseqDropout()
+        (activation_dropout_module): FairseqDropout()
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+    )
+    (layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+  )
+  (decoder): TransformerDecoderBase(
+    (dropout_module): FairseqDropout()
+    (embed_tokens): Embedding(32088, 512, padding_idx=1)
+    (embed_positions): SinusoidalPositionalEmbedding()
+    (layernorm_embedding): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+    (layers): ModuleList(
+      (0): TransformerDecoderLayerBase(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+      (1): TransformerDecoderLayerBase(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+      (2): TransformerDecoderLayerBase(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+      (3): TransformerDecoderLayerBase(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+      (4): TransformerDecoderLayerBase(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+      (5): TransformerDecoderLayerBase(
+        (dropout_module): FairseqDropout()
+        (self_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (activation_dropout_module): FairseqDropout()
+        (self_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (encoder_attn): MultiheadAttention(
+          (dropout_module): FairseqDropout()
+          (k_proj): Linear(in_features=512, out_features=512, bias=True)
+          (v_proj): Linear(in_features=512, out_features=512, bias=True)
+          (q_proj): Linear(in_features=512, out_features=512, bias=True)
+          (out_proj): Linear(in_features=512, out_features=512, bias=True)
+        )
+        (encoder_attn_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+        (fc1): Linear(in_features=512, out_features=2048, bias=True)
+        (fc2): Linear(in_features=2048, out_features=512, bias=True)
+        (final_layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+      )
+    )
+    (layer_norm): FusedLayerNorm(torch.Size([512]), eps=1e-05, elementwise_affine=True)
+    (output_projection): Linear(in_features=512, out_features=32088, bias=False)
+  )
+)
+2022-10-25 20:10:08 | INFO | fairseq_cli.train | task: KDTranslationTask
+2022-10-25 20:10:08 | INFO | fairseq_cli.train | model: TransformerModel
+2022-10-25 20:10:08 | INFO | fairseq_cli.train | criterion: KDLabelSmoothedCrossEntropyCriterion
+2022-10-25 20:10:08 | INFO | fairseq_cli.train | num. shared model params: 95,383,552 (num. trained: 95,383,552)
+2022-10-25 20:10:08 | INFO | fairseq_cli.train | num. expert model params: 0 (num. trained: 0)
+2022-10-25 20:10:08 | INFO | fairseq.data.data_utils | loaded 78,941 examples from: indic-en-exp/final_bin/valid.SRC-TGT.SRC
+2022-10-25 20:10:08 | INFO | fairseq.data.data_utils | loaded 78,941 examples from: indic-en-exp/final_bin/valid.SRC-TGT.TGT
+2022-10-25 20:10:08 | INFO | fairseq.tasks.translation | indic-en-exp/final_bin valid SRC-TGT 78941 examples
+2022-10-25 20:10:11 | INFO | torch.distributed.distributed_c10d | Added key: store_based_barrier_key:2 to store for rank: 0
+2022-10-25 20:10:14 | INFO | torch.distributed.distributed_c10d | Rank 0: Completed store-based barrier for key:store_based_barrier_key:2 with 4 nodes.
+2022-10-25 20:10:15 | INFO | fairseq.utils | ***********************CUDA enviroments for all 4 workers***********************
+2022-10-25 20:10:15 | INFO | fairseq.utils | rank   0: capabilities =  8.0  ; total memory = 39.587 GB ; name = A100-SXM4-40GB                          
+2022-10-25 20:10:15 | INFO | fairseq.utils | rank   1: capabilities =  8.0  ; total memory = 39.587 GB ; name = A100-SXM4-40GB                          
+2022-10-25 20:10:15 | INFO | fairseq.utils | rank   2: capabilities =  8.0  ; total memory = 39.587 GB ; name = A100-SXM4-40GB                          
+2022-10-25 20:10:15 | INFO | fairseq.utils | rank   3: capabilities =  8.0  ; total memory = 39.587 GB ; name = A100-SXM4-40GB                          
+2022-10-25 20:10:15 | INFO | fairseq.utils | ***********************CUDA enviroments for all 4 workers***********************
+2022-10-25 20:10:15 | INFO | fairseq_cli.train | training on 4 devices (GPUs/TPUs)
+2022-10-25 20:10:15 | INFO | fairseq_cli.train | max tokens per device = 16384 and max sentences per device = None
+2022-10-25 20:10:15 | INFO | fairseq.trainer | Preparing to load checkpoint checkpoints/adaptive-distil/checkpoint_last.pt
+2022-10-25 20:10:15 | INFO | fairseq.trainer | No existing checkpoint found checkpoints/adaptive-distil/checkpoint_last.pt
+2022-10-25 20:10:15 | INFO | fairseq.trainer | loading train data for epoch 1
+2022-10-25 20:10:17 | INFO | fairseq.data.data_utils | loaded 49,772,565 examples from: indic-en-exp/final_bin/train.SRC-TGT.SRC
+2022-10-25 20:10:18 | INFO | fairseq.data.data_utils | loaded 49,772,565 examples from: indic-en-exp/final_bin/train.SRC-TGT.TGT
+2022-10-25 20:10:18 | INFO | fairseq.tasks.translation | indic-en-exp/final_bin train SRC-TGT 49772565 examples
+2022-10-25 20:10:36 | WARNING | fairseq.tasks.fairseq_task | 11,612 samples have invalid sizes and will be skipped, max_positions=(210, 210), first few sample ids=[38134819, 6246747, 2525593, 1919047, 33622048, 7799562, 4508869, 12466026, 14778728, 20258840]
+2022-10-25 20:10:37 | WARNING | fairseq.tasks.fairseq_task | 11,612 samples have invalid sizes and will be skipped, max_positions=(210, 210), first few sample ids=[38134819, 6246747, 2525593, 1919047, 33622048, 7799562, 4508869, 12466026, 14778728, 20258840]
+2022-10-25 20:10:37 | WARNING | fairseq.tasks.fairseq_task | 11,612 samples have invalid sizes and will be skipped, max_positions=(210, 210), first few sample ids=[38134819, 6246747, 2525593, 1919047, 33622048, 7799562, 4508869, 12466026, 14778728, 20258840]
+2022-10-25 20:10:39 | INFO | fairseq.optim.adam | using FusedAdam
+2022-10-25 20:10:40 | WARNING | fairseq.tasks.fairseq_task | 11,612 samples have invalid sizes and will be skipped, max_positions=(210, 210), first few sample ids=[38134819, 6246747, 2525593, 1919047, 33622048, 7799562, 4508869, 12466026, 14778728, 20258840]
+2022-10-25 20:10:53 | INFO | fairseq_cli.train | loaded teacher from checkpoints/indicTrans/checkpoint_best.pt in evaluation mode
+2022-10-25 20:10:53 | INFO | fairseq.data.iterators | grouped total_num_itrs = 16028
+2022-10-25 20:11:02 | INFO | fairseq.trainer | begin training epoch 1
+2022-10-25 20:11:02 | INFO | fairseq_cli.train | Start iterating over samples
+2022-10-25 20:11:57 | WARNING | urllib3.connectionpool | Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /api/5288891/envelope/
+2022-10-25 20:11:57 | WARNING | urllib3.connectionpool | Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /api/5288891/envelope/
+2022-10-25 20:11:57 | WARNING | urllib3.connectionpool | Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /api/5288891/envelope/
+2022-10-25 20:18:31 | INFO | fairseq.trainer | NOTE: gradient overflow detected, ignoring gradient, setting loss scale to: 64.0
+2022-10-25 20:18:31 | INFO | torch.nn.parallel.distributed | Reducer buckets have been rebuilt in this iteration.
+2022-10-25 20:18:32 | INFO | fairseq.trainer | NOTE: gradient overflow detected, ignoring gradient, setting loss scale to: 32.0
+2022-10-25 20:18:34 | INFO | fairseq.trainer | NOTE: gradient overflow detected, ignoring gradient, setting loss scale to: 16.0
+2022-10-25 20:18:39 | INFO | fairseq.trainer | NOTE: gradient overflow detected, ignoring gradient, setting loss scale to: 8.0
+2022-10-25 20:20:39 | INFO | train_inner | epoch 001:    104 / 16028 loss=13.969, nll_loss=13.771, nll_loss_teacher=0.547, kd_loss=14.013, ppl=13979.6, wps=36236.4, ups=0.8, wpb=45182.3, bsz=3201.6, num_updates=100, lr=1.25975e-05, gnorm=2.951, clip=100, loss_scale=8, train_wall=143, gb_free=24.4, wall=624
+2022-10-25 20:22:41 | INFO | train_inner | epoch 001:    204 / 16028 loss=11.72, nll_loss=11.25, nll_loss_teacher=0.541, kd_loss=11.802, ppl=2436.22, wps=38172.3, ups=0.83, wpb=46204.8, bsz=3069.7, num_updates=200, lr=2.5095e-05, gnorm=1.058, clip=55, loss_scale=8, train_wall=121, gb_free=24.4, wall=745
+2022-10-25 20:24:41 | INFO | train_inner | epoch 001:    304 / 16028 loss=10.697, nll_loss=10.079, nll_loss_teacher=0.541, kd_loss=10.781, ppl=1081.66, wps=38155.5, ups=0.83, wpb=46136.8, bsz=3124.8, num_updates=300, lr=3.75925e-05, gnorm=1.092, clip=43, loss_scale=8, train_wall=121, gb_free=24.8, wall=866
+2022-10-25 20:26:42 | INFO | train_inner | epoch 001:    404 / 16028 loss=10.076, nll_loss=9.337, nll_loss_teacher=0.545, kd_loss=10.167, ppl=646.91, wps=37454.5, ups=0.83, wpb=45328.2, bsz=3064.2, num_updates=400, lr=5.009e-05, gnorm=0.992, clip=38, loss_scale=8, train_wall=121, gb_free=21.8, wall=987
+2022-10-25 20:28:42 | INFO | train_inner | epoch 001:    504 / 16028 loss=9.704, nll_loss=8.893, nll_loss_teacher=0.547, kd_loss=9.796, ppl=475.31, wps=37243.9, ups=0.84, wpb=44582.4, bsz=3105.9, num_updates=500, lr=6.25875e-05, gnorm=1.037, clip=42, loss_scale=8, train_wall=120, gb_free=20.7, wall=1107
+2022-10-25 20:30:42 | INFO | train_inner | epoch 001:    604 / 16028 loss=9.38, nll_loss=8.516, nll_loss_teacher=0.543, kd_loss=9.478, ppl=366.06, wps=37721.4, ups=0.83, wpb=45234.7, bsz=3090, num_updates=600, lr=7.5085e-05, gnorm=1.046, clip=46, loss_scale=8, train_wall=120, gb_free=21, wall=1227
+2022-10-25 20:32:44 | INFO | train_inner | epoch 001:    704 / 16028 loss=8.977, nll_loss=8.05, nll_loss_teacher=0.543, kd_loss=9.087, ppl=265.08, wps=37876.5, ups=0.82, wpb=46025.1, bsz=3158.6, num_updates=700, lr=8.75825e-05, gnorm=0.856, clip=25, loss_scale=8, train_wall=121, gb_free=19.7, wall=1348
+2022-10-25 20:34:44 | INFO | train_inner | epoch 001:    804 / 16028 loss=8.63, nll_loss=7.647, nll_loss_teacher=0.543, kd_loss=8.744, ppl=200.4, wps=38093.3, ups=0.83, wpb=46043.2, bsz=3161.7, num_updates=800, lr=0.00010008, gnorm=0.765, clip=12, loss_scale=8, train_wall=121, gb_free=22.1, wall=1469
+2022-10-25 20:36:46 | INFO | train_inner | epoch 001:    904 / 16028 loss=8.328, nll_loss=7.294, nll_loss_teacher=0.539, kd_loss=8.438, ppl=156.95, wps=37321.5, ups=0.83, wpb=45204.6, bsz=3265.7, num_updates=900, lr=0.000112578, gnorm=0.751, clip=12, loss_scale=8, train_wall=121, gb_free=23.3, wall=1590
+2022-10-25 20:38:47 | INFO | train_inner | epoch 001:   1004 / 16028 loss=8.117, nll_loss=7.046, nll_loss_teacher=0.541, kd_loss=8.232, ppl=132.16, wps=37551.1, ups=0.83, wpb=45425.3, bsz=3228.7, num_updates=1000, lr=0.000125075, gnorm=0.726, clip=6, loss_scale=8, train_wall=121, gb_free=16.1, wall=1711
+2022-10-25 20:40:48 | INFO | train_inner | epoch 001:   1104 / 16028 loss=7.829, nll_loss=6.71, nll_loss_teacher=0.541, kd_loss=7.95, ppl=104.68, wps=38380.5, ups=0.82, wpb=46725.5, bsz=3120.7, num_updates=1100, lr=0.000137573, gnorm=0.648, clip=8, loss_scale=8, train_wall=122, gb_free=23.2, wall=1833
+2022-10-25 20:42:48 | INFO | train_inner | epoch 001:   1204 / 16028 loss=7.66, nll_loss=6.511, nll_loss_teacher=0.54, kd_loss=7.778, ppl=91.2, wps=37345.5, ups=0.83, wpb=44840.2, bsz=3198.3, num_updates=1200, lr=0.00015007, gnorm=0.63, clip=7, loss_scale=8, train_wall=120, gb_free=23.1, wall=1953
+2022-10-25 20:44:48 | INFO | train_inner | epoch 001:   1304 / 16028 loss=7.549, nll_loss=6.377, nll_loss_teacher=0.544, kd_loss=7.668, ppl=83.09, wps=37163.1, ups=0.83, wpb=44550.1, bsz=3035.8, num_updates=1300, lr=0.000162568, gnorm=0.646, clip=6, loss_scale=8, train_wall=120, gb_free=20, wall=2073
+2022-10-25 20:46:48 | INFO | train_inner | epoch 001:   1404 / 16028 loss=7.232, nll_loss=6.008, nll_loss_teacher=0.542, kd_loss=7.358, ppl=64.37, wps=38042.2, ups=0.83, wpb=45709.4, bsz=3246.3, num_updates=1400, lr=0.000175065, gnorm=0.553, clip=0, loss_scale=8, train_wall=120, gb_free=19.1, wall=2193
+2022-10-25 20:48:49 | INFO | train_inner | epoch 001:   1504 / 16028 loss=7.096, nll_loss=5.845, nll_loss_teacher=0.543, kd_loss=7.225, ppl=57.46, wps=38259.7, ups=0.83, wpb=46076.4, bsz=3158.9, num_updates=1500, lr=0.000187563, gnorm=0.578, clip=4, loss_scale=8, train_wall=120, gb_free=21.9, wall=2314
+2022-10-25 20:50:50 | INFO | train_inner | epoch 001:   1604 / 16028 loss=6.893, nll_loss=5.605, nll_loss_teacher=0.541, kd_loss=7.024, ppl=48.68, wps=37895.5, ups=0.83, wpb=45715.5, bsz=3146.6, num_updates=1600, lr=0.00020006, gnorm=0.519, clip=0, loss_scale=8, train_wall=120, gb_free=17.5, wall=2434
+2022-10-25 20:52:50 | INFO | train_inner | epoch 001:   1704 / 16028 loss=6.752, nll_loss=5.437, nll_loss_teacher=0.546, kd_loss=6.891, ppl=43.34, wps=37762.5, ups=0.83, wpb=45420.4, bsz=3122.3, num_updates=1700, lr=0.000212558, gnorm=0.537, clip=0, loss_scale=8, train_wall=120, gb_free=19.1, wall=2554
+2022-10-25 20:54:52 | INFO | train_inner | epoch 001:   1804 / 16028 loss=6.517, nll_loss=5.161, nll_loss_teacher=0.542, kd_loss=6.661, ppl=35.77, wps=37671.7, ups=0.82, wpb=45856.8, bsz=3191.5, num_updates=1800, lr=0.000225055, gnorm=0.501, clip=0, loss_scale=8, train_wall=122, gb_free=20, wall=2676
+2022-10-25 20:56:55 | INFO | train_inner | epoch 001:   1904 / 16028 loss=6.405, nll_loss=5.026, nll_loss_teacher=0.541, kd_loss=6.548, ppl=32.58, wps=37619.3, ups=0.81, wpb=46537.8, bsz=3059.9, num_updates=1900, lr=0.000237553, gnorm=0.469, clip=0, loss_scale=8, train_wall=123, gb_free=21.1, wall=2800
+2022-10-25 20:58:56 | INFO | train_inner | epoch 001:   2004 / 16028 loss=6.309, nll_loss=4.909, nll_loss_teacher=0.547, kd_loss=6.458, ppl=30.05, wps=37605.5, ups=0.83, wpb=45521.8, bsz=3092, num_updates=2000, lr=0.00025005, gnorm=0.507, clip=2, loss_scale=8, train_wall=121, gb_free=22.4, wall=2921
+2022-10-25 21:00:57 | INFO | train_inner | epoch 001:   2104 / 16028 loss=6.161, nll_loss=4.733, nll_loss_teacher=0.543, kd_loss=6.309, ppl=26.6, wps=38258.7, ups=0.83, wpb=46199.8, bsz=3196.5, num_updates=2100, lr=0.000262548, gnorm=0.554, clip=4, loss_scale=8, train_wall=121, gb_free=21.6, wall=3042
+2022-10-25 21:02:58 | INFO | train_inner | epoch 001:   2204 / 16028 loss=5.906, nll_loss=4.437, nll_loss_teacher=0.543, kd_loss=6.064, ppl=21.66, wps=38585.1, ups=0.83, wpb=46636.7, bsz=3320, num_updates=2200, lr=0.000275045, gnorm=0.471, clip=1, loss_scale=8, train_wall=121, gb_free=20, wall=3163
+2022-10-25 21:04:58 | INFO | train_inner | epoch 001:   2304 / 16028 loss=5.907, nll_loss=4.434, nll_loss_teacher=0.54, kd_loss=6.059, ppl=21.61, wps=38366.2, ups=0.83, wpb=46260.5, bsz=3183.5, num_updates=2300, lr=0.000287543, gnorm=0.468, clip=1, loss_scale=8, train_wall=120, gb_free=23.8, wall=3283
+2022-10-25 21:07:00 | INFO | train_inner | epoch 001:   2404 / 16028 loss=5.858, nll_loss=4.372, nll_loss_teacher=0.542, kd_loss=6.011, ppl=20.71, wps=37897.2, ups=0.83, wpb=45904.9, bsz=3100.3, num_updates=2400, lr=0.00030004, gnorm=0.501, clip=0, loss_scale=8, train_wall=121, gb_free=20, wall=3404
+2022-10-25 21:09:01 | INFO | train_inner | epoch 001:   2504 / 16028 loss=5.733, nll_loss=4.225, nll_loss_teacher=0.545, kd_loss=5.892, ppl=18.7, wps=38070.3, ups=0.83, wpb=46046.4, bsz=3055.7, num_updates=2500, lr=0.000312538, gnorm=0.453, clip=0, loss_scale=8, train_wall=121, gb_free=20.9, wall=3525
+2022-10-25 21:11:01 | INFO | train_inner | epoch 001:   2604 / 16028 loss=5.627, nll_loss=4.099, nll_loss_teacher=0.542, kd_loss=5.788, ppl=17.14, wps=37976.8, ups=0.83, wpb=45608.8, bsz=3061.1, num_updates=2600, lr=0.000325035, gnorm=0.469, clip=0, loss_scale=8, train_wall=120, gb_free=15.9, wall=3645
+2022-10-25 21:13:03 | INFO | train_inner | epoch 001:   2704 / 16028 loss=5.5, nll_loss=3.949, nll_loss_teacher=0.542, kd_loss=5.664, ppl=15.44, wps=37568.9, ups=0.82, wpb=45905.3, bsz=3076.9, num_updates=2700, lr=0.000337533, gnorm=0.439, clip=0, loss_scale=8, train_wall=122, gb_free=19, wall=3768
+2022-10-25 21:15:04 | INFO | train_inner | epoch 001:   2804 / 16028 loss=5.386, nll_loss=3.815, nll_loss_teacher=0.537, kd_loss=5.547, ppl=14.08, wps=38281.5, ups=0.82, wpb=46503.7, bsz=3256.4, num_updates=2800, lr=0.00035003, gnorm=0.481, clip=3, loss_scale=8, train_wall=121, gb_free=22.6, wall=3889
+2022-10-25 21:17:06 | INFO | train_inner | epoch 001:   2904 / 16028 loss=5.311, nll_loss=3.727, nll_loss_teacher=0.539, kd_loss=5.474, ppl=13.24, wps=37422, ups=0.82, wpb=45707.7, bsz=3233.8, num_updates=2900, lr=0.000362528, gnorm=0.434, clip=0, loss_scale=8, train_wall=122, gb_free=21.6, wall=4011
+2022-10-25 21:19:08 | INFO | train_inner | epoch 001:   3004 / 16028 loss=5.204, nll_loss=3.599, nll_loss_teacher=0.544, kd_loss=5.378, ppl=12.12, wps=38022.3, ups=0.82, wpb=46228.3, bsz=3248.2, num_updates=3000, lr=0.000375025, gnorm=0.438, clip=0, loss_scale=8, train_wall=121, gb_free=23.7, wall=4133
+2022-10-25 21:21:09 | INFO | train_inner | epoch 001:   3104 / 16028 loss=5.27, nll_loss=3.674, nll_loss_teacher=0.54, kd_loss=5.436, ppl=12.77, wps=37861.9, ups=0.82, wpb=45913.5, bsz=2870.6, num_updates=3100, lr=0.000387523, gnorm=0.447, clip=1, loss_scale=8, train_wall=121, gb_free=22.6, wall=4254
+2022-10-25 21:23:11 | INFO | train_inner | epoch 001:   3204 / 16028 loss=5.052, nll_loss=3.419, nll_loss_teacher=0.542, kd_loss=5.23, ppl=10.69, wps=37789.5, ups=0.82, wpb=46117.7, bsz=3171, num_updates=3200, lr=0.00040002, gnorm=0.419, clip=0, loss_scale=8, train_wall=122, gb_free=18.7, wall=4376
+2022-10-25 21:25:14 | INFO | train_inner | epoch 001:   3304 / 16028 loss=4.968, nll_loss=3.321, nll_loss_teacher=0.539, kd_loss=5.142, ppl=9.99, wps=38227.8, ups=0.82, wpb=46819.1, bsz=3215.2, num_updates=3300, lr=0.000412518, gnorm=0.415, clip=0, loss_scale=8, train_wall=122, gb_free=20.7, wall=4499
+2022-10-25 21:27:14 | INFO | train_inner | epoch 001:   3404 / 16028 loss=4.985, nll_loss=3.337, nll_loss_teacher=0.548, kd_loss=5.173, ppl=10.1, wps=36655.3, ups=0.83, wpb=43957, bsz=2997, num_updates=3400, lr=0.000425015, gnorm=0.441, clip=1, loss_scale=8, train_wall=120, gb_free=19, wall=4618
+2022-10-25 21:29:14 | INFO | train_inner | epoch 001:   3504 / 16028 loss=4.839, nll_loss=3.169, nll_loss_teacher=0.541, kd_loss=5.024, ppl=8.99, wps=37647.1, ups=0.83, wpb=45228.2, bsz=3208.4, num_updates=3500, lr=0.000437513, gnorm=0.41, clip=1, loss_scale=8, train_wall=120, gb_free=21.9, wall=4739
+2022-10-25 21:31:16 | INFO | train_inner | epoch 001:   3604 / 16028 loss=4.835, nll_loss=3.161, nll_loss_teacher=0.542, kd_loss=5.02, ppl=8.94, wps=37330.3, ups=0.82, wpb=45447.9, bsz=3035.2, num_updates=3600, lr=0.00045001, gnorm=0.426, clip=0, loss_scale=8, train_wall=122, gb_free=26.5, wall=4860
+2022-10-25 21:33:17 | INFO | train_inner | epoch 001:   3704 / 16028 loss=4.791, nll_loss=3.109, nll_loss_teacher=0.546, kd_loss=4.981, ppl=8.63, wps=37943.1, ups=0.83, wpb=45880.7, bsz=3053.4, num_updates=3700, lr=0.000462508, gnorm=0.433, clip=1, loss_scale=8, train_wall=121, gb_free=18.8, wall=4981
+2022-10-25 21:35:18 | INFO | train_inner | epoch 001:   3804 / 16028 loss=4.707, nll_loss=3.011, nll_loss_teacher=0.542, kd_loss=4.897, ppl=8.06, wps=37387.4, ups=0.82, wpb=45318.6, bsz=3119.4, num_updates=3800, lr=0.000475005, gnorm=0.397, clip=0, loss_scale=8, train_wall=121, gb_free=19.5, wall=5102
+2022-10-25 21:37:19 | INFO | train_inner | epoch 001:   3904 / 16028 loss=4.618, nll_loss=2.907, nll_loss_teacher=0.541, kd_loss=4.808, ppl=7.5, wps=38411.7, ups=0.82, wpb=46697.3, bsz=2997.4, num_updates=3900, lr=0.000487503, gnorm=0.382, clip=0, loss_scale=8, train_wall=121, gb_free=19.3, wall=5224
+2022-10-25 21:39:20 | INFO | train_inner | epoch 001:   4004 / 16028 loss=4.6, nll_loss=2.885, nll_loss_teacher=0.545, kd_loss=4.797, ppl=7.39, wps=37881.9, ups=0.83, wpb=45550.8, bsz=2936.7, num_updates=4000, lr=0.0005, gnorm=0.386, clip=0, loss_scale=8, train_wall=120, gb_free=20.6, wall=5344
+2022-10-25 21:41:20 | INFO | train_inner | epoch 001:   4104 / 16028 loss=4.544, nll_loss=2.821, nll_loss_teacher=0.542, kd_loss=4.739, ppl=7.07, wps=38030.2, ups=0.83, wpb=45725.8, bsz=3087.7, num_updates=4100, lr=0.000493865, gnorm=0.386, clip=0, loss_scale=16, train_wall=120, gb_free=23.5, wall=5465
+2022-10-25 21:43:21 | INFO | train_inner | epoch 001:   4204 / 16028 loss=4.516, nll_loss=2.787, nll_loss_teacher=0.544, kd_loss=4.712, ppl=6.9, wps=38119.4, ups=0.83, wpb=46194.1, bsz=3060.2, num_updates=4200, lr=0.00048795, gnorm=0.397, clip=1, loss_scale=16, train_wall=121, gb_free=23.1, wall=5586
+2022-10-25 21:45:22 | INFO | train_inner | epoch 001:   4304 / 16028 loss=4.437, nll_loss=2.699, nll_loss_teacher=0.539, kd_loss=4.627, ppl=6.49, wps=38344.4, ups=0.83, wpb=46320.3, bsz=3124, num_updates=4300, lr=0.000482243, gnorm=0.35, clip=0, loss_scale=16, train_wall=121, gb_free=26, wall=5707
+2022-10-25 21:46:25 | INFO | fairseq.trainer | NOTE: gradient overflow detected, ignoring gradient, setting loss scale to: 8.0
+2022-10-25 21:47:24 | INFO | train_inner | epoch 001:   4405 / 16028 loss=4.374, nll_loss=2.625, nll_loss_teacher=0.542, kd_loss=4.574, ppl=6.17, wps=37704.3, ups=0.82, wpb=45997.7, bsz=3128.2, num_updates=4400, lr=0.000476731, gnorm=0.349, clip=0, loss_scale=8, train_wall=122, gb_free=23.4, wall=5829
+2022-10-25 21:49:25 | INFO | train_inner | epoch 001:   4505 / 16028 loss=4.311, nll_loss=2.553, nll_loss_teacher=0.541, kd_loss=4.51, ppl=5.87, wps=38218, ups=0.83, wpb=46125.5, bsz=3186.1, num_updates=4500, lr=0.000471405, gnorm=0.344, clip=0, loss_scale=8, train_wall=120, gb_free=20.7, wall=5949
+2022-10-25 21:51:26 | INFO | train_inner | epoch 001:   4605 / 16028 loss=4.266, nll_loss=2.498, nll_loss_teacher=0.544, kd_loss=4.476, ppl=5.65, wps=37833.1, ups=0.83, wpb=45765.8, bsz=3193.2, num_updates=4600, lr=0.000466252, gnorm=0.332, clip=0, loss_scale=8, train_wall=121, gb_free=18.8, wall=6070
+2022-10-25 21:51:58 | INFO | fairseq.trainer | NOTE: gradient overflow detected, ignoring gradient, setting loss scale to: 4.0
+2022-10-25 21:53:27 | INFO | train_inner | epoch 001:   4706 / 16028 loss=4.306, nll_loss=2.546, nll_loss_teacher=0.542, kd_loss=4.506, ppl=5.84, wps=37931.9, ups=0.82, wpb=46243.2, bsz=3001.3, num_updates=4700, lr=0.000461266, gnorm=0.357, clip=0, loss_scale=4, train_wall=122, gb_free=17.4, wall=6192
+2022-10-25 21:55:28 | INFO | train_inner | epoch 001:   4806 / 16028 loss=4.238, nll_loss=2.467, nll_loss_teacher=0.544, kd_loss=4.438, ppl=5.53, wps=37891.1, ups=0.83, wpb=45549.4, bsz=3031.4, num_updates=4800, lr=0.000456435, gnorm=0.342, clip=0, loss_scale=4, train_wall=120, gb_free=23.3, wall=6312
+2022-10-25 21:57:28 | INFO | train_inner | epoch 001:   4906 / 16028 loss=4.183, nll_loss=2.404, nll_loss_teacher=0.544, kd_loss=4.389, ppl=5.29, wps=38277.3, ups=0.83, wpb=46196.6, bsz=3080.2, num_updates=4900, lr=0.000451754, gnorm=0.334, clip=0, loss_scale=4, train_wall=120, gb_free=20.9, wall=6433
+2022-10-25 21:59:29 | INFO | train_inner | epoch 001:   5006 / 16028 loss=4.18, nll_loss=2.401, nll_loss_teacher=0.541, kd_loss=4.385, ppl=5.28, wps=38188.3, ups=0.83, wpb=46008.2, bsz=3039.5, num_updates=5000, lr=0.000447214, gnorm=0.345, clip=0, loss_scale=4, train_wall=120, gb_free=20.4, wall=6553
+2022-10-25 22:01:29 | INFO | train_inner | epoch 001:   5106 / 16028 loss=4.148, nll_loss=2.366, nll_loss_teacher=0.543, kd_loss=4.351, ppl=5.15, wps=38125.3, ups=0.83, wpb=45994.7, bsz=3125.4, num_updates=5100, lr=0.000442807, gnorm=0.331, clip=0, loss_scale=4, train_wall=120, gb_free=27.2, wall=6674
+2022-10-25 22:03:30 | INFO | train_inner | epoch 001:   5206 / 16028 loss=4.083, nll_loss=2.29, nll_loss_teacher=0.541, kd_loss=4.293, ppl=4.89, wps=38419.9, ups=0.83, wpb=46491.9, bsz=3124.1, num_updates=5200, lr=0.000438529, gnorm=0.322, clip=0, loss_scale=4, train_wall=121, gb_free=23.7, wall=6795
+2022-10-25 22:05:32 | INFO | train_inner | epoch 001:   5306 / 16028 loss=4.099, nll_loss=2.307, nll_loss_teacher=0.543, kd_loss=4.31, ppl=4.95, wps=38444.2, ups=0.82, wpb=46913.6, bsz=2996.8, num_updates=5300, lr=0.000434372, gnorm=0.336, clip=0, loss_scale=4, train_wall=122, gb_free=25.4, wall=6917
+2022-10-25 22:07:33 | INFO | train_inner | epoch 001:   5406 / 16028 loss=4.067, nll_loss=2.27, nll_loss_teacher=0.546, kd_loss=4.276, ppl=4.82, wps=38008.6, ups=0.83, wpb=45733.4, bsz=3180.1, num_updates=5400, lr=0.000430331, gnorm=0.35, clip=1, loss_scale=4, train_wall=120, gb_free=21.9, wall=7037
+2022-10-25 22:09:33 | INFO | train_inner | epoch 001:   5506 / 16028 loss=4.053, nll_loss=2.257, nll_loss_teacher=0.543, kd_loss=4.262, ppl=4.78, wps=38151.2, ups=0.83, wpb=45986.1, bsz=3274.4, num_updates=5500, lr=0.000426401, gnorm=0.333, clip=1, loss_scale=4, train_wall=120, gb_free=15.8, wall=7158
+2022-10-25 22:11:35 | INFO | train_inner | epoch 001:   5606 / 16028 loss=4.018, nll_loss=2.215, nll_loss_teacher=0.543, kd_loss=4.234, ppl=4.64, wps=38152.7, ups=0.82, wpb=46400.7, bsz=2996.4, num_updates=5600, lr=0.000422577, gnorm=0.303, clip=0, loss_scale=4, train_wall=121, gb_free=19.5, wall=7280
+2022-10-25 22:13:36 | INFO | train_inner | epoch 001:   5706 / 16028 loss=4, nll_loss=2.193, nll_loss_teacher=0.545, kd_loss=4.217, ppl=4.57, wps=37681.3, ups=0.83, wpb=45496.8, bsz=3071, num_updates=5700, lr=0.000418854, gnorm=0.318, clip=0, loss_scale=4, train_wall=121, gb_free=20.9, wall=7400
+2022-10-25 22:15:36 | INFO | train_inner | epoch 001:   5806 / 16028 loss=3.98, nll_loss=2.171, nll_loss_teacher=0.542, kd_loss=4.195, ppl=4.5, wps=38378.6, ups=0.83, wpb=46207.5, bsz=2996.2, num_updates=5800, lr=0.000415227, gnorm=0.32, clip=0, loss_scale=4, train_wall=120, gb_free=21.9, wall=7521
+2022-10-25 22:17:36 | INFO | train_inner | epoch 001:   5906 / 16028 loss=3.965, nll_loss=2.154, nll_loss_teacher=0.546, kd_loss=4.182, ppl=4.45, wps=37819.2, ups=0.83, wpb=45405.7, bsz=3068.4, num_updates=5900, lr=0.000411693, gnorm=0.312, clip=0, loss_scale=4, train_wall=120, gb_free=19, wall=7641
