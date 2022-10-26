@@ -1,5 +1,5 @@
 #! /bin/bash
-#SBATCH --job-name train
+#SBATCH --job-name baseline
 #SBATCH --nodes 1
 #SBATCH --ntasks-per-node 1
 #SBATCH --partition ai4bp
@@ -20,4 +20,6 @@ srun fairseq-train indic-en-exp/final_bin \
 --update-freq 1 \
 --distributed-world-size 4 \
 --num-workers 64 \
+--eval-bleu --eval-bleu-args '{"beam": 1, "lenpen": 1.0}' --eval-bleu-detok moses --eval-bleu-remove-bpe --eval-bleu-print-samples \
+--best-checkpoint-metric bleu --maximize-best-checkpoint-metric \
 --wandb-project Indic-En-Distillation > logs/train.log
