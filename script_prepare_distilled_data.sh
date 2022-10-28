@@ -1,5 +1,5 @@
 #! /bin/bash
-#SBATCH --job-name distil-sam
+#SBATCH --job-name prepare-distilled-data
 #SBATCH --nodes 1
 #SBATCH --ntasks-per-node 1
 #SBATCH --partition ai4bp
