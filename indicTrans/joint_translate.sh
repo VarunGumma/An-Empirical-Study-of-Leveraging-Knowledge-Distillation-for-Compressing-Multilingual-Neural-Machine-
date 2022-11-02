@@ -5,15 +5,16 @@ infname=$2
 outfname=$3
 src_lang=$4
 tgt_lang=$5
-exp_dir=$6
-ref_fname=$7
+ckpt_dir=$6
+exp_dir=$7
+ref_fname=$8
 
 SRC_PREFIX='SRC'
 TGT_PREFIX='TGT'
 
 SUBWORD_NMT_DIR='subword-nmt'
 data_bin_dir=$exp_dir/final_bin
-model_dir=$exp_dir/model-$ext
+model_path=$ckpt_dir/$ext/checkpoint_best.pt
 
 ### normalization and script conversion
 
@@ -42,12 +43,13 @@ tgt_output_fname=$outfname
 
 fairseq-interactive $data_bin_dir \
     -s $SRC_PREFIX -t $TGT_PREFIX \
-    --distributed-world-size 2 \
-    --path $model_dir/checkpoint_best.pt \
-    --batch-size 512 --buffer-size 2500 --beam 5 --remove-bpe \
+    --distributed-world-size 1 \
+    --path $model_path \
+    --batch-size 1024 --buffer-size 2500 --beam 5 --remove-bpe \
     --skip-invalid-size-inputs-valid-test \
     --input $src_input_bpe_fname \
     --num-workers 64 \
+    --user-dir model_configs \
     --memory-efficient-fp16  >  $tgt_output_fname.log 2>&1
 
 

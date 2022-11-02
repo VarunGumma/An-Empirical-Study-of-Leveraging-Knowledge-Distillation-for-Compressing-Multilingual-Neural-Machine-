@@ -1,0 +1,429 @@
+wat2021 - bn: {
+ "name": "BLEU",
+ "score": 26.3,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "56.7/31.5/20.1/13.3 (BP = 1.000 ratio = 1.007 hyp_len = 42960 ref_len = 42644)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2021 - gu: {
+ "name": "BLEU",
+ "score": 37.3,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "67.0/43.6/31.1/22.6 (BP = 0.987 ratio = 0.987 hyp_len = 42074 ref_len = 42644)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2021 - hi: {
+ "name": "BLEU",
+ "score": 40.5,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "69.9/47.2/34.4/25.4 (BP = 0.982 ratio = 0.982 hyp_len = 41875 ref_len = 42644)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2021 - kn: {
+ "name": "BLEU",
+ "score": 32.6,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "64.8/40.1/27.7/19.5 (BP = 0.947 ratio = 0.948 hyp_len = 40436 ref_len = 42644)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2021 - ml: {
+ "name": "BLEU",
+ "score": 31.1,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "63.8/38.6/26.2/18.2 (BP = 0.943 ratio = 0.945 hyp_len = 40297 ref_len = 42644)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2021 - mr: {
+ "name": "BLEU",
+ "score": 30.3,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "61.8/36.7/24.7/17.1 (BP = 0.969 ratio = 0.969 hyp_len = 41329 ref_len = 42644)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2021 - or: {
+ "name": "BLEU",
+ "score": 30.9,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "61.1/36.8/25.2/17.5 (BP = 0.981 ratio = 0.981 hyp_len = 41821 ref_len = 42644)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2021 - pa: {
+ "name": "BLEU",
+ "score": 39.4,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "68.8/45.8/33.2/24.5 (BP = 0.985 ratio = 0.985 hyp_len = 42008 ref_len = 42644)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2021 - ta: {
+ "name": "BLEU",
+ "score": 29.3,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "60.7/35.8/23.9/16.2 (BP = 0.965 ratio = 0.966 hyp_len = 41193 ref_len = 42644)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2021 - te: {
+ "name": "BLEU",
+ "score": 32.4,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "62.9/38.4/26.2/18.4 (BP = 0.987 ratio = 0.987 hyp_len = 42078 ref_len = 42644)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2020 - bn: {
+ "name": "BLEU",
+ "score": 18.6,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "54.2/26.1/14.7/8.6 (BP = 0.905 ratio = 0.909 hyp_len = 65580 ref_len = 72115)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2020 - gu: {
+ "name": "BLEU",
+ "score": 22.7,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "58.1/30.3/18.1/11.2 (BP = 0.929 ratio = 0.932 hyp_len = 85935 ref_len = 92232)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2020 - hi: {
+ "name": "BLEU",
+ "score": 22.1,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "57.8/30.7/18.3/11.3 (BP = 0.899 ratio = 0.904 hyp_len = 60689 ref_len = 67117)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2020 - ml: {
+ "name": "BLEU",
+ "score": 18.7,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "54.3/26.2/14.9/8.7 (BP = 0.900 ratio = 0.905 hyp_len = 50074 ref_len = 55329)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2020 - mr: {
+ "name": "BLEU",
+ "score": 19.6,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "55.5/27.3/15.7/9.3 (BP = 0.905 ratio = 0.910 hyp_len = 69689 ref_len = 76611)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2020 - ta: {
+ "name": "BLEU",
+ "score": 17.1,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "51.1/23.3/12.8/7.3 (BP = 0.937 ratio = 0.939 hyp_len = 69200 ref_len = 73669)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wat2020 - te: {
+ "name": "BLEU",
+ "score": 16.8,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "53.6/25.1/13.7/7.7 (BP = 0.864 ratio = 0.872 hyp_len = 50957 ref_len = 58409)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wmt-news - gu: {
+ "name": "BLEU",
+ "score": 25.3,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "62.2/34.6/21.8/14.5 (BP = 0.879 ratio = 0.886 hyp_len = 15730 ref_len = 17757)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wmt-news - hi: {
+ "name": "BLEU",
+ "score": 27.4,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "61.4/34.1/20.7/13.0 (BP = 0.999 ratio = 0.999 hyp_len = 55477 ref_len = 55541)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+wmt-news - ta: {
+ "name": "BLEU",
+ "score": 21.6,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "56.5/28.4/16.1/9.6 (BP = 0.967 ratio = 0.968 hyp_len = 24078 ref_len = 24879)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+ufal - ta: {
+ "name": "BLEU",
+ "score": 23.2,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "58.2/31.1/19.1/12.2 (BP = 0.913 ratio = 0.916 hyp_len = 48524 ref_len = 52964)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+pmi - as: {
+ "name": "BLEU",
+ "score": 23.5,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "51.9/28.4/19.2/13.5 (BP = 0.944 ratio = 0.945 hyp_len = 42866 ref_len = 45352)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+flores101_dataset - as: {
+ "name": "BLEU",
+ "score": 19.7,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "53.1/25.5/14.2/8.3 (BP = 0.984 ratio = 0.985 hyp_len = 24338 ref_len = 24721)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+flores101_dataset - bn: {
+ "name": "BLEU",
+ "score": 28.2,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "62.6/35.3/22.0/14.2 (BP = 0.977 ratio = 0.977 hyp_len = 24152 ref_len = 24721)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+flores101_dataset - gu: {
+ "name": "BLEU",
+ "score": 30.7,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "64.4/37.8/24.3/16.2 (BP = 0.979 ratio = 0.979 hyp_len = 24209 ref_len = 24721)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+flores101_dataset - hi: {
+ "name": "BLEU",
+ "score": 34.4,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "67.1/41.9/28.3/19.5 (BP = 0.973 ratio = 0.974 hyp_len = 24067 ref_len = 24721)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+flores101_dataset - kn: {
+ "name": "BLEU",
+ "score": 25.4,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "60.8/32.8/19.8/12.4 (BP = 0.958 ratio = 0.959 hyp_len = 23708 ref_len = 24721)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+flores101_dataset - ml: {
+ "name": "BLEU",
+ "score": 27.1,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "62.6/35.0/21.3/13.3 (BP = 0.964 ratio = 0.965 hyp_len = 23845 ref_len = 24721)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+flores101_dataset - mr: {
+ "name": "BLEU",
+ "score": 27.4,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "61.6/34.4/21.1/13.3 (BP = 0.987 ratio = 0.987 hyp_len = 24398 ref_len = 24721)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+flores101_dataset - or: {
+ "name": "BLEU",
+ "score": 26.3,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "61.3/33.4/20.2/12.8 (BP = 0.972 ratio = 0.973 hyp_len = 24050 ref_len = 24721)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+flores101_dataset - pa: {
+ "name": "BLEU",
+ "score": 31.3,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "64.3/38.1/24.5/16.2 (BP = 0.996 ratio = 0.996 hyp_len = 24631 ref_len = 24721)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+flores101_dataset - ta: {
+ "name": "BLEU",
+ "score": 24.5,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "59.8/31.6/18.7/11.5 (BP = 0.969 ratio = 0.969 hyp_len = 23963 ref_len = 24721)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+flores101_dataset - te: {
+ "name": "BLEU",
+ "score": 29.9,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "64.6/37.9/24.1/15.9 (BP = 0.959 ratio = 0.960 hyp_len = 23735 ref_len = 24721)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
