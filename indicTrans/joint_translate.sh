@@ -45,13 +45,15 @@ fairseq-interactive $data_bin_dir \
     -s $SRC_PREFIX -t $TGT_PREFIX \
     --distributed-world-size 1 \
     --path $model_path \
-    --batch-size 1024 --buffer-size 2500 --beam 5 --remove-bpe \
+    --batch-size 512 \
+    --buffer-size 2500 \
+    --beam 5 \
+    --remove-bpe \
     --skip-invalid-size-inputs-valid-test \
     --input $src_input_bpe_fname \
     --num-workers 64 \
     --user-dir model_configs \
     --memory-efficient-fp16  >  $tgt_output_fname.log 2>&1
-
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.

@@ -1,5 +1,5 @@
 #! /bin/bash
-#SBATCH --job-name adaptive-distil
+#SBATCH --job-name baseline-4x-v2
 #SBATCH --nodes 1
 #SBATCH --ntasks-per-node 1
 #SBATCH --partition ai4bp
@@ -13,15 +13,12 @@ srun fairseq-train indic-en-exp/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 16384 \
---arch transformer_1x_v0 \
+--arch transformer_4x_v0 \
+--encoder-layers 2 \
+--decoder-layers 2 \
 --dropout 0.2 \
---task translation \
---kd-strategy word_and_seq_level \
---teacher-checkpoint-path checkpoints/indicTrans/checkpoint_best.pt \
---criterion label_smoothed_cross_entropy_with_kd \
+--criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
---use-adaptive-weightage \
---adaptive-smoothing 0.5 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
@@ -31,14 +28,14 @@ srun fairseq-train indic-en-exp/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir checkpoints/adaptive-distil \
+--save-dir checkpoints/baseline-4x-v2 \
 --save-interval 1 \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
+--memory-efficient-fp16 \
 --update-freq 1 \
 --distributed-world-size 4 \
 --num-workers 64 \
---memory-efficient-fp16 \
---wandb-project Indic-En-Distillation \
---user-dir indicTrans/model_configs > logs/adaptive_distil.log
+--user-dir indicTrans/model_configs \
+--wandb-project Indic-En-Distillation > logs/baseline_4x_v2.log

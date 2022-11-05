@@ -1,5 +1,5 @@
 #! /bin/bash
-#SBATCH --job-name adaptive-distil
+#SBATCH --job-name global-multi-adaptive-distil
 #SBATCH --nodes 1
 #SBATCH --ntasks-per-node 1
 #SBATCH --partition ai4bp
@@ -16,12 +16,14 @@ srun fairseq-train indic-en-exp/final_bin \
 --arch transformer_1x_v0 \
 --dropout 0.2 \
 --task translation \
---kd-strategy word_and_seq_level \
+--kd-strategy global_multi_level \
 --teacher-checkpoint-path checkpoints/indicTrans/checkpoint_best.pt \
 --criterion label_smoothed_cross_entropy_with_kd \
 --label-smoothing 0.1 \
---use-adaptive-weightage \
---adaptive-smoothing 0.5 \
+--alpha 0.5 \
+--use-adaptive-kd-rates \
+--kd-queue-size 50000 \
+--kd-selection-temp 1.5 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
@@ -31,14 +33,14 @@ srun fairseq-train indic-en-exp/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir checkpoints/adaptive-distil \
+--save-dir checkpoints/global-multi-adaptive-distil \
 --save-interval 1 \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
+--memory-efficient-fp16 \
 --update-freq 1 \
 --distributed-world-size 4 \
 --num-workers 64 \
---memory-efficient-fp16 \
 --wandb-project Indic-En-Distillation \
---user-dir indicTrans/model_configs > logs/adaptive_distil.log
+--user-dir indicTrans/model_configs > logs/global_multi_adaptive_distil.log

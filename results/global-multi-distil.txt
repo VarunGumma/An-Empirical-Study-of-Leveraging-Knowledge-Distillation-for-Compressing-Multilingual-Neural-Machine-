@@ -1,8 +1,8 @@
 wat2021 - bn: {
  "name": "BLEU",
- "score": 26.3,
+ "score": 26.2,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "56.7/31.5/20.1/13.3 (BP = 1.000 ratio = 1.007 hyp_len = 42960 ref_len = 42644)",
+ "verbose_score": "56.2/31.4/20.2/13.3 (BP = 1.000 ratio = 1.031 hyp_len = 43971 ref_len = 42644)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -13,9 +13,9 @@ wat2021 - bn: {
 
 wat2021 - gu: {
  "name": "BLEU",
- "score": 37.3,
+ "score": 37.8,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "67.0/43.6/31.1/22.6 (BP = 0.987 ratio = 0.987 hyp_len = 42074 ref_len = 42644)",
+ "verbose_score": "66.7/43.5/31.1/22.7 (BP = 0.998 ratio = 0.998 hyp_len = 42563 ref_len = 42644)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -26,9 +26,9 @@ wat2021 - gu: {
 
 wat2021 - hi: {
  "name": "BLEU",
- "score": 40.5,
+ "score": 40.8,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "69.9/47.2/34.4/25.4 (BP = 0.982 ratio = 0.982 hyp_len = 41875 ref_len = 42644)",
+ "verbose_score": "69.7/47.1/34.4/25.4 (BP = 0.991 ratio = 0.991 hyp_len = 42273 ref_len = 42644)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -39,9 +39,9 @@ wat2021 - hi: {
 
 wat2021 - kn: {
  "name": "BLEU",
- "score": 32.6,
+ "score": 32.9,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "64.8/40.1/27.7/19.5 (BP = 0.947 ratio = 0.948 hyp_len = 40436 ref_len = 42644)",
+ "verbose_score": "64.6/40.1/27.6/19.4 (BP = 0.960 ratio = 0.961 hyp_len = 40961 ref_len = 42644)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -52,9 +52,9 @@ wat2021 - kn: {
 
 wat2021 - ml: {
  "name": "BLEU",
- "score": 31.1,
+ "score": 31.7,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "63.8/38.6/26.2/18.2 (BP = 0.943 ratio = 0.945 hyp_len = 40297 ref_len = 42644)",
+ "verbose_score": "63.8/38.7/26.4/18.4 (BP = 0.958 ratio = 0.959 hyp_len = 40888 ref_len = 42644)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -65,9 +65,9 @@ wat2021 - ml: {
 
 wat2021 - mr: {
  "name": "BLEU",
- "score": 30.3,
+ "score": 30.8,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "61.8/36.7/24.7/17.1 (BP = 0.969 ratio = 0.969 hyp_len = 41329 ref_len = 42644)",
+ "verbose_score": "61.7/36.8/24.9/17.3 (BP = 0.981 ratio = 0.981 hyp_len = 41843 ref_len = 42644)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -78,9 +78,9 @@ wat2021 - mr: {
 
 wat2021 - or: {
  "name": "BLEU",
- "score": 30.9,
+ "score": 31.4,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "61.1/36.8/25.2/17.5 (BP = 0.981 ratio = 0.981 hyp_len = 41821 ref_len = 42644)",
+ "verbose_score": "60.9/36.9/25.3/17.7 (BP = 0.993 ratio = 0.993 hyp_len = 42336 ref_len = 42644)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -91,9 +91,9 @@ wat2021 - or: {
 
 wat2021 - pa: {
  "name": "BLEU",
- "score": 39.4,
+ "score": 39.9,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "68.8/45.8/33.2/24.5 (BP = 0.985 ratio = 0.985 hyp_len = 42008 ref_len = 42644)",
+ "verbose_score": "68.5/45.9/33.2/24.5 (BP = 0.997 ratio = 0.997 hyp_len = 42536 ref_len = 42644)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -104,9 +104,9 @@ wat2021 - pa: {
 
 wat2021 - ta: {
  "name": "BLEU",
- "score": 29.3,
+ "score": 29.9,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "60.7/35.8/23.9/16.2 (BP = 0.965 ratio = 0.966 hyp_len = 41193 ref_len = 42644)",
+ "verbose_score": "60.6/35.9/24.0/16.4 (BP = 0.982 ratio = 0.982 hyp_len = 41883 ref_len = 42644)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -117,9 +117,9 @@ wat2021 - ta: {
 
 wat2021 - te: {
  "name": "BLEU",
- "score": 32.4,
+ "score": 32.9,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "62.9/38.4/26.2/18.4 (BP = 0.987 ratio = 0.987 hyp_len = 42078 ref_len = 42644)",
+ "verbose_score": "62.6/38.4/26.3/18.5 (BP = 1.000 ratio = 1.003 hyp_len = 42790 ref_len = 42644)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -130,9 +130,9 @@ wat2021 - te: {
 
 wat2020 - bn: {
  "name": "BLEU",
- "score": 18.6,
+ "score": 19.1,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "54.2/26.1/14.7/8.6 (BP = 0.905 ratio = 0.909 hyp_len = 65580 ref_len = 72115)",
+ "verbose_score": "53.8/25.8/14.7/8.6 (BP = 0.933 ratio = 0.935 hyp_len = 67407 ref_len = 72115)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -143,9 +143,9 @@ wat2020 - bn: {
 
 wat2020 - gu: {
  "name": "BLEU",
- "score": 22.7,
+ "score": 23.2,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "58.1/30.3/18.1/11.2 (BP = 0.929 ratio = 0.932 hyp_len = 85935 ref_len = 92232)",
+ "verbose_score": "57.8/30.3/18.2/11.3 (BP = 0.950 ratio = 0.951 hyp_len = 87720 ref_len = 92232)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -156,9 +156,9 @@ wat2020 - gu: {
 
 wat2020 - hi: {
  "name": "BLEU",
- "score": 22.1,
+ "score": 22.8,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "57.8/30.7/18.3/11.3 (BP = 0.899 ratio = 0.904 hyp_len = 60689 ref_len = 67117)",
+ "verbose_score": "57.5/30.6/18.4/11.4 (BP = 0.926 ratio = 0.928 hyp_len = 62309 ref_len = 67117)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -169,9 +169,9 @@ wat2020 - hi: {
 
 wat2020 - ml: {
  "name": "BLEU",
- "score": 18.7,
+ "score": 19.2,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "54.3/26.2/14.9/8.7 (BP = 0.900 ratio = 0.905 hyp_len = 50074 ref_len = 55329)",
+ "verbose_score": "54.1/26.3/15.0/8.9 (BP = 0.919 ratio = 0.922 hyp_len = 51011 ref_len = 55329)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -182,9 +182,9 @@ wat2020 - ml: {
 
 wat2020 - mr: {
  "name": "BLEU",
- "score": 19.6,
+ "score": 19.9,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "55.5/27.3/15.7/9.3 (BP = 0.905 ratio = 0.910 hyp_len = 69689 ref_len = 76611)",
+ "verbose_score": "54.8/27.0/15.5/9.2 (BP = 0.930 ratio = 0.932 hyp_len = 71425 ref_len = 76611)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -195,9 +195,9 @@ wat2020 - mr: {
 
 wat2020 - ta: {
  "name": "BLEU",
- "score": 17.1,
+ "score": 17.5,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "51.1/23.3/12.8/7.3 (BP = 0.937 ratio = 0.939 hyp_len = 69200 ref_len = 73669)",
+ "verbose_score": "51.0/23.3/12.7/7.3 (BP = 0.957 ratio = 0.958 hyp_len = 70559 ref_len = 73669)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -208,9 +208,9 @@ wat2020 - ta: {
 
 wat2020 - te: {
  "name": "BLEU",
- "score": 16.8,
+ "score": 17.3,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "53.6/25.1/13.7/7.7 (BP = 0.864 ratio = 0.872 hyp_len = 50957 ref_len = 58409)",
+ "verbose_score": "53.3/25.1/13.7/7.7 (BP = 0.894 ratio = 0.900 hyp_len = 52545 ref_len = 58409)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -221,9 +221,9 @@ wat2020 - te: {
 
 wmt-news - gu: {
  "name": "BLEU",
- "score": 25.3,
+ "score": 25.4,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "62.2/34.6/21.8/14.5 (BP = 0.879 ratio = 0.886 hyp_len = 15730 ref_len = 17757)",
+ "verbose_score": "62.0/34.2/21.3/14.0 (BP = 0.899 ratio = 0.904 hyp_len = 16048 ref_len = 17757)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -236,7 +236,7 @@ wmt-news - hi: {
  "name": "BLEU",
  "score": 27.4,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "61.4/34.1/20.7/13.0 (BP = 0.999 ratio = 0.999 hyp_len = 55477 ref_len = 55541)",
+ "verbose_score": "61.1/34.0/20.8/13.0 (BP = 1.000 ratio = 1.015 hyp_len = 56386 ref_len = 55541)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -247,9 +247,9 @@ wmt-news - hi: {
 
 wmt-news - ta: {
  "name": "BLEU",
- "score": 21.6,
+ "score": 22.1,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "56.5/28.4/16.1/9.6 (BP = 0.967 ratio = 0.968 hyp_len = 24078 ref_len = 24879)",
+ "verbose_score": "56.1/28.5/16.1/9.6 (BP = 0.989 ratio = 0.989 hyp_len = 24606 ref_len = 24879)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -260,9 +260,9 @@ wmt-news - ta: {
 
 ufal - ta: {
  "name": "BLEU",
- "score": 23.2,
+ "score": 24.0,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "58.2/31.1/19.1/12.2 (BP = 0.913 ratio = 0.916 hyp_len = 48524 ref_len = 52964)",
+ "verbose_score": "57.7/31.0/19.0/12.0 (BP = 0.951 ratio = 0.953 hyp_len = 50450 ref_len = 52964)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -273,9 +273,9 @@ ufal - ta: {
 
 pmi - as: {
  "name": "BLEU",
- "score": 23.5,
+ "score": 23.8,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "51.9/28.4/19.2/13.5 (BP = 0.944 ratio = 0.945 hyp_len = 42866 ref_len = 45352)",
+ "verbose_score": "51.1/27.7/18.7/13.1 (BP = 0.981 ratio = 0.982 hyp_len = 44514 ref_len = 45352)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -286,9 +286,9 @@ pmi - as: {
 
 flores101_dataset - as: {
  "name": "BLEU",
- "score": 19.7,
+ "score": 20.0,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "53.1/25.5/14.2/8.3 (BP = 0.984 ratio = 0.985 hyp_len = 24338 ref_len = 24721)",
+ "verbose_score": "52.8/25.4/14.2/8.4 (BP = 1.000 ratio = 1.007 hyp_len = 24885 ref_len = 24721)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -299,9 +299,9 @@ flores101_dataset - as: {
 
 flores101_dataset - bn: {
  "name": "BLEU",
- "score": 28.2,
+ "score": 28.9,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "62.6/35.3/22.0/14.2 (BP = 0.977 ratio = 0.977 hyp_len = 24152 ref_len = 24721)",
+ "verbose_score": "62.8/35.5/22.3/14.4 (BP = 0.994 ratio = 0.994 hyp_len = 24577 ref_len = 24721)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -312,9 +312,9 @@ flores101_dataset - bn: {
 
 flores101_dataset - gu: {
  "name": "BLEU",
- "score": 30.7,
+ "score": 31.1,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "64.4/37.8/24.3/16.2 (BP = 0.979 ratio = 0.979 hyp_len = 24209 ref_len = 24721)",
+ "verbose_score": "64.5/38.0/24.4/16.1 (BP = 0.993 ratio = 0.993 hyp_len = 24550 ref_len = 24721)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -325,9 +325,9 @@ flores101_dataset - gu: {
 
 flores101_dataset - hi: {
  "name": "BLEU",
- "score": 34.4,
+ "score": 34.9,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "67.1/41.9/28.3/19.5 (BP = 0.973 ratio = 0.974 hyp_len = 24067 ref_len = 24721)",
+ "verbose_score": "67.0/41.8/28.2/19.5 (BP = 0.990 ratio = 0.990 hyp_len = 24480 ref_len = 24721)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -338,9 +338,9 @@ flores101_dataset - hi: {
 
 flores101_dataset - kn: {
  "name": "BLEU",
- "score": 25.4,
+ "score": 26.2,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "60.8/32.8/19.8/12.4 (BP = 0.958 ratio = 0.959 hyp_len = 23708 ref_len = 24721)",
+ "verbose_score": "60.6/33.0/20.1/12.6 (BP = 0.982 ratio = 0.982 hyp_len = 24283 ref_len = 24721)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -351,9 +351,9 @@ flores101_dataset - kn: {
 
 flores101_dataset - ml: {
  "name": "BLEU",
- "score": 27.1,
+ "score": 28.2,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "62.6/35.0/21.3/13.3 (BP = 0.964 ratio = 0.965 hyp_len = 23845 ref_len = 24721)",
+ "verbose_score": "62.5/35.3/21.7/13.6 (BP = 0.993 ratio = 0.993 hyp_len = 24549 ref_len = 24721)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -364,9 +364,9 @@ flores101_dataset - ml: {
 
 flores101_dataset - mr: {
  "name": "BLEU",
- "score": 27.4,
+ "score": 28.2,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "61.6/34.4/21.1/13.3 (BP = 0.987 ratio = 0.987 hyp_len = 24398 ref_len = 24721)",
+ "verbose_score": "61.4/34.7/21.5/13.8 (BP = 1.000 ratio = 1.001 hyp_len = 24749 ref_len = 24721)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -377,9 +377,9 @@ flores101_dataset - mr: {
 
 flores101_dataset - or: {
  "name": "BLEU",
- "score": 26.3,
+ "score": 27.0,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "61.3/33.4/20.2/12.8 (BP = 0.972 ratio = 0.973 hyp_len = 24050 ref_len = 24721)",
+ "verbose_score": "61.1/33.7/20.5/12.9 (BP = 0.994 ratio = 0.994 hyp_len = 24572 ref_len = 24721)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -390,9 +390,9 @@ flores101_dataset - or: {
 
 flores101_dataset - pa: {
  "name": "BLEU",
- "score": 31.3,
+ "score": 31.5,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "64.3/38.1/24.5/16.2 (BP = 0.996 ratio = 0.996 hyp_len = 24631 ref_len = 24721)",
+ "verbose_score": "64.0/38.0/24.6/16.4 (BP = 1.000 ratio = 1.016 hyp_len = 25119 ref_len = 24721)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -403,9 +403,9 @@ flores101_dataset - pa: {
 
 flores101_dataset - ta: {
  "name": "BLEU",
- "score": 24.5,
+ "score": 24.9,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "59.8/31.6/18.7/11.5 (BP = 0.969 ratio = 0.969 hyp_len = 23963 ref_len = 24721)",
+ "verbose_score": "59.4/31.4/18.7/11.4 (BP = 0.993 ratio = 0.993 hyp_len = 24545 ref_len = 24721)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",
@@ -416,9 +416,9 @@ flores101_dataset - ta: {
 
 flores101_dataset - te: {
  "name": "BLEU",
- "score": 29.9,
+ "score": 30.8,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "64.6/37.9/24.1/15.9 (BP = 0.959 ratio = 0.960 hyp_len = 23735 ref_len = 24721)",
+ "verbose_score": "64.3/37.9/24.3/16.1 (BP = 0.984 ratio = 0.984 hyp_len = 24323 ref_len = 24721)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",

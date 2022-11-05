@@ -4,6 +4,20 @@ echo `date`
 allArgs=("$@")
 
 for ext in "${allArgs[@]}"; do
+    # ufal
+    echo ">>>>> UFAL"
+    ./joint_translate.sh $ext ../benchmarks/ufal-ta/en-ta/test.ta ../benchmarks/ufal-ta/en-ta/outfile.en ta en ../checkpoints ../indic-en-exp
+    output=$(./compute_bleu.sh ../benchmarks/ufal-ta/en-ta/outfile.en ../benchmarks/ufal-ta/en-ta/test.en ta en)
+    echo -e "ufal - ta: ${output}\n" > ../results/$ext.txt
+    echo -e "<<<<< UFAL\n"
+
+    # PMI
+    echo ">>>>> PMI"
+    ./joint_translate.sh $ext ../benchmarks/pmi/en-as/test.as ../benchmarks/pmi/en-as/outfile.en as en ../checkpoints ../indic-en-exp
+    output=$(./compute_bleu.sh ../benchmarks/pmi/en-as/outfile.en ../benchmarks/pmi/en-as/test.en as en)
+    echo -e "pmi - as: ${output}\n" >> ../results/$ext.txt
+    echo -e "<<<<< PMI\n"
+
     # wat2021
     echo ">>>>> WAT2021"
     for lang in bn gu hi kn ml mr or pa ta te; do
@@ -31,20 +45,6 @@ for ext in "${allArgs[@]}"; do
     done 
     echo -e "<<<<< WMT-NEWS\n"
 
-    # ufal
-    echo ">>>>> UFAL"
-    ./joint_translate.sh $ext ../benchmarks/ufal-ta/en-ta/test.ta ../benchmarks/ufal-ta/en-ta/outfile.en ta en ../checkpoints ../indic-en-exp
-    output=$(./compute_bleu.sh ../benchmarks/ufal-ta/en-ta/outfile.en ../benchmarks/ufal-ta/en-ta/test.en ta en)
-    echo -e "ufal - ta: ${output}\n" >> ../results/$ext.txt
-    echo -e "<<<<< UFAL\n"
-
-    # PMI
-    echo ">>>>> PMI"
-    ./joint_translate.sh $ext ../benchmarks/pmi/en-as/test.as ../benchmarks/pmi/en-as/outfile.en as en ../checkpoints ../indic-en-exp
-    output=$(./compute_bleu.sh ../benchmarks/pmi/en-as/outfile.en ../benchmarks/pmi/en-as/test.en as en)
-    echo -e "pmi - as: ${output}\n" >> ../results/$ext.txt
-    echo -e "<<<<< PMI\n"
-
     # flores101
     echo ">>>>> FLORES-101"
     for lang in as bn gu hi kn ml mr or pa ta te; do
@@ -54,8 +54,8 @@ for ext in "${allArgs[@]}"; do
     done
     echo -e "<<<<< FLORES-101\n"
 
-    echo -e "[INFO]\tmodel-${ext} evaluation completed\n\n"
+    echo -e "[INFO]\t${ext} evaluation completed\n\n"
 done
 
 echo -e "[INFO]\tconverting all txt files to csv"
-python scripts/convert_txt_to_csv.py "$@"
+python3 scripts/convert_txt_to_csv.py "$@"
