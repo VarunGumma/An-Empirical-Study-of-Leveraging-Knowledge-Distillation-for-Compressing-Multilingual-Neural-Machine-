@@ -1,18 +1,8 @@
-#! /bin/bash
-#SBATCH --job-name baseline-4x-rs
-#SBATCH --nodes 1
-#SBATCH --ntasks-per-node 1
-#SBATCH --partition ai4bp
-#SBATCH --time 07-00:00:00
-#SBATCH --cpus-per-task 64
-#SBATCH --gpus-per-task 4
-#SBATCH --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090
-
-srun fairseq-train indic-en-exp/final_bin \
+fairseq-train indic-en-exp/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 16384 \
+--max-tokens 8192 \
 --arch transformer_4x_v0 \
 --encoder-recurrent-stacking 6 \
 --decoder-recurrent-stacking 6 \
@@ -34,8 +24,8 @@ srun fairseq-train indic-en-exp/final_bin \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --memory-efficient-fp16 \
---update-freq 1 \
---distributed-world-size 4 \
+--update-freq 8 \
+--distributed-world-size 1 \
 --num-workers 64 \
 --user-dir indicTrans/model_configs \
 --wandb-project Indic-En-Distillation > logs/baseline_4x_rs.log
