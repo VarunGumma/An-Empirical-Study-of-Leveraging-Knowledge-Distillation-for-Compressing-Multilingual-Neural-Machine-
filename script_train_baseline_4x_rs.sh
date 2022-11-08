@@ -2,7 +2,7 @@ fairseq-train indic-en-exp/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 8192 \
+--max-tokens 16384 \
 --arch transformer_4x_v0 \
 --encoder-recurrent-stacking 6 \
 --decoder-recurrent-stacking 6 \
@@ -24,8 +24,8 @@ fairseq-train indic-en-exp/final_bin \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --memory-efficient-fp16 \
---update-freq 8 \
+--update-freq 4 \
 --distributed-world-size 1 \
---num-workers 64 \
+--num-workers 16 \
 --user-dir indicTrans/model_configs \
 --wandb-project Indic-En-Distillation > logs/baseline_4x_rs.log

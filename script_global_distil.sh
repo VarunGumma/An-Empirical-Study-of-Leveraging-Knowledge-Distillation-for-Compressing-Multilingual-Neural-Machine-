@@ -1,14 +1,4 @@
-#! /bin/bash
-#SBATCH --job-name global-distil
-#SBATCH --nodes 1
-#SBATCH --ntasks-per-node 1
-#SBATCH --partition ai4bp
-#SBATCH --time 07-00:00:00
-#SBATCH --cpus-per-task 64
-#SBATCH --gpus-per-task 4
-#SBATCH --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090
-
-srun fairseq-train indic-en-exp/final_bin \
+fairseq-train indic-en-exp/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -40,6 +30,6 @@ srun fairseq-train indic-en-exp/final_bin \
 --memory-efficient-fp16 \
 --update-freq 1 \
 --distributed-world-size 4 \
---num-workers 64 \
+--num-workers 16 \
 --wandb-project Indic-En-Distillation \
 --user-dir indicTrans/model_configs > logs/global_distil.log
