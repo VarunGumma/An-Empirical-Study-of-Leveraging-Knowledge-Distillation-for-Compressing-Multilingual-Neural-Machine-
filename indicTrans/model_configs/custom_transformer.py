@@ -3,7 +3,7 @@ from fairseq.models.transformer import base_architecture
 
 @register_model_architecture("transformer", "transformer_1x_v0")
 # pre-defining certain parameters for regularly used models
-def transformer_base(args):
+def transformer_base_v0(args):
     args.encoder_embed_dim = getattr(args, "encoder_embed_dim", 512)
     args.encoder_ffn_embed_dim = getattr(args, "encoder_ffn_embed_dim", 2048)
     args.encoder_attention_heads = getattr(args, "encoder_attention_heads", 8)

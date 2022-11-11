@@ -1,3 +1,29 @@
+ufal - ta: {
+ "name": "BLEU",
+ "score": 24.6,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "58.0/31.4/19.3/12.4 (BP = 0.956 ratio = 0.957 hyp_len = 50662 ref_len = 52964)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
+pmi - as: {
+ "name": "BLEU",
+ "score": 24.6,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "51.8/28.8/19.7/14.0 (BP = 0.972 ratio = 0.972 hyp_len = 44081 ref_len = 45352)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
 wat2021 - bn: {
  "name": "BLEU",
  "score": 26.8,
@@ -250,32 +276,6 @@ wmt-news - ta: {
  "score": 22.7,
  "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
  "verbose_score": "56.8/29.1/16.7/10.2 (BP = 0.985 ratio = 0.985 hyp_len = 24503 ref_len = 24879)",
- "nrefs": "1",
- "case": "mixed",
- "eff": "no",
- "tok": "13a",
- "smooth": "exp",
- "version": "2.3.1"
-}
-
-ufal - ta: {
- "name": "BLEU",
- "score": 24.6,
- "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "58.0/31.4/19.3/12.4 (BP = 0.956 ratio = 0.957 hyp_len = 50662 ref_len = 52964)",
- "nrefs": "1",
- "case": "mixed",
- "eff": "no",
- "tok": "13a",
- "smooth": "exp",
- "version": "2.3.1"
-}
-
-pmi - as: {
- "name": "BLEU",
- "score": 24.6,
- "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
- "verbose_score": "51.8/28.8/19.7/14.0 (BP = 0.972 ratio = 0.972 hyp_len = 44081 ref_len = 45352)",
  "nrefs": "1",
  "case": "mixed",
  "eff": "no",

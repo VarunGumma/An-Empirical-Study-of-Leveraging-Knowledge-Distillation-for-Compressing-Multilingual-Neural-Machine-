@@ -2,7 +2,7 @@ fairseq-train indic-en-exp/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 16384 \
+--max-tokens 8192 \
 --arch transformer_4x_v0 \
 --encoder-layers 1 \
 --decoder-layers 1 \
@@ -20,12 +20,15 @@ fairseq-train indic-en-exp/final_bin \
 --warmup-updates 4000 \
 --save-dir checkpoints/baseline-4x-v1 \
 --save-interval 1 \
---keep-last-epochs 1 \
+--keep-last-epochs 5 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---memory-efficient-fp16 \
---update-freq 4 \
---distributed-world-size 1 \
+--update-freq 1 \
+--distributed-world-size 8 \
 --num-workers 16 \
 --user-dir indicTrans/model_configs \
---wandb-project Indic-En-Distillation > logs/baseline_4x_v1.log
+--eval-bleu \
+--eval-bleu-args '{"beam": 5, "lenpen": 1.0}' \
+--eval-bleu-detok moses \
+--eval-bleu-remove-bpe \
+--wandb-project Indic-En-Distillation

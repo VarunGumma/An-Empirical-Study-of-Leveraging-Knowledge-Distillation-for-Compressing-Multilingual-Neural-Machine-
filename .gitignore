@@ -2,6 +2,5 @@ indic-en-exp/
 indic-en/
 checkpoints/
 wandb/
-logs/
 samanantar_data/
 *.out
