@@ -28,7 +28,7 @@ All the files which contain the term ```distil``` perform ```word + seq level```
 
 Files which contain the term ```train``` perform ```seq level``` distillation (training a smaller model using distilled data only)
 
-If a file contains the term ```4x```, the dimension of the model which will be trained is 1536, which is same as IndicTrans, else it is a ```1x``` model with dimension 512.
+If a file contains the term ```4x```, the dimension of the model which will be trained is 1536, which is same as IndicTrans, else it is a ```base``` model with dimension 512.
 
 we use ```--activation-fn=gelu```, ```--encoder-normalize-before```, ```--decoder-normalize-before``` and ```--layernorm-embedding``` arguments to stablize the training of all the distilled models. Note that these tweaks are not present in the original IndicTrans model.
 
