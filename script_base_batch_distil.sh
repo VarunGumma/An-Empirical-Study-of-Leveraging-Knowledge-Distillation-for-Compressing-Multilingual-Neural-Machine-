@@ -3,14 +3,15 @@ fairseq-train indic-en-exp/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 8192 \
---arch transformer_1x_v0 \ 
+--arch transformer_1x_v0 \
 --dropout 0.2 \
 --task translation \
---kd-strategy word_and_seq_level \
+--kd-strategy batch_level \
 --teacher-checkpoint-path checkpoints/indicTrans/checkpoint_best.pt \
 --criterion label_smoothed_cross_entropy_with_kd \
 --label-smoothing 0.1 \
 --alpha 1 \
+--kd-rate 0.5 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
@@ -20,7 +21,7 @@ fairseq-train indic-en-exp/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir checkpoints/distil \
+--save-dir checkpoints/base-batch-distil \
 --save-interval 1 \
 --keep-last-epochs 5 \
 --patience 5 \

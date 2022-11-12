@@ -3,7 +3,9 @@ fairseq-train indic-en-exp/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 8192 \
---arch transformer_1x_v0 \
+--arch transformer_4x_v0 \
+--encoder-recurrent-stacking 6 \
+--decoder-recurrent-stacking 6 \
 --dropout 0.2 \
 --criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
@@ -16,7 +18,7 @@ fairseq-train indic-en-exp/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir checkpoints/baseline \
+--save-dir checkpoints/4x-recurrent-stacking \
 --save-interval 1 \
 --keep-last-epochs 5 \
 --patience 5 \
@@ -24,9 +26,9 @@ fairseq-train indic-en-exp/final_bin \
 --update-freq 1 \
 --distributed-world-size 8 \
 --num-workers 16 \
---wandb-project Indic-En-Distillation \
+--user-dir indicTrans/model_configs \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0}' \
 --eval-bleu-detok moses \
 --eval-bleu-remove-bpe \
---user-dir indicTrans/model_configs
+--wandb-project Indic-En-Distillation

@@ -4,8 +4,8 @@ fairseq-train indic-en-exp/final_bin \
 --max-update 1000000 \
 --max-tokens 8192 \
 --arch transformer_4x_v0 \
---encoder-layers 1 \
---decoder-layers 1 \
+--encoder-layers 2 \
+--decoder-layers 2 \
 --dropout 0.2 \
 --criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
@@ -18,7 +18,7 @@ fairseq-train indic-en-exp/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir checkpoints/baseline-4x-v1 \
+--save-dir checkpoints/4x-2-layers \
 --save-interval 1 \
 --keep-last-epochs 5 \
 --patience 5 \
@@ -30,5 +30,5 @@ fairseq-train indic-en-exp/final_bin \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0}' \
 --eval-bleu-detok moses \
---eval-bleu-remove-bpe \
+--eval-bleu-remove-bpe \    
 --wandb-project Indic-En-Distillation

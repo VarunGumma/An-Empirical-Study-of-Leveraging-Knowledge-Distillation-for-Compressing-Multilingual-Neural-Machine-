@@ -3,17 +3,12 @@ fairseq-train indic-en-exp/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 8192 \
---arch transformer_1x_v0 \
+--arch transformer_4x_v0 \
+--encoder-layers 3 \
+--decoder-layers 3 \
 --dropout 0.2 \
---task translation \
---kd-strategy global_multi_level \
---teacher-checkpoint-path checkpoints/indicTrans/checkpoint_best.pt \
---criterion label_smoothed_cross_entropy_with_kd \
+--criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
---alpha 1 \
---use-adaptive-kd-rates \
---kd-queue-size 50000 \
---kd-selection-temp 1.5 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
@@ -23,7 +18,7 @@ fairseq-train indic-en-exp/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir checkpoints/global-multi-adaptive-distil \
+--save-dir checkpoints/4x-3-layers \
 --save-interval 1 \
 --keep-last-epochs 5 \
 --patience 5 \
@@ -31,9 +26,9 @@ fairseq-train indic-en-exp/final_bin \
 --update-freq 1 \
 --distributed-world-size 8 \
 --num-workers 16 \
---wandb-project Indic-En-Distillation \
+--user-dir indicTrans/model_configs \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0}' \
 --eval-bleu-detok moses \
 --eval-bleu-remove-bpe \
---user-dir indicTrans/model_configs
+--wandb-project Indic-En-Distillation
