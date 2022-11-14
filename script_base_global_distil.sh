@@ -27,7 +27,7 @@ fairseq-train indic-en-exp/final_bin \
 --keep-last-epochs 5 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---memory-efficient-fp16 \
+--run-sanity-val-steps \
 --update-freq 1 \
 --distributed-world-size 4 \
 --num-workers 16 \

@@ -39,6 +39,6 @@ Once all the required models have been trained, their checkpoints will be availa
 cd indicTrans
 bash evaluate_benchmarks.sh <ckpt-folder-1> <ckpt-folder-2> <ckpt-folder-3> <ckpt-folder-3> ... 
 ```
-Once it has executed, all the required results will be available in the ```results/benchmark_scores.csv``` file. 
+This evaluation program requires 1 GPU and once it has executed, all the required results will be available in the ```results/benchmark_scores.csv``` file. 
 
 Make sure the ```results``` folder always contains the ```indicTrans.txt``` file which contains the standard benchmark scores of IndicTrans model (as given [here](https://github.com/AI4Bharat/indicTrans))
