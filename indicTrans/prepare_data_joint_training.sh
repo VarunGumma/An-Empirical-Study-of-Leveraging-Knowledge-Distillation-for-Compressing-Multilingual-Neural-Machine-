@@ -6,17 +6,17 @@ tgt_lang=$3
 vocab_type=${4:-"sep"} # sep or joint
 train_data_dir=${5:-"$exp_dir"}
 devtest_data_dir=${6:-"$exp_dir/devtest/all"}
+reuse_bpe_and_vocab=${7:-true}
+indicTrans_dir=${8:"../indic-en"}
+
 
 echo "Running experiment ${exp_dir} on ${src_lang} to ${tgt_lang}"
 
 train_processed_dir=$exp_dir/data
 devtest_processed_dir=$exp_dir/data
 
-out_data_dir=$exp_dir/final_bin
-
 mkdir -p $train_processed_dir
 mkdir -p $devtest_processed_dir
-mkdir -p $out_data_dir
 langs=(as bn hi gu kn ml mr or pa ta te)
 
 for lang in ${langs[@]};do
@@ -28,7 +28,7 @@ for lang in ${langs[@]};do
 
 	train_norm_dir=$exp_dir/norm/$src_lang-$tgt_lang
 	devtest_norm_dir=$exp_dir/norm/$src_lang-$tgt_lang
-	mkdir -p $train_norm_dir
+	mkdir -p $train_norm_dirindic-en-exp
 	mkdir -p $devtest_norm_dir
 
 	# train preprocessing
@@ -41,7 +41,6 @@ for lang in ${langs[@]};do
 	input_size=`python scripts/preprocess_translate.py $train_infname_src $train_outfname_src $src_lang true`
 	input_size=`python scripts/preprocess_translate.py $train_infname_tgt $train_outfname_tgt $tgt_lang true`
 	echo "Number of sentences in train: $input_size"
-
 	# dev preprocessing
 	dev_infname_src=$devtest_data_dir/en-${lang}/dev.$src_lang
 	dev_infname_tgt=$devtest_data_dir/en-${lang}/dev.$tgt_lang
@@ -51,7 +50,6 @@ for lang in ${langs[@]};do
 	input_size=`python scripts/preprocess_translate.py $dev_infname_src $dev_outfname_src $src_lang true`
 	input_size=`python scripts/preprocess_translate.py $dev_infname_tgt $dev_outfname_tgt $tgt_lang true`
 	echo "Number of sentences in dev: $input_size"
-
 	# test preprocessing
 	test_infname_src=$devtest_data_dir/en-${lang}/test.$src_lang
 	test_infname_tgt=$devtest_data_dir/en-${lang}/test.$tgt_lang
@@ -76,26 +74,27 @@ python scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_l
 python scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang 'dev'
 python scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang 'test'
 
-echo "Since we are performining distillation, we DO NOT learn a new bpe/vocab on the distilled data"
-echo "Re-using the old bpe/vocab trained on indicTrans"
 
-# echo "Learning bpe. This will take a very long time depending on the size of the dataset"
-# echo `date`
-# # learn bpe for preprocessed_train files
-# for creating joint_vocab use this
-# bash learn_bpe.sh $exp_dir
+if [ "$reuse_bpe_and_vocab" == false ]; then
+	echo "Learning bpe. This will take a very long time depending on the size of the dataset"
+	echo `date`
+	# learn bpe for preprocessed_train files
+	# for creating joint_vocab use this
+	# bash learn_bpe.sh $exp_dir
 
-# for sep vocab use this
-# bash learn_single_bpe.sh $exp_dir
-# check if vocab type is single
+	# for sep vocab use this
+	# bash learn_single_bpe.sh $exp_dir
+	# check if vocab type is single
+	if [[ "$vocab_type" == "sep" ]]
+	then
+	    bash learn_single_bpe.sh $exp_dir
+	else 
+	    bash learn_bpe.sh $exp_dir
+	fi
+else
+	cp -r  $indicTrans_dir/* $exp_dir
+	echo "reusing old bpe"
 
-# NO NEED TO LEARN BPE FOR DISTILLATION
-# if [[ "$vocab_type" == "sep" ]]
-# then
-#     bash learn_single_bpe.sh $exp_dir
-# else 
-#     bash learn_bpe.sh $exp_dir
-# fi
 
 echo `date`
 echo "Applying bpe"
@@ -114,7 +113,6 @@ fi
 mkdir -p $exp_dir/final
 # # this is only required for joint training
 # we apply language tags to the bpe segmented data
-#
 # if we are translating lang1 to lang2 then <lang1 line> will become __src__ <lang1> __tgt__ <lang2> <lang1 line>
 echo "Adding language tags"
 python scripts/add_joint_tags_translate.py $exp_dir 'train'
@@ -128,26 +126,34 @@ python scripts/add_joint_tags_translate.py $exp_dir 'test'
 # python scripts/remove_large_sentences.py $exp_dir/bpe/dev.SRC $exp_dir/bpe/dev.TGT $exp_dir/final/dev.SRC $exp_dir/final/dev.TGT
 # python scripts/remove_large_sentences.py $exp_dir/bpe/test.SRC $exp_dir/bpe/test.TGT $exp_dir/final/test.SRC $exp_dir/final/test.TGT
 
-# echo "Binarizing data"
-# Binarize the training data for using with fairseq train
-echo "Binarize using the existing vocab"
-# use cpu_count to get num_workers instead of setting it manually when running in different
-# instances
+# use cpu_count to get num_workers instead of setting it manually when running in different instances
 num_workers=`python -c "import multiprocessing; print(multiprocessing.cpu_count())"`
 
-data_dir=$exp_dir/final
-
-rm -rf $out_data_dir
-
-fairseq-preprocess \
-    --source-lang $src_lang \
-    --target-lang $tgt_lang \
-    --trainpref $data_dir/train \
-    --validpref $data_dir/dev \
-    --testpref $data_dir/test \
-    --destdir $out_data_dir \
-    --srcdict $exp_dir/dict.$src_lang.txt \
-    --tgtdict $exp_dir/dict.$tgt_lang.txt \
-    --workers $num_workers \
-    --thresholdtgt 5 \
-    --thresholdsrc 5
+# Binarize the training data for using with fairseq train
+if [ "$reuse_bpe_and_vocab" == true ]; then
+	echo "Binarizing using the existing vocab"
+	fairseq-preprocess \
+		--source-lang $src_lang \
+		--target-lang $tgt_lang \
+		--trainpref $exp_dir/final/train \
+		--validpref $exp_dir/final/dev \
+		--testpref $exp_dir/final/test \
+		--destdir $exp_dir/final_bin \
+		--srcdict $exp_dir/final_bin/dict.$src_lang.txt \
+		--tgtdict $exp_dir/final_bin/dict.$tgt_lang.txt \
+		--workers $num_workers \
+		--thresholdtgt 5 \
+		--thresholdsrc 5
+else
+	echo "Binarizing data"
+	fairseq-preprocess \
+		--source-lang $src_lang \
+		--target-lang $tgt_lang \
+		--trainpref $exp_dir/final/train \
+		--validpref $exp_dir/final/dev \
+		--testpref $exp_dir/final/test \
+		--destdir $exp_dir/final_bin \
+		--workers $num_workers \
+		--thresholdtgt 5 \
+		--thresholdsrc 5
+fi

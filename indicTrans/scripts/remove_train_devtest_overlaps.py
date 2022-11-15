@@ -1,14 +1,12 @@
 import os
 import string
-import shutil
-from itertools import permutations, chain
 from collections import defaultdict
 from tqdm import tqdm
 import sys
 
 INDIC_LANGS = ["as", "bn", "gu", "hi", "kn", "ml", "mr", "or", "pa", "ta", "te"]
 # we will be testing the overlaps of training data with all these benchmarks
-# benchmarks = ['wat2021-devtest', 'wat2020-devtest', 'wat-2018', 'wmt-news', 'ufal-ta', 'pmi']
+# benchmarks = ['wat2021-devtest', 'wat2020-devtest', 'wat-2018', 'wmt-news', 'ufal-ta', 'pmi', 'flores-101']
 
 
 def read_lines(path):
@@ -224,22 +222,15 @@ def remove_train_devtest_overlaps(train_dir, devtest_dir, many2many=False):
             src_overlaps_dict = {}
             tgt_overlaps_dict = {}
             for line in src_overlaps:
-                src_overlaps_dict[line] = 1
+                src_overlaps_dict[line] = True
             for line in tgt_overlaps:
-                tgt_overlaps_dict[line] = 1
+                tgt_overlaps_dict[line] = True
 
             # loop to remove the ovelapped data
-            idx = -1
-            for src_line_norm, tgt_line_norm in tqdm(
-                zip(src_train_normalized, tgt_train_normalized), total=len_before
-            ):
-                idx += 1
-                if src_overlaps_dict.get(src_line_norm, None):
-                    continue
-                if tgt_overlaps_dict.get(tgt_line_norm, None):
-                    continue
-                new_src_train.append(src_train[idx])
-                new_tgt_train.append(tgt_train[idx])
+            for (idx, (src_line_norm, tgt_line_norm)) in tqdm(enumerate(zip(src_train_normalized, tgt_train_normalized)), total=len_before):
+                if not src_overlaps_dict.get(src_line_norm, False) and not tgt_overlaps_dict.get(tgt_line_norm, False):
+                    new_src_train.append(src_train[idx])
+                    new_tgt_train.append(tgt_train[idx])
 
             len_after = len(new_src_train)
             print(
