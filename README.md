@@ -16,7 +16,7 @@ pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cud
 
 It is recommended you use ```Python 3.10+``` and the latest version of [Pytorch](https://pytorch.org/get-started/locally/) for best results.
 
-The samanantar binarized data can be found [here](https://drive.google.com/file/d/1ZKyLzN4mUzG5Yy8GdPj02HXDD7k53tj2/view?usp=share_link). Unzip it in the ```Indic-En``` directory and you will get two folders, namely ```indic-en-exp``` and ```indic-en``` which contain the binarized distilled and original Samanantar data respectively. The ```indic-en``` directory also contains the best checkpoint of IndicTrans. 
+We have created an _incrementally distilled_ version of samanantar and it can be found [here](https://drive.google.com/file/d/1RH-37irLEHDFRkjtzw67XKGyLWW_fA_M/view?usp=share_link). It is _incremental_ in the sense that the data contains a random X% of original Samanantar data and 100-X% distilled data in it and vary X from 0 (completely distilled) to 100% (completely original). In the zip folder given above, the ```v2_X_binarized``` directory contains the Samananatar data with X% originality.
 
 Before training, create a ```checkpoints``` folder in the ```Indic-En``` directory. This will hold all checkpoints of the all the trained models.
 
@@ -36,7 +36,6 @@ we use ```--activation-fn=gelu```, ```--encoder-normalize-before```, ```--decode
 ### Evaluation
 Once all the required models have been trained, their checkpoints will be available in the ```checkpoints``` directory. You can use the following commands to generate a ```csv``` of benchmark scores.
 ```
-cd indicTrans
 bash evaluate_benchmarks.sh <ckpt-folder-1> <ckpt-folder-2> <ckpt-folder-3> <ckpt-folder-3> ... 
 ```
 This evaluation program requires 1 GPU and once it has executed, all the required results will be available in the ```results/benchmark_scores.csv``` file. 
