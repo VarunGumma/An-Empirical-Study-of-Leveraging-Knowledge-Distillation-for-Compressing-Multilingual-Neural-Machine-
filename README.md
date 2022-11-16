@@ -24,7 +24,7 @@ Before training, create a ```checkpoints``` folder in the ```Indic-En``` directo
 ### Training
 Each model being trained is programmed to use 8 GPUs and 16 CPUs. In case required you can change these in the scripts by modifying the ```--distributed-world-size``` and ```--num-workers``` arguments. After modification make sure that the global batch size ```(distributed_world_size * max_tokens * update_freq)``` is 64K. Since ```fp16``` mixed-precision is prone to underflow during distillation or training deeper models, we recommend using ```fp32``` itself.
 
-All the files which contain the term ```distil``` perform ```word + seq level``` distillation (training a smaller model using distilled data and teacher distibution signal). 
+All the files present in the ```training_scripts``` folder which contain the term ```distil``` perform ```word + seq level``` distillation (training a smaller model using distilled data and teacher distibution signal). 
 
 Files which contain the term ```train``` perform ```seq level``` distillation (training a smaller model using distilled data only)
 
