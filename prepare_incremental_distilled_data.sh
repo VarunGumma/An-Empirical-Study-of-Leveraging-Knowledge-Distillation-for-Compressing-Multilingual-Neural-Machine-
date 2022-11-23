@@ -17,7 +17,6 @@ for idx in 0 10 20 30 40 50 60 70 80 90 100; do
     mv $data_dir/v2_${idx}_binarized/final_bin/* $data_dir/v2_${idx}_binarized/
     rm -rf $data_dir/v2_${idx}_binarized/vocab $data_dir/v2_${idx}_binarized/final_bin
     rm $data_dir/v2_${idx}_binarized/preprocess.log
-    echo -e "********************************************************************\n"
 done 
 
 tar -czvf $data_bin_dir/incrementally_distilled_samanantar_binarzed_data.tar.gz $data_bin_dir/*

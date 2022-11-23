@@ -12,9 +12,9 @@ mkdir $exp_dir
 echo -e "[INFO]\tremoving overlap between train and devtest"
 python3 scripts/remove_train_devtest_overlaps.py $train_dir $devtest_dir
 
-if [ ! -d "$devtest_dir/all" ]; then
+if [ ! -d $devtest_dir/all ]; then
     echo -e "[INFO]\tmerging devtest files"
-    python3 merge_benchmarks.py $devtest_dir
+    bash merge_benchmarks.sh $devtest_dir
 fi 
 
 echo -e "[INFO]\tcopying data"
@@ -22,7 +22,7 @@ cp -r $train_dir/* $exp_dir
 mkdir -p $exp_dir/devtest
 cp -r $devtest_dir/all $exp_dir/devtest/
 
-echo -e "[INFO]\tpreparing data. It is recommened to use a multicore processor for this."
+echo -e "[INFO]\tpreparing data. It is recommened to use a multicore processor or a GPU for this."
 bash prepare_data_joint_training.sh $exp_dir indic en sep $exp_dir $exp_dir/devtest/all true indic-en
 
 echo -e "[INFO]\tcleaning unnecessary files from exp dir to save space"
