@@ -3,8 +3,8 @@
 fairseq-train $1/v2_0_binarized:$1/v2_10_binarized:$1/v2_20_binarized:$1/v2_30_binarized:$1/v2_40_binarized:$1/v2_50_binarized:$1/v2_60_binarized:$1/v2_70_binarized:$1/v2_80_binarized:$1/v2_90_binarized:$1/v2_100_binarized \
 --max-source-positions 210 \
 --max-target-positions 210 \
---max-update 1000000 \
---max-tokens 1536 \
+--max-epoch 11 \
+--max-tokens 8192 \
 --arch transformer_4x_v0 \
 --encoder-recurrent-stacking 6 \
 --decoder-recurrent-stacking 6 \
@@ -20,15 +20,14 @@ fairseq-train $1/v2_0_binarized:$1/v2_10_binarized:$1/v2_20_binarized:$1/v2_30_b
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../checkpoints/4x-recurrent-stacking \
+--save-dir ../checkpoints/4x-recurrent-stacking-incremental \
 --save-interval 1 \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --run-sanity-val-steps \
 --update-freq 1 \
---distributed-world-size 1 \
---memory-efficient-fp16 \
+--distributed-world-size 8 \
 --num-workers 16 \
 --user-dir ../model_configs \
 --eval-bleu \

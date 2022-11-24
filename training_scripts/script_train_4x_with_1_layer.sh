@@ -1,6 +1,6 @@
 #/bin/bash
 
-fairseq-train $1/v2_0_binarized/final_bin \
+fairseq-train $1/v2_0_binarized \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
