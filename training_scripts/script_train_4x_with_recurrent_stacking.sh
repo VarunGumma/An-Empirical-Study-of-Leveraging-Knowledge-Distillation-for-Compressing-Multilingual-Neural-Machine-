@@ -4,7 +4,7 @@ fairseq-train $1/v2_0_binarized \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 8192 \
+--max-tokens 16384 \
 --arch transformer_4x_v0 \
 --encoder-recurrent-stacking 6 \
 --decoder-recurrent-stacking 6 \
@@ -22,16 +22,16 @@ fairseq-train $1/v2_0_binarized \
 --warmup-updates 4000 \
 --save-dir ../checkpoints/4x-recurrent-stacking \
 --save-interval 1 \
---keep-last-epochs 5 \
+--keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---run-sanity-val-steps \
 --update-freq 1 \
---distributed-world-size 8 \
---num-workers 16 \
+--distributed-world-size 4 \
+--num-workers 128 \
 --user-dir ../model_configs \
+--fp16 \
 --eval-bleu \
---eval-bleu-args '{"beam": 5, "lenpen": 1.0}' \
+--eval-bleu-args "{\"beam\": 5, \"lenpen\": 1.0, \"max_len_a\": 1.2, \"max_len_b\": 10}" \
 --eval-bleu-detok moses \
 --eval-bleu-remove-bpe \
 --wandb-project Indic-En-Distillation

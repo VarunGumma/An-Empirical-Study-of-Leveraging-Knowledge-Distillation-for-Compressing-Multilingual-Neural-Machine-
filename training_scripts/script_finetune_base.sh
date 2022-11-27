@@ -1,32 +1,38 @@
 #/bin/bash
 
-fairseq-train $1/v2_0_binarized \
+fairseq-train $1/v2_100_binarized \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 16384 \
+--save-interval 1 \
 --arch transformer_1x_v0 \
---dropout 0.2 \
 --criterion label_smoothed_cross_entropy \
---label-smoothing 0.1 \
 --source-lang SRC \
---target-lang TGT \
 --lr-scheduler inverse_sqrt \
+--target-lang TGT \
+--label-smoothing 0.1 \
 --optimizer adam \
 --adam-betas "(0.9, 0.98)" \
 --clip-norm 1.0 \
 --warmup-init-lr 1e-07 \
---lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../checkpoints/base_with_best_bleu \
---save-interval 1 \
+--dropout 0.2 \
+--save-dir ../checkpoints/baseline_with_best_bleu_finetuned_reset_optim \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
+--user-dir ../model_configs \
 --update-freq 1 \
 --distributed-world-size 4 \
---num-workers 16 \
---user-dir ../model_configs \
+--max-tokens 6144 \
+--lr 3e-5 \
+--restore-file ../checkpoints/base_with_best_bleu/checkpoint_best.pt \
+--reset-lr-scheduler \
+--reset-meters \
+--reset-dataloader \
+--reset-optimizer \
+--num-workers 128 \
+--wandb-project Indic-En-Distillation \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
@@ -34,5 +40,4 @@ fairseq-train $1/v2_0_binarized \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
---memory-efficient-fp16 \
---wandb-project Indic-En-Distillation \
+--memory-efficient-fp16

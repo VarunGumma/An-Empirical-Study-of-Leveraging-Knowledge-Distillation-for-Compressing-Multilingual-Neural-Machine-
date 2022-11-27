@@ -4,10 +4,8 @@ fairseq-train $1/v2_0_binarized:$1/v2_10_binarized:$1/v2_20_binarized:$1/v2_30_b
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-epoch 11 \
---max-tokens 8192 \
---arch transformer_4x_v0 \
---encoder-recurrent-stacking 6 \
---decoder-recurrent-stacking 6 \
+--max-tokens 16384 \
+--arch transformer_1x_v0 \
 --dropout 0.2 \
 --criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
@@ -20,18 +18,21 @@ fairseq-train $1/v2_0_binarized:$1/v2_10_binarized:$1/v2_20_binarized:$1/v2_30_b
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../checkpoints/4x-recurrent-stacking-incremental \
+--save-dir ../checkpoints/base_with_best_bleu_incremental_v2 \
 --save-interval 1 \
 --keep-last-epochs 1 \
---patience 5 \
+--patience 11 \
 --skip-invalid-size-inputs-valid-test \
---run-sanity-val-steps \
 --update-freq 1 \
---distributed-world-size 8 \
---num-workers 16 \
+--distributed-world-size 4 \
 --user-dir ../model_configs \
+--num-workers 32 \
 --eval-bleu \
---eval-bleu-args '{"beam": 5, "lenpen": 1.0}' \
+--eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
 --eval-bleu-remove-bpe \
+--eval-bleu-print-samples \
+--best-checkpoint-metric bleu \
+--maximize-best-checkpoint-metric \
+--memory-efficient-fp16 \
 --wandb-project Indic-En-Distillation

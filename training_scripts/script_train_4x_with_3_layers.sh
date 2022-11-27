@@ -25,7 +25,6 @@ fairseq-train $1/v2_0_binarized \
 --keep-last-epochs 5 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---run-sanity-val-steps \
 --update-freq 1 \
 --distributed-world-size 8 \
 --num-workers 16 \
