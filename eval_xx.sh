@@ -1,10 +1,10 @@
 echo ">>>>> FLORES-101"
 for lang in as bn gu hi kn ml mr or pa ta te; do
     bash joint_translate_xx.sh \
-    ../flores101_dataset/en-$lang/dev.$lang \
-    ../flores101_dataset/en-$lang/outfile.en $lang en \
-    ../indic-en/model \
-    ../indic-en \
-    ~/Downloads/flores101_dataset/en-$lang/enc_states
+    ~/MTP/flores101_dataset/en-$lang/dev.$lang \
+    ~/MTP/flores101_dataset/en-$lang/outfile.en $lang en \
+    ~/MTP/indic-en/model \
+    ~/MTP/indic-en \
+    ~/MTP/flores101_dataset/en-$lang/encoder_states
 done
 echo -e "<<<<< FLORES-101\n"

@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/home/varun/miniconda3/envs/itdv2/bin/fairseq-interactive", line 5, in <module>
+    from fairseq_cli.interactive import cli_main
+  File "/home/varun/fairseq/fairseq_cli/interactive.py", line 23, in <module>
+    from fairseq import checkpoint_utils, distributed_utils, options, tasks, utils
+  File "/home/varun/fairseq/fairseq/__init__.py", line 20, in <module>
+    from fairseq.distributed import utils as distributed_utils
+  File "/home/varun/fairseq/fairseq/distributed/__init__.py", line 7, in <module>
+    from .fully_sharded_data_parallel import (
+  File "/home/varun/fairseq/fairseq/distributed/fully_sharded_data_parallel.py", line 10, in <module>
+    from fairseq.dataclass.configs import DistributedTrainingConfig
+  File "/home/varun/fairseq/fairseq/dataclass/__init__.py", line 6, in <module>
+    from .configs import FairseqDataclass
+  File "/home/varun/fairseq/fairseq/dataclass/configs.py", line 260, in <module>
+    class DistributedTrainingConfig(FairseqDataclass):
+  File "/home/varun/fairseq/fairseq/dataclass/configs.py", line 262, in DistributedTrainingConfig
+    default=max(1, torch.cuda.device_count()),
+  File "/home/varun/miniconda3/envs/itdv2/lib/python3.10/site-packages/torch/cuda/__init__.py", line 528, in device_count
+    nvml_count = _device_count_nvml()
+  File "/home/varun/miniconda3/envs/itdv2/lib/python3.10/site-packages/torch/cuda/__init__.py", line 514, in _device_count_nvml
+    raw_cnt = _raw_device_count_nvml()
+  File "/home/varun/miniconda3/envs/itdv2/lib/python3.10/site-packages/torch/cuda/__init__.py", line 495, in _raw_device_count_nvml
+    rc = nvml_h.nvmlInit()
+KeyboardInterrupt
