@@ -40,17 +40,19 @@ echo -e "[INFO]\tDecoding"
 src_input_bpe_fname=$outfname.bpe
 tgt_output_fname=$outfname
 
+num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count())"`
+
 fairseq-interactive $data_bin_dir \
     -s $SRC_PREFIX -t $TGT_PREFIX \
     --distributed-world-size 1 \
     --path $model_path \
-    --batch-size 32 \
+    --batch-size 256 \
     --buffer-size 2500 \
     --beam 5 \
     --remove-bpe \
     --skip-invalid-size-inputs-valid-test \
     --input $src_input_bpe_fname \
-    --num-workers 16 \
+    --num-workers $num_workers \
     --user-dir model_configs \
     --path-to-save-encoder-states $encoder_states_save_path \
     --convert-encoder-states-to-numpy \
@@ -60,6 +62,6 @@ echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.
 python3 scripts/postprocess_translate.py $tgt_output_fname.log $tgt_output_fname $input_size $tgt_lang true
 
-rm $outfname._bpe $outfname.bpe $outfname.norm 
+rm $outfname._bpe $outfname.bpe $outfname.norm $outfname.log $outfname
 
 echo -e "[INFO]\tTranslation completed"

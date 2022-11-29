@@ -2,4 +2,5 @@ checkpoints/
 wandb/
 samanantar_data/
 benchmarks/
+.ipynb_checkpoints/
 *.out
