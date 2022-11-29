@@ -6,7 +6,7 @@ src_lang=$3
 tgt_lang=$4
 ckpt_dir=$5
 exp_dir=$6
-ref_fname=$7
+encoder_states_save_path=$7
 
 SRC_PREFIX='SRC'
 TGT_PREFIX='TGT'
@@ -50,8 +50,9 @@ fairseq-interactive $data_bin_dir \
     --remove-bpe \
     --skip-invalid-size-inputs-valid-test \
     --input $src_input_bpe_fname \
-    --num-workers 64 \
+    --num-workers 16 \
     --user-dir model_configs \
+    --experimental-encoder-states-save-path $encoder_states_save_path \
     --memory-efficient-fp16  >  $tgt_output_fname.log 2>&1
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
