@@ -1,6 +1,14 @@
-#/bin/bash
+#!/bin/bash
 
-fairseq-train $1/v2_0_HQ_binarized/final_bin \
+#SBATCH --nodes 1
+#SBATCH --ntasks-per-node 1
+#SBATCH --cpus-per-task 64
+#SBATCH --gpus-per-task 4
+#SBATCH --partition ai4bp
+#SBATCH --time=07-00:00:00
+#SBATCH --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090
+
+srun fairseq-train ../../data_bin_dir/v2_0_HQ_binarized/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
