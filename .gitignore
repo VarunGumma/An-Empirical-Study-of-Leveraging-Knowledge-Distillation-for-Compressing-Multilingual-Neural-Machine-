@@ -3,3 +3,4 @@ wandb/
 samanantar_data/
 benchmarks/
 *.out
+training_scripts/start_interactive.sh

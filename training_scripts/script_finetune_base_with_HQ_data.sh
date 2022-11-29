@@ -1,6 +1,6 @@
 #/bin/bash
 
-fairseq-train $1/v2_100_binarized \
+fairseq-train $1/v2_0_HQ_binarized/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -15,20 +15,22 @@ fairseq-train $1/v2_100_binarized \
 --adam-betas "(0.9, 0.98)" \
 --clip-norm 1.0 \
 --warmup-init-lr 1e-07 \
---lr 3e-5 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir ../checkpoints/baseline_with_best_bleu_finetuned_no_reset_optim \
+--save-dir ../checkpoints/baseline_with_best_bleu_finetuned_on_HQ_data \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --user-dir ../model_configs \
 --update-freq 1 \
 --distributed-world-size 4 \
---max-tokens 6144 \
+--max-tokens 8192 \
+--lr 3e-5 \
 --restore-file ../checkpoints/base_with_best_bleu/checkpoint_best.pt \
+--reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
+--reset-optimizer \
 --num-workers 64 \
 --wandb-project Indic-En-Distillation \
 --eval-bleu \
