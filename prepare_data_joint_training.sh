@@ -73,7 +73,6 @@ python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang 'dev'
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang 'test'
 
-
 if [ "$reuse_bpe_vocab" == false ]; then
 	echo "Learning bpe. This will take a very long time depending on the size of the dataset"
 	echo `date`
@@ -84,7 +83,11 @@ if [ "$reuse_bpe_vocab" == false ]; then
 	fi
 else
 	echo "reusing old bpe"
-	cp -r  $vocab_bpe_dir/* $exp_dir
+	mkdir $exp_dir/final_bin
+	# copy the old vocab
+	cp -r $vocab_bpe_dir/vocab $exp_dir
+	# copy the old dictionaries into the exp_dir/final_bin
+	cp -r  $vocab_bpe_dir/final_bin/dict.* $exp_dir/final_bin
 fi
 
 

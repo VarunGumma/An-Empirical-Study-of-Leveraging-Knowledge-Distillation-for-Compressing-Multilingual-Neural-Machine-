@@ -2,5 +2,6 @@ checkpoints/
 wandb/
 samanantar_data/
 benchmarks/
+.ipynb_checkpoints/
 *.out
 training_scripts/start_interactive.sh
