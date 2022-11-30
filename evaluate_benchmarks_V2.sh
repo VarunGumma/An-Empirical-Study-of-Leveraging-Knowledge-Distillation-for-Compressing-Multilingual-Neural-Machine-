@@ -20,7 +20,6 @@ for lang in bn gu hi kn ml mr or pa ta te; do
 done
 echo -e  "<<<<< WAT2021\n"
 
-# wat2020
 echo ">>>>> WAT2020"
 for lang in bn gu hi ml mr ta te; do
     bash joint_translate_xx.sh \
