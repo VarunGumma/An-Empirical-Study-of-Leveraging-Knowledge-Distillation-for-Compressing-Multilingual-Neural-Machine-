@@ -1,6 +1,6 @@
 #/bin/bash
 
-fairseq-train ../../data_bin_dir/v2_0_binarized/final_bin:../../data_bin_dir/v2_10_binarized/final_bin:../../data_bin_dir/v2_20_binarized/final_bin:../../data_bin_dir/v2_30_binarized/final_bin:../../data_bin_dir/v2_40_binarized/final_bin:../../data_bin_dir/v2_50_binarized/final_bin:../../data_bin_dir/v2_60_binarized/final_bin:../../data_bin_dir/v2_70_binarized/final_bin:../../data_bin_dir/v2_80_binarized/final_bin:../../data_bin_dir/v2_90_binarized/final_bin:../../data_bin_dir/v2_100_binarized/final_bin \
+fairseq-train $1/v2_0_binarized/final_bin:$1/v2_10_binarized/final_bin:$1/v2_20_binarized/final_bin:$1/v2_30_binarized/final_bin:$1/v2_40_binarized/final_bin:$1/v2_50_binarized/final_bin:$1/v2_60_binarized/final_bin:$1/v2_70_binarized/final_bin:$1/v2_80_binarized/final_bin:$1/v2_90_binarized/final_bin:$1/v2_100_binarized/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-epoch 11 \
@@ -18,7 +18,7 @@ fairseq-train ../../data_bin_dir/v2_0_binarized/final_bin:../../data_bin_dir/v2_
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../checkpoints/base_with_best_bleu_incremental_v2 \
+--save-dir ../checkpoints/base_with_best_bleu_incremental \
 --save-interval 1 \
 --keep-last-epochs 1 \
 --patience 11 \
@@ -26,7 +26,7 @@ fairseq-train ../../data_bin_dir/v2_0_binarized/final_bin:../../data_bin_dir/v2_
 --update-freq 1 \
 --distributed-world-size 4 \
 --user-dir ../model_configs \
---num-workers 32 \
+--num-workers 64 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \

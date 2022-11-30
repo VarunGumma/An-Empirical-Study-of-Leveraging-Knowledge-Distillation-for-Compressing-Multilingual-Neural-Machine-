@@ -46,7 +46,7 @@ fairseq-interactive $data_bin_dir \
     -s $SRC_PREFIX -t $TGT_PREFIX \
     --distributed-world-size 1 \
     --path $model_path \
-    --batch-size 256 \
+    --batch-size 1024 \
     --buffer-size 2500 \
     --beam 5 \
     --remove-bpe \

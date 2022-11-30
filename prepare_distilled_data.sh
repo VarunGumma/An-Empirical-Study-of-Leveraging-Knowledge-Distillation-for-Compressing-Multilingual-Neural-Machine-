@@ -32,16 +32,7 @@ rm -rf $exp_dir/bpe \
     $exp_dir/final \
     $exp_dir/data \
     $exp_dir/norm \
-    $exp_dir/en-bn \
-    $exp_dir/en-hi \
-    $exp_dir/en-ml \
-    $exp_dir/en-or \
-    $exp_dir/en-ta \
-    $exp_dir/en-as \
-    $exp_dir/en-gu \
-    $exp_dir/en-kn \
-    $exp_dir/en-mr \
-    $exp_dir/en-pa \
-    $exp_dir/en-te
+    $exp_dir/en-*\
+    $devtest_dir/all
 
 echo -e "[INFO]\tcompleted!"
