@@ -3,7 +3,7 @@ import logging
 import torch
 from os import listdir
 from tqdm import tqdm
-from sentence_transformers import SentenceTransformer, util
+from sentence_transformers import SentenceTransformer
 logging.basicConfig(level=logging.DEBUG)
 
 @torch.no_grad()
@@ -22,8 +22,8 @@ def main(args):
 
         while idx < L:
             # calculate the encoded representation for both source and target sentences
-            src_embeds = model.encode(src_sents[idx : idx + args.batch_size], batch_size=1024, device='cuda', normalize_embeddings=True, convert_to_tensor=True)
-            tgt_embeds = model.encode(tgt_sents[idx : idx + args.batch_size], batch_size=1024, device='cuda', normalize_embeddings=True, convert_to_tensor=True)
+            src_embeds = model.encode(src_sents[idx : idx + args.batch_size], batch_size=1536, device='cuda', normalize_embeddings=True, convert_to_tensor=True)
+            tgt_embeds = model.encode(tgt_sents[idx : idx + args.batch_size], batch_size=1536, device='cuda', normalize_embeddings=True, convert_to_tensor=True)
             # calculate the cosine similarity
             cos_sim.extend(torch.mul(src_embeds, tgt_embeds).sum(1).detach().tolist())
             logging.info(f" - scores calculated for {len(cos_sim)} samples")
