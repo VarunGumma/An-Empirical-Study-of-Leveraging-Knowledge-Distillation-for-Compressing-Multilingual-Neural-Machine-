@@ -33,6 +33,7 @@ fairseq-train ../../data_bin_dir/v2_0_binarized/final_bin \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
+--validate-interval-updates 10000 \
 --update-freq 1 \
 --distributed-world-size 4 \
 --num-workers 64 \

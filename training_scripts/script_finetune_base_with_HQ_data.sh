@@ -25,10 +25,11 @@ srun fairseq-train ../../data_bin_dir/v2_0_HQ_binarized/final_bin \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir ../checkpoints/baseline_with_best_bleu_finetuned_on_HQ_data \
+--save-dir ../checkpoints/baseline_with_best_bleu_finetuned_on_HQ_data_V2 \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
+--validate-interval-updates 10000 \
 --user-dir ../model_configs \
 --update-freq 1 \
 --distributed-world-size 4 \

@@ -23,6 +23,7 @@ fairseq-train $1/v2_0_binarized/final_bin:$1/v2_10_binarized/final_bin:$1/v2_20_
 --keep-last-epochs 1 \
 --patience 11 \
 --skip-invalid-size-inputs-valid-test \
+--validate-interval-updates 10000 \
 --update-freq 1 \
 --distributed-world-size 4 \
 --user-dir ../model_configs \

@@ -22,10 +22,10 @@ fairseq-train $1/v2_0_binarized/final_bin \
 --warmup-updates 4000 \
 --save-dir ../checkpoints/4x_1_layer_with_best_bleu \
 --save-interval 1 \
---keep-last-epochs 5 \
+--keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---run-sanity-val-steps \
+--validate-interval-updates 10000 \
 --update-freq 1 \
 --distributed-world-size 8 \
 --num-workers 16 \
