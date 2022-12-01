@@ -1,32 +1,21 @@
-echo ">>>>> FLORES-101"
-for lang in as bn gu hi kn ml mr or pa ta te; do
-    bash joint_translate_xx.sh \
-    ~/benchmarks/flores101_dataset/en-$lang/dev.$lang \
-    ~/benchmarks/flores101_dataset/en-$lang/outfile.en $lang en \
-    ~/indicTrans_ckpts/indic-en/model \
-    ~/indicTrans_ckpts/indic-en \
-    ~/benchmarks/flores101_dataset/en-$lang/encoder_states
-done
-echo -e "<<<<< FLORES-101\n"
+#!/bin/bash
+echo `date`
+devtest_base_dir=$1
+ckpt_base_dir=$2
+src_lang=$3
+tgt_lang=$4
 
-echo ">>>>> WAT2021"
-for lang in bn gu hi kn ml mr or pa ta te; do
-    bash joint_translate_xx.sh \
-    ~/benchmarks/wat2021-devtest/en-$lang/dev.$lang \
-    ~/benchmarks/wat2021-devtest/en-$lang/outfile.en $lang en \
-    ~/indicTrans_ckpts/indic-en/model \
-    ~/indicTrans_ckpts/indic-en \
-    ~/benchmarks/wat2021-devtest/en-$lang/encoder_states
+for dir in flores101_dataset wat2021-devtest wat2020-devtest; do
+    echo ">>>>> ${dir}"
+    for lang_pair in `ls $devtest_base_dir/$dir`; do
+        path=$devtest_base_dir/$dir/$lang_pair
+        IFS='-' read -ra temp <<< $lang_pair
+        if [ $src_lang == en ]; then
+            tgt_lang=${temp[1]}
+        else
+            src_lang=${temp[1]}
+        fi
+        bash joint_translate_V2.sh $path/dev.$src_lang $path/outfile.$tgt_lang $src_lang $tgt_lang $ckpt_base_dir/model $ckpt_base_dir $path/indic_en_encoder_states
+    done 
+    echo -e "<<<<< ${dir}\n"
 done
-echo -e  "<<<<< WAT2021\n"
-
-echo ">>>>> WAT2020"
-for lang in bn gu hi ml mr ta te; do
-    bash joint_translate_xx.sh \
-    ~/benchmarks/wat2020-devtest/en-$lang/dev.$lang \
-    ~/benchmarks/wat2020-devtest/en-$lang/outfile.en $lang en \
-    ~/indicTrans_ckpts/indic-en/model \
-    ~/indicTrans_ckpts/indic-en \
-    ~/benchmarks/wat2020-devtest/en-$lang/encoder_states
-done 
-echo -e "<<<<< WAT2020\n"
