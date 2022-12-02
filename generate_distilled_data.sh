@@ -7,6 +7,9 @@ src_lang=$3
 tgt_lang=$4
 exp_dir=$5
 
+echo "removing previous distillation data directory (if it exists)"
+rm -rf $distilled_data_dir
+
 for dir in `ls $original_data_dir`; do
     echo "working on ${dir}"
     mkdir -p $distilled_data_dir/$dir
