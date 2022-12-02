@@ -5,4 +5,4 @@ benchmarks/
 .ipynb_checkpoints/
 *.out
 data_bin_dir/
-training_scripts/start_interactive.sh
+start_interactive.sh
