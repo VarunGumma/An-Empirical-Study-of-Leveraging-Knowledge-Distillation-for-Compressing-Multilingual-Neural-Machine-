@@ -4,6 +4,6 @@ samanantar_data/
 benchmarks/
 .ipynb_checkpoints/
 *.out
-data_bin_dir/
+data_dir/
 start_interactive.sh
 model_configs/__pycache__/
