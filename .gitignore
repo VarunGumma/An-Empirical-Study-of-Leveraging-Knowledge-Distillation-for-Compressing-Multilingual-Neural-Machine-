@@ -6,3 +6,4 @@ benchmarks/
 *.out
 data_bin_dir/
 start_interactive.sh
+model_configs/__pycache__/
