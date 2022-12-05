@@ -1,9 +1,8 @@
 checkpoints/
 wandb/
-samanantar_data/
 benchmarks/
 .ipynb_checkpoints/
 *.out
 data_dir/
-start_interactive.sh
-model_configs/__pycache__/
+training_scripts/start_interactive.sh
+**/__pycache__/
