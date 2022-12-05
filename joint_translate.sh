@@ -44,10 +44,10 @@ num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count
 
 fairseq-interactive $data_bin_dir \
     -s $SRC_PREFIX -t $TGT_PREFIX \
-    --distributed-world-size 1 \
+    --distributed-world-size 2 \
     --path $model_path \
-    --batch-size 1000 \
-    --buffer-size 1024 \
+    --batch-size 512 \
+    --buffer-size 1536 \
     --beam 5 \
     --remove-bpe \
     --skip-invalid-size-inputs-valid-test \

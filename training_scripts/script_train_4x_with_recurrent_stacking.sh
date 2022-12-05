@@ -2,17 +2,17 @@
 
 #SBATCH --nodes 1
 #SBATCH --ntasks-per-node 1
-#SBATCH --cpus-per-task 64
+#SBATCH --cpus-per-task 16
 #SBATCH --gpus-per-task 4
 #SBATCH --partition ai4bp
 #SBATCH --time=07-00:00:00
 #SBATCH --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090
 
-fairseq-train ../../data_bin_dir/v2_0_binarized/final_bin \
+srun fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 16384 \
+--max-tokens 8192 \
 --arch transformer_4x_v0 \
 --encoder-recurrent-stacking 6 \
 --decoder-recurrent-stacking 6 \
@@ -34,9 +34,9 @@ fairseq-train ../../data_bin_dir/v2_0_binarized/final_bin \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --validate-interval-updates 10000 \
---update-freq 1 \
+--update-freq 2 \
 --distributed-world-size 4 \
---num-workers 64 \
+--num-workers 16 \
 --user-dir ../model_configs \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \

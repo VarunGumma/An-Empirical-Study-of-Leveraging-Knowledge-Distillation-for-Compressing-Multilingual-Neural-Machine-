@@ -26,8 +26,8 @@ fairseq-train $1/v2_0_binarized/final_bin \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --validate-interval-updates 10000 \
---update-freq 1 \
---distributed-world-size 8 \
+--update-freq 2 \
+--distributed-world-size 4 \
 --num-workers 16 \
 --user-dir ../model_configs \
 --eval-bleu \
@@ -36,5 +36,6 @@ fairseq-train $1/v2_0_binarized/final_bin \
 --eval-bleu-remove-bpe \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
---maximize-best-checkpoint-metric \   
---wandb-project Indic-En-Distillation
+--maximize-best-checkpoint-metric \
+--wandb-project Indic-En-Distillation \
+--memory-efficient-fp16

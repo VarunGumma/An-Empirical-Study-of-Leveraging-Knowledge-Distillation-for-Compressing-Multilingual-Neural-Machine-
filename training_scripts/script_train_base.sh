@@ -1,6 +1,14 @@
-#/bin/bash
+#!/bin/bash
 
-fairseq-train ../../data_bin_dir/v2_0_binarized/final_bin \
+#SBATCH --nodes 1
+#SBATCH --ntasks-per-node 1
+#SBATCH --cpus-per-task 16
+#SBATCH --gpus-per-task 4
+#SBATCH --partition ai4bp
+#SBATCH --time=07-00:00:00
+#SBATCH --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090
+
+srun fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -18,7 +26,7 @@ fairseq-train ../../data_bin_dir/v2_0_binarized/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../checkpoints/base_with_best_bleu \
+--save-dir ../checkpoints/base_with_best_bleu_V2 \
 --save-interval 1 \
 --keep-last-epochs 1 \
 --patience 5 \
@@ -29,7 +37,7 @@ fairseq-train ../../data_bin_dir/v2_0_binarized/final_bin \
 --num-workers 16 \
 --user-dir ../model_configs \
 --eval-bleu \
---eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
+--eval-bleu-args '{"beam": 1, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
 --eval-bleu-remove-bpe \
 --eval-bleu-print-samples \
