@@ -49,6 +49,8 @@ fairseq-interactive $data_bin_dir \
     --batch-size 64 \
     --buffer-size 256 \
     --beam 5 \
+    --max-len-a 1.2 \
+    --max-len-b 10 \
     --remove-bpe \
     --skip-invalid-size-inputs-valid-test \
     --input $src_input_bpe_fname \

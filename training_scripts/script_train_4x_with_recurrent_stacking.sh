@@ -13,9 +13,7 @@ srun fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 8192 \
---arch transformer_4x_v0 \
---encoder-recurrent-stacking 6 \
---decoder-recurrent-stacking 6 \
+--arch transformer_4x_rs \
 --dropout 0.2 \
 --criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \

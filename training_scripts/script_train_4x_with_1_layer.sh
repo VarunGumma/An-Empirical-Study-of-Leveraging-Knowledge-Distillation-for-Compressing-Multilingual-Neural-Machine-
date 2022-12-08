@@ -38,4 +38,3 @@ fairseq-train $1/v2_0_binarized/final_bin \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
 --wandb-project Indic-En-Distillation \
---memory-efficient-fp16
