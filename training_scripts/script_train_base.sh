@@ -26,7 +26,7 @@ srun fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../checkpoints/base_with_best_bleu_V2 \
+--save-dir ../checkpoints/base_with_best_bleu \
 --save-interval 1 \
 --keep-last-epochs 1 \
 --patience 5 \
@@ -37,7 +37,7 @@ srun fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --num-workers 16 \
 --user-dir ../model_configs \
 --eval-bleu \
---eval-bleu-args '{"beam": 1, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
+--eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
 --eval-bleu-remove-bpe \
 --eval-bleu-print-samples \
