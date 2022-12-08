@@ -19,6 +19,7 @@ mkdir -p $devtest_processed_dir
 langs=(as bn hi gu kn ml mr or pa ta te)
 
 for lang in ${langs[@]}; do
+	echo "working on $lang"
 	if [ $src_lang == en ]; then
 		tgt_lang=$lang
 	else
@@ -73,7 +74,7 @@ python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang 'dev'
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang 'test'
 
-if [ "$reuse_bpe_vocab" == false ]; then
+if [[ "$reuse_bpe_vocab" == false ]]; then
 	echo "Learning bpe. This will take a very long time depending on the size of the dataset"
 	echo `date`
 	if [[ "$vocab_type" == "sep" ]]; then
