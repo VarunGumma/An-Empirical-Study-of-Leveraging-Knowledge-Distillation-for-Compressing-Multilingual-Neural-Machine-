@@ -1,13 +1,13 @@
-#/bin/bash
-
-fairseq-train $1/v2_0_binarized/final_bin \
+fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 8192 \
---arch transformer_4x_v0 \
---encoder-layers 3 \
---decoder-layers 3 \
+--arch transformer_1x_v0 \
+--encoder-add-adapters \
+--encoder-adapter-reduction-factor 2 \
+--encoder-adapter-activation-fn silu \
+--encoder-adapter-lang-ids "[\"as\", \"bn\", \"gu\", \"hi\", \"kn\", \"ml\", \"mr\", \"or\", \"pa\", \"ta\", \"te\"]" \
 --dropout 0.2 \
 --criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
@@ -20,15 +20,15 @@ fairseq-train $1/v2_0_binarized/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../checkpoints/4x_3_layers \
+--save-dir ../checkpoints/adapter_FT_language_wise/base \
 --save-interval 1 \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --validate-interval-updates 10000 \
---update-freq 2 \
---distributed-world-size 4 \
---num-workers 16 \
+--update-freq 1 \
+--distributed-world-size 8 \
+--num-workers 64 \
 --user-dir ../model_configs \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
@@ -37,4 +37,5 @@ fairseq-train $1/v2_0_binarized/final_bin \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
+--memory-efficient-fp16 \
 --wandb-project Indic-En-Distillation \
