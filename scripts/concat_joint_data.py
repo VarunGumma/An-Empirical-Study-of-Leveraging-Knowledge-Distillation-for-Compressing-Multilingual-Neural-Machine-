@@ -2,21 +2,7 @@ import os
 from tqdm import tqdm
 import sys
 
-LANGS = [
-    "as",
-    "bn",
-    "gu",
-    "hi",
-    "kn",
-    "ml",
-    "mr",
-    "or",
-    "pa",
-    "ta",
-    "te",
-    #"ur"
-]
-
+INDIC_LANGS = ["as", "bn", "gu", "hi", "kn", "ml", "mr", "or", "pa", "ta", "te"]
 
 def add_token(sent, tag_infos):
     """ add special tokens specified by tag_infos to each element in list
@@ -104,20 +90,14 @@ def corpus_stats(data_dir, outdir, lang_pair_list, split):
 
 
 if __name__ == '__main__':
-
     in_dir = sys.argv[1]
     out_dir = sys.argv[2]
     src_lang = sys.argv[3]
     tgt_lang = sys.argv[4]
     split = sys.argv[5]
-    lang_pair_list = []
 
-    if src_lang == 'en':
-        for lang in LANGS:
-            lang_pair_list.append(['en', lang])
-    else:
-        for lang in LANGS:
-            lang_pair_list.append([lang, 'en'])
+    INDIC_LANGS = src_lang.split(':')
+    lang_pair_list = [(['en', lang] if src_lang == 'en' else [lang, 'en']) for lang in INDIC_LANGS]
 
     concat_data(in_dir, out_dir, lang_pair_list, split=split)
 

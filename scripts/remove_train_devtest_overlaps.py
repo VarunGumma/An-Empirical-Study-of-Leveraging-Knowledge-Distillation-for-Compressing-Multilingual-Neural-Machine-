@@ -2,7 +2,8 @@ import os
 import string
 from collections import defaultdict
 from tqdm import tqdm
-import sys
+# import sys
+from argparse import ArgumentParser
 
 INDIC_LANGS = ["as", "bn", "gu", "hi", "kn", "ml", "mr", "or", "pa", "ta", "te"]
 # we will be testing the overlaps of training data with all these benchmarks
@@ -242,15 +243,12 @@ def remove_train_devtest_overlaps(train_dir, devtest_dir, many2many=False):
 
 
 if __name__ == "__main__":
-    train_data_dir = sys.argv[1]
-    # benchmarks directory should contains all the test sets
-    devtest_data_dir = sys.argv[2]
-    if len(sys.argv) == 3:
-        many2many = False
-    elif len(sys.argv) == 4:
-        many2many = sys.argv[4]
-        if many2many.lower() == "true":
-            many2many = True
-        else:
-            many2many = False
-    remove_train_devtest_overlaps(train_data_dir, devtest_data_dir, many2many)
+    parser = ArgumentParser(description="remove train_devtest overlaps")
+    parser.add_argument("-t", "--train-dir", type=str)
+    parser.add_argument("-d", "--devtest-dir", type=str)
+    parser.add_argument("-m2m", "--many2many", action="store_true")
+    parser.add_argument("-l", "--languages", type=str, default="as:bn:gu:hi:kn:ml:mr:or:pa:ta:te")
+    args = parser.parse_args()
+
+    INDIC_LANGS = args.languages.split(':')
+    remove_train_devtest_overlaps(args.train_dir, args.devtest_dir, args.many2many)

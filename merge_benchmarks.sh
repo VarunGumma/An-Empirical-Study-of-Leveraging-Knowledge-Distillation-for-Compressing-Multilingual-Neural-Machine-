@@ -1,7 +1,8 @@
 #!/bin/bash
 echo `date`
 base_path=$1
-shift 1
+languages=$2
+shift 2
 
 # list of all benchmarks to merge and form validation set
 allArgs=("$@")
@@ -9,7 +10,10 @@ allArgs=("$@")
 rm -rf $base_path/all
 mkdir $base_path/all
 
-for lang in as bn gu hi kn ml mr or pa ta te; do
+# languages separated by ':'
+IFS=':' read -ra languages_split <<< $languages
+
+for lang in "${languages_split[@]}"; do
     mkdir $base_path/all/en-$lang
     for devtest_dir in "${allArgs[@]}"; do
         if [[ -f $base_path/$devtest_dir/en-$lang/dev.$lang ]]; then

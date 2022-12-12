@@ -16,16 +16,15 @@ devtest_processed_dir=$exp_dir/data
 
 mkdir -p $train_processed_dir
 mkdir -p $devtest_processed_dir
-langs=(as bn hi gu kn ml mr or pa ta te)
+
+if [ $src_lang == en ]; then
+	IFS=':' read -ra langs <<< $tgt_lang
+else
+	IFS=':' read -ra langs <<< $src_lang
+fi
 
 for lang in ${langs[@]}; do
 	echo "working on $lang"
-	if [ $src_lang == en ]; then
-		tgt_lang=$lang
-	else
-		src_lang=$lang
-	fi
-
 	train_norm_dir=$exp_dir/norm/$src_lang-$tgt_lang
 	devtest_norm_dir=$exp_dir/norm/$src_lang-$tgt_lang
 	mkdir -p $train_norm_dir
