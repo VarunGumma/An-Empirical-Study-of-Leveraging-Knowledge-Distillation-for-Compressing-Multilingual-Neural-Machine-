@@ -25,7 +25,7 @@ srun fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir ../checkpoints/base_with_best_bleu_finetuned_on_HQ_data \
+--save-dir ../checkpoints/base_finetuned_on_HQ_data \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
@@ -35,12 +35,12 @@ srun fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --distributed-world-size 3 \
 --max-tokens 6144 \
 --lr 3e-5 \
---restore-file ../checkpoints/base_with_best_bleu/checkpoint_best.pt \
+--restore-file ../checkpoints/base/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
 --reset-optimizer \
---num-workers 16 \
+--num-workers 64 \
 --wandb-project Indic-En-Distillation \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
