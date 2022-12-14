@@ -25,7 +25,7 @@ srun fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir ../checkpoints/base_finetuned_on_HQ_data \
+--save-dir ../checkpoints/HQ_base \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \

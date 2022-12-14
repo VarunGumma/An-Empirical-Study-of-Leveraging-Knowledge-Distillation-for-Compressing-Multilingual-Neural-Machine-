@@ -26,8 +26,8 @@ def read_benchmark_names(fname):
 df = pd.DataFrame([read_benchmark_scores(f"{BASE_PATH}/{fname}.txt") for fname in FNAMES]).T
 df.columns = FNAMES
 
-for (i, col) in enumerate(FNAMES[1:], 1):
-    df.insert(i*2, f"scoredrop-{col}", df[FNAMES[0]]-df[col])
+# for (i, col) in enumerate(FNAMES[1:], 1):
+#     df.insert(i*2, f"scoredrop-{col}", df[FNAMES[0]]-df[col])
+
 df.insert(0, "benchmarks", read_benchmark_names(f"{BASE_PATH}/{FNAMES[0]}.txt"))
-    
 df.to_csv(f"{BASE_PATH}/benchmark_scores.csv", index=False)

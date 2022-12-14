@@ -1,7 +1,7 @@
 #!/bin/bash
 
-save_to_dir="V2_base_with_adapters_finetuned_on"
-restore_from_dir="base"
+save_to_dir="HQ_base_with_adapters_finetuned_on"
+restore_from_dir="HQ_base"
 
 for lang in as bn gu hi kn ml mr or pa ta te; do
     echo `date`
@@ -12,7 +12,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     echo "restoring from ${restore_from_dir}"
     echo "saving checkpoints to ${save_to_dir}"
 
-    fairseq-train ../../data_dir/v2_distilled_indic_en_language_wise_bin/$lang/final_bin \
+    fairseq-train ../../data_dir/v2_distilled_indic_en_language_wise_HQ_bin/$lang/final_bin \
     --max-source-positions 210 \
     --max-target-positions 210 \
     --max-update 1000000 \
@@ -39,8 +39,8 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
     --user-dir ../model_configs \
-    --update-freq 1 \
-    --distributed-world-size 2 \
+    --update-freq 2 \
+    --distributed-world-size 1 \
     --max-tokens 32768 \
     --lr 5e-5 \
     --restore-file ../checkpoints/$restore_from_dir/checkpoint_best.pt \
@@ -49,7 +49,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --reset-meters \
     --reset-dataloader \
     --reset-optimizer \
-    --num-workers 16 \
+    --num-workers 8 \
     --validate-interval-updates 500 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \

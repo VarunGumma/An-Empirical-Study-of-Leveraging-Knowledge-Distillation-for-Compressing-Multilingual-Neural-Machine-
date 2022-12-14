@@ -21,7 +21,7 @@ fairseq-train ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --reset-dataloader \
 --reset-optimizer \
 --warmup-updates 4000 \
---save-dir ../checkpoints/4x_RS_layers_finetuned_on_HQ_data \
+--save-dir ../checkpoints/HQ_4x_RS_layers \
 --save-interval 1 \
 --keep-last-epochs 1 \
 --patience 5 \
