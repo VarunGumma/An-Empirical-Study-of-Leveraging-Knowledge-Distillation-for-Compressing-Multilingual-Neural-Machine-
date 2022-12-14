@@ -154,3 +154,16 @@ pmi - as: {
  "version": "2.3.1"
 }
 
+ufal-ta - ta: {
+ "name": "BLEU",
+ "score": 30.2,
+ "signature": "nrefs:1|case:mixed|eff:no|tok:13a|smooth:exp|version:2.3.1",
+ "verbose_score": "62.3/37.2/25.1/17.8 (BP = 0.946 ratio = 0.947 hyp_len = 50156 ref_len = 52964)",
+ "nrefs": "1",
+ "case": "mixed",
+ "eff": "no",
+ "tok": "13a",
+ "smooth": "exp",
+ "version": "2.3.1"
+}
+
