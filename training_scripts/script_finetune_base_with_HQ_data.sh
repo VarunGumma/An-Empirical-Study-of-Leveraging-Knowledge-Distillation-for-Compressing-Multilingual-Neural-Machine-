@@ -1,14 +1,4 @@
-#!/bin/bash
-
-#SBATCH --nodes 1
-#SBATCH --ntasks-per-node 1
-#SBATCH --cpus-per-task 16
-#SBATCH --gpus-per-task 3
-#SBATCH --partition ai4bp
-#SBATCH --time=07-00:00:00
-#SBATCH --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090
-
-srun fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
+fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -32,15 +22,15 @@ srun fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --validate-interval-updates 10000 \
 --user-dir ../model_configs \
 --update-freq 1 \
---distributed-world-size 3 \
---max-tokens 6144 \
---lr 3e-5 \
+--distributed-world-size 6 \
+--max-tokens 4096 \
+--lr 1e-4 \
 --restore-file ../checkpoints/base/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
 --reset-optimizer \
---num-workers 64 \
+--num-workers 32 \
 --wandb-project Indic-En-Distillation \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
@@ -48,5 +38,4 @@ srun fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --eval-bleu-remove-bpe \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
---maximize-best-checkpoint-metric \
---memory-efficient-fp16
+--maximize-best-checkpoint-metric

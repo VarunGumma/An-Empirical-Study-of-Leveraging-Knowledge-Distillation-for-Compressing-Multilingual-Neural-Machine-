@@ -2,7 +2,8 @@ import pandas as pd
 from sys import argv
 
 BASE_PATH = "results"
-FNAMES = argv[1:]
+split = argv[1]
+FNAMES = argv[2:]
 
 
 def read_benchmark_scores(fname):
@@ -23,11 +24,11 @@ def read_benchmark_names(fname):
     return [line.split(':')[0] for line in data if is_benchmark(line)]
 
 
-df = pd.DataFrame([read_benchmark_scores(f"{BASE_PATH}/{fname}.txt") for fname in FNAMES]).T
+df = pd.DataFrame([read_benchmark_scores(f"{BASE_PATH}/{fname}.{split}.txt") for fname in FNAMES]).T
 df.columns = FNAMES
 
 # for (i, col) in enumerate(FNAMES[1:], 1):
 #     df.insert(i*2, f"scoredrop-{col}", df[FNAMES[0]]-df[col])
 
-df.insert(0, "benchmarks", read_benchmark_names(f"{BASE_PATH}/{FNAMES[0]}.txt"))
-df.to_csv(f"{BASE_PATH}/benchmark_scores.csv", index=False)
+df.insert(0, "benchmarks", read_benchmark_names(f"{BASE_PATH}/{FNAMES[0]}.{split}.txt"))
+df.to_csv(f"{BASE_PATH}/benchmark_scores.{split}.csv", index=False)

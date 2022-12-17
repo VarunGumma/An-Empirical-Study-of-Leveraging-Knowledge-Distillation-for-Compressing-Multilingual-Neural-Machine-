@@ -14,7 +14,7 @@ rm -rf results/*
 
 for ext in "${allArgs[@]}"; do
     for dir in `ls $devtest_base_dir`; do
-        echo "<<<<<<<<<< ${dir} >>>>>>>>>>"
+        echo -e "\n<<<<<<<<<< ${dir} >>>>>>>>>>"
         for lang_pair in `ls $devtest_base_dir/$dir`; do
             echo "working on ${lang_pair}"
             path=$devtest_base_dir/$dir/$lang_pair
@@ -24,12 +24,22 @@ for ext in "${allArgs[@]}"; do
 	        else
 		        src_lang=${temp[1]}
 	        fi
-            bash joint_translate.sh $path/test.$src_lang $path/outfile.$tgt_lang $src_lang $tgt_lang $ckpt_base_dir/$ext $exp_dir
-            output=`bash compute_bleu.sh $path/outfile.$tgt_lang $path/test.$tgt_lang $src_lang $tgt_lang`
-            echo -e "${dir} - ${temp[1]}: ${output}\n" >> results/$ext.txt
+
+            if [[ -f $path/dev.$src_lang ]]; then
+                bash joint_translate.sh $path/dev.$src_lang $path/outfile.dev.$tgt_lang $src_lang $tgt_lang $ckpt_base_dir/$ext $exp_dir
+                output=`bash compute_bleu.sh $path/outfile.dev.$tgt_lang $path/dev.$tgt_lang $src_lang $tgt_lang`
+                echo -e "${dir} - ${temp[1]}: ${output}\n" >> results/$ext.dev.txt
+            fi
+            if [[ -f $path/test.$src_lang ]]; then
+                bash joint_translate.sh $path/test.$src_lang $path/outfile.test.$tgt_lang $src_lang $tgt_lang $ckpt_base_dir/$ext $exp_dir
+                output=`bash compute_bleu.sh $path/outfile.test.$tgt_lang $path/test.$tgt_lang $src_lang $tgt_lang`
+                echo -e "${dir} - ${temp[1]}: ${output}\n" >> results/$ext.test.txt
+            fi
         done 
     done
 done
 
+
 echo -e "[INFO]\tconverting all txt files to csv"
-python3 convert_txt_to_csv.py "$@"
+python3 convert_txt_to_csv.py "test" "$@"
+python3 convert_txt_to_csv.py "dev" "$@"
