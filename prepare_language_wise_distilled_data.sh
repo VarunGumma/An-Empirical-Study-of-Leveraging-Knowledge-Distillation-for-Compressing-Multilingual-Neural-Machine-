@@ -1,5 +1,12 @@
 #!/bin/bash
 
-for lang in as bn gu hi kn ml mr or pa ta te; do 
-    bash prepare_distilled_data.sh v2_distilled_indic_en_HQ benchmarks v2_distilled_indic_en_language_wise_HQ_bin/$lang checkpoints/indic-en $lang en
+for langs in hi:pa:gu:mr as:bn:or ta:te:ml:kn; do 
+    bash prepare_distilled_data.sh \
+    ../Downloads/data/v2_distilled_indic_en \
+    ../data_dir/benchmarks \
+    ../data_dir/v2_distilled_indic_en_language_family_v1_bin/$langs \
+    checkpoints/indic-en \
+    indic \
+    en \
+    $langs
 done 

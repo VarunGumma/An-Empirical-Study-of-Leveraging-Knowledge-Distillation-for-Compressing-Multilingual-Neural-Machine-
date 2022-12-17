@@ -1,15 +1,16 @@
 #/bin/bash
 
 exp_dir=$1
-src_lang=$2
+src_langs=$2
 tgt_lang=$3
-vocab_type=${4:-"sep"} # sep or joint
-train_data_dir=${5:-"$exp_dir"}
-devtest_data_dir=${6:-"$exp_dir/devtest/all"}
-reuse_bpe_vocab=${7:-false}
-vocab_bpe_dir=${8-"none"}
+languages_list=$4
+vocab_type=${5:-"sep"} # sep or joint
+train_data_dir=${6:-"$exp_dir"}
+devtest_data_dir=${7:-"$exp_dir/devtest/all"}
+reuse_bpe_vocab=${8:-false}
+vocab_bpe_dir=${9-"none"}
 
-echo "Running experiment ${exp_dir} on ${src_lang} to ${tgt_lang}"
+echo "Running experiment ${exp_dir} on ${src_langs} to ${tgt_lang}"
 
 train_processed_dir=$exp_dir/data
 devtest_processed_dir=$exp_dir/data
@@ -17,14 +18,15 @@ devtest_processed_dir=$exp_dir/data
 mkdir -p $train_processed_dir
 mkdir -p $devtest_processed_dir
 
-if [ $src_lang == en ]; then
-	IFS=':' read -ra langs <<< $tgt_lang
-else
-	IFS=':' read -ra langs <<< $src_lang
-fi
+IFS=':' read -ra langs <<< $languages_list
 
 for lang in ${langs[@]}; do
-	echo "working on $lang"
+	if [[ "$src_lang" == en ]]; then
+		tgt_lang=$lang
+	else
+		src_lang=$lang
+	fi
+	echo "working on $src_lang"
 	train_norm_dir=$exp_dir/norm/$src_lang-$tgt_lang
 	devtest_norm_dir=$exp_dir/norm/$src_lang-$tgt_lang
 	mkdir -p $train_norm_dir
@@ -68,6 +70,9 @@ done
 # <lang1> <lang2> <number of lines>
 # lang1-lang2 n1
 # lang1-lang3 n2
+
+echo $src_lang
+echo $tgt_lang
 
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang 'train'
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang 'dev'

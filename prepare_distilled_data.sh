@@ -6,6 +6,7 @@ exp_dir=$3
 vocab_bpe_dir=$4
 src_lang=$5
 tgt_lang=$6
+langs=$7
 
 echo `date`
 echo -e "[IMPORTANT]\tMAKE SURE THE VOCAB FOLDER IN THE EXPERIMENT DIRECTORY CONTAINS THE BPE CODES AND VOCABULARY OF THE ORIGINAL INDICTRANS MODEL!"
@@ -14,11 +15,7 @@ rm -rf $exp_dir
 mkdir -p $exp_dir
 
 echo -e "[INFO]\tremoving overlap between train and devtest"
-if [ $src_lang == en ]; then
-    langs=$tgt_lang
-else
-    langs=$src_lang
-fi
+
 python3 scripts/remove_train_devtest_overlaps.py -t $train_dir -d $devtest_dir -l $langs
 
 if [ ! -d $devtest_dir/all ]; then
@@ -32,7 +29,7 @@ mkdir -p $exp_dir/devtest
 cp -r $devtest_dir/all $exp_dir/devtest/
 
 echo -e "[INFO]\tpreparing data. It is recommened to use a multicore processor or a GPU for this."
-bash prepare_data_joint_training.sh $exp_dir $src_lang $tgt_lang sep $exp_dir $exp_dir/devtest/all true $vocab_bpe_dir
+bash prepare_data_joint_training.sh $exp_dir $src_lang $tgt_lang $langs sep $exp_dir $exp_dir/devtest/all true $vocab_bpe_dir
 
 echo -e "[INFO]\tcleaning unnecessary files from exp dir to save space"
 rm -rf $exp_dir/bpe $exp_dir/devtest $exp_dir/final $exp_dir/data $exp_dir/norm $exp_dir/en-* $devtest_dir/all
