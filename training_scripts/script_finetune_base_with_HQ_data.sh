@@ -15,22 +15,22 @@ fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir ../checkpoints/HQ_base \
+--save-dir ../checkpoints/HQ_base_v2 \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --validate-interval-updates 10000 \
 --user-dir ../model_configs \
---update-freq 1 \
---distributed-world-size 6 \
---max-tokens 4096 \
---lr 1e-4 \
+--update-freq 3 \
+--distributed-world-size 1 \
+--max-tokens 8192 \
+--lr 3e-5 \
 --restore-file ../checkpoints/base/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
 --reset-optimizer \
---num-workers 32 \
+--num-workers 16 \
 --wandb-project Indic-En-Distillation \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \

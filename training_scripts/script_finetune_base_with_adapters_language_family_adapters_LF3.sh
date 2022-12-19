@@ -1,6 +1,6 @@
 #!/bin/bash
 
-save_to_dir="V_base_with_language_family_adapters_v1_finetuned_on"
+save_to_dir="V_base_with_language_family_adapters_LF3_finetuned_on"
 restore_from_dir="base"
 
 for lang in as bn gu hi kn ml mr or pa ta te; do
@@ -20,11 +20,11 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --arch transformer_1x_v0 \
     --encoder-add-adapters \
     --encoder-adapter-reduction-factor-trend "[2, 4, 8, 8, 4, 2]" \
-    --encoder-adapter-lang-ids "[\"as:bn:or\", \"hi:pa:gu:mr\", \"ta:ml:te:ka\"]" \
+    --encoder-adapter-lang-ids "[\"mr:gu\", \"hi:mr:gu\", \"pa:hi\", \"bn:or\", \"bn:or:as\", \"bn:as\", \"ta:ml\", \"te:kn\", \"ta:ml:te:kn\"]" \
     --encoder-finetune-adapter $lang \
     --decoder-add-adapters \
     --decoder-adapter-reduction-factor-trend "[2, 4, 8, 8, 4, 2]" \
-    --decoder-adapter-lang-ids "[\"as:bn:or\", \"hi:pa:gu:mr\", \"ta:ml:te:ka\"]" \
+    --decoder-adapter-lang-ids "[\"mr:gu\", \"hi:mr:gu\", \"pa:hi\", \"bn:or\", \"bn:or:as\", \"bn:as\", \"ta:ml\", \"te:kn\", \"ta:ml:te:kn\"]" \
     --decoder-finetune-adapter $lang \
     --criterion label_smoothed_cross_entropy \
     --source-lang SRC \
@@ -39,6 +39,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --dropout 0.2 \
     --save-dir ../checkpoints/$save_to_dir \
     --keep-last-epochs 1 \
+    --save-interval-updates 500 \
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
     --user-dir ../model_configs \
