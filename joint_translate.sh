@@ -49,7 +49,7 @@ fairseq-interactive $data_bin_dir \
     -s $SRC_PREFIX -t $TGT_PREFIX \
     --distributed-world-size 1 \
     --path $model_path \
-    --batch-size 64 \
+    --batch-size 1024 \
     --buffer-size 1100 \
     --beam 5 \
     --max-len-a 1.2 \

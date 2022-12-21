@@ -37,7 +37,7 @@ for ext in "${allArgs[@]}"; do
                 echo -e "${dir} - ${temp[1]}: ${output}\n" >> results/$ext.test.txt
             fi
 
-            # rm $path/outfile.*
+            rm $path/outfile.*
         done 
     done
 done
