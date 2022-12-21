@@ -250,6 +250,6 @@ if __name__ == "__main__":
     parser.add_argument("-l", "--languages", type=str, default="as:bn:gu:hi:kn:ml:mr:or:pa:ta:te")
     args = parser.parse_args()
 
-    INDIC_LANGS = args.languages.split(':')
+    INDIC_LANGS = args.languages.split('-')
     print(INDIC_LANGS)
     remove_train_devtest_overlaps(args.train_dir, args.devtest_dir, args.many2many)
