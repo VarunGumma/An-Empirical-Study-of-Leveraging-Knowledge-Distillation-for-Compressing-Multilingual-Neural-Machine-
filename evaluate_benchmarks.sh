@@ -32,7 +32,7 @@ for ext in "${allArgs[@]}"; do
             # fi
             
             if [[ -f $path/test.$src_lang ]]; then
-                bash joint_translate.sh $path/test.$src_lang $path/outfile.test.$tgt_lang $src_lang $tgt_lang $ckpt_base_dir/$ext $exp_dir
+                bash joint_translate_eval.sh $path/test.$src_lang $path/outfile.test.$tgt_lang $src_lang $tgt_lang $ckpt_base_dir/$ext $exp_dir
                 output=`bash compute_bleu.sh $path/outfile.test.$tgt_lang $path/test.$tgt_lang $src_lang $tgt_lang`
                 echo -e "${dir} - ${temp[1]}: ${output}\n" >> results/$ext.test.txt
             fi
