@@ -18,10 +18,10 @@ fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --warmup-updates 4000 \
 --save-dir ../checkpoints/4x_RS_layers \
 --save-interval 1 \
+--save-interval-updates 5000 \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---validate-interval-updates 10000 \
 --update-freq 1 \
 --distributed-world-size 4 \
 --num-workers 16 \

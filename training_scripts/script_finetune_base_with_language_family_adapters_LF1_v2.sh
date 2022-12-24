@@ -56,7 +56,6 @@ for lang in as-bn-or ta-te-ml-kn hi-pa-gu-mr; do
     --reset-dataloader \
     --reset-optimizer \
     --num-workers 32 \
-    --validate-interval-updates 500 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \

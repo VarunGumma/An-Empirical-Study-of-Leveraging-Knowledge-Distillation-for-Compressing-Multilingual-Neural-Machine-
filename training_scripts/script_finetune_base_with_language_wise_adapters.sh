@@ -17,6 +17,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --max-target-positions 210 \
     --max-update 1000000 \
     --save-interval 1 \
+    --save-interval-updates 500 \
     --arch transformer_1x_v0 \
     --encoder-add-adapters \
     --encoder-adapter-bottleneck-dim-trend 256,128,64,64,128,256 \
@@ -55,7 +56,6 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --reset-dataloader \
     --reset-optimizer \
     --num-workers 16 \
-    --validate-interval-updates 500 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \

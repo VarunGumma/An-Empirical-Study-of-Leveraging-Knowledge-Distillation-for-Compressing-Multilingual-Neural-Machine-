@@ -3,6 +3,7 @@ fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --save-interval 1 \
+--save-interval-updates 5000 \
 --arch transformer_1x_v0 \
 --criterion label_smoothed_cross_entropy \
 --source-lang SRC \
@@ -19,7 +20,6 @@ fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---validate-interval-updates 10000 \
 --user-dir ../model_configs \
 --update-freq 3 \
 --distributed-world-size 1 \
