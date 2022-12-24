@@ -19,17 +19,19 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --save-interval 1 \
     --arch transformer_1x_v0 \
     --encoder-add-adapters \
-    --encoder-adapter-reduction-factor-trend "[2, 4, 8, 8, 4, 2]" \
-    --encoder-adapter-lang-ids "[\"as\", \"bn\", \"gu\", \"hi\", \"kn\", \"ml\", \"mr\", \"or\", \"pa\", \"ta\", \"te\"]" \
+    --encoder-adapter-bottleneck-dim-trend 256,128,64,64,128,256 \
+    --encoder-adapter-langs as,bn,gu,hi,kn,ml,mr,or,pa,ta,te \
     --encoder-finetune-adapter $lang \
     --decoder-add-adapters \
-    --decoder-adapter-reduction-factor-trend "[2, 4, 8, 8, 4, 2]" \
-    --decoder-adapter-lang-ids "[\"as\", \"bn\", \"gu\", \"hi\", \"kn\", \"ml\", \"mr\", \"or\", \"pa\", \"ta\", \"te\"]" \
+    --decoder-adapter-bottleneck-dim-trend 256,128,64,64,128,256 \
+    --decoder-adapter-langs as,bn,gu,hi,kn,ml,mr,or,pa,ta,te \
     --decoder-finetune-adapter $lang \
+    --adapter-activation-fn relu \
+    --adapter-dropout 0.1 \
     --criterion label_smoothed_cross_entropy \
     --source-lang SRC \
-    --lr-scheduler inverse_sqrt \
     --target-lang TGT \
+    --lr-scheduler inverse_sqrt \
     --label-smoothing 0.1 \
     --optimizer adam \
     --adam-betas "(0.9, 0.98)" \
@@ -42,8 +44,8 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
     --user-dir ../model_configs \
-    --update-freq 1 \
-    --distributed-world-size 6 \
+    --update-freq 6 \
+    --distributed-world-size 1 \
     --max-tokens 4096 \
     --lr 7.5e-4 \
     --restore-file ../checkpoints/$restore_from_dir/checkpoint_best.pt \
@@ -59,8 +61,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --eval-bleu-detok moses \
     --eval-bleu-remove-bpe \
     --maximize-best-checkpoint-metric \
-    --best-checkpoint-metric bleu \
-    --wandb-project Indic-En-Distillation
+    --best-checkpoint-metric bleu
 
     restore_from_dir=$save_to_dir
 done

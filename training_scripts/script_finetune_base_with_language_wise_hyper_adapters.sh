@@ -1,7 +1,7 @@
 #!/bin/bash
 
-save_to_dir="V2_HQ_base_with_adapters_finetuned_on"
-restore_from_dir="HQ_base"
+save_to_dir="VV_base_with_adapters_finetuned_on"
+restore_from_dir="base"
 
 for lang in as bn gu hi kn ml mr or pa ta te; do
     echo `date`
@@ -12,24 +12,39 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     echo "restoring from ${restore_from_dir}"
     echo "saving checkpoints to ${save_to_dir}"
 
-    fairseq-train ../../data_dir/v2_distilled_indic_en_language_wise_HQ_bin/$lang/final_bin \
+    fairseq-train ../../data_dir/v2_distilled_indic_en_language_wise_bin/$lang/final_bin \
     --max-source-positions 210 \
     --max-target-positions 210 \
     --max-update 1000000 \
     --save-interval 1 \
     --arch transformer_1x_v0 \
-    --encoder-add-adapters \
-    --encoder-adapter-reduction-factor 2 \
-    --encoder-adapter-lang-ids "[\"as\", \"bn\", \"gu\", \"hi\", \"kn\", \"ml\", \"mr\", \"or\", \"pa\", \"ta\", \"te\"]" \
-    --encoder-finetune-adapter $lang \
-    --decoder-add-adapters \
-    --decoder-adapter-reduction-factor 2 \
-    --decoder-adapter-lang-ids "[\"as\", \"bn\", \"gu\", \"hi\", \"kn\", \"ml\", \"mr\", \"or\", \"pa\", \"ta\", \"te\"]" \
-    --decoder-finetune-adapter $lang \
+    --hyperadapter-langs as,bn,gu,hi,kn,ml,mr,or,pa,ta,te,en \
+    --hyperadapter-src-lang $lang \
+    --hyperadapter-tgt-lang en \
+    --hyperadapter-dropout 0.1 \
+    --hyperadapter-activation-fn relu \
+    --encoder-add-hyperadapters \
+    --encoder-hyperadapter-lang-embedding-dim 64 \
+    --encoder-hyperadapter-layer-embedding-dim 64 \
+    --encoder-hyperadapter-bottleneck-dim 64 \
+    --encoder-hyperadapter-hidden-dim 64 \
+    --encoder-hyperadapter-num-hidden-layers 2 \
+    --encoder-hyperadapter-generate-layernorm \
+    --encoder-hyperadapter-language-embedding-tied \
+    --encoder-hyperadapter-inputs src,tgt,layer \
+    --decoder-add-hyperadapters \
+    --decoder-hyperadapter-lang-embedding-dim 64 \
+    --decoder-hyperadapter-layer-embedding-dim 64 \
+    --decoder-hyperadapter-bottleneck-dim 64 \
+    --decoder-hyperadapter-hidden-dim 64 \
+    --decoder-hyperadapter-num-hidden-layers 2 \
+    --decoder-hyperadapter-generate-layernorm \
+    --decoder-hyperadapter-language-embedding-tied \
+    --decoder-hyperadapter-inputs src,tgt,layer \
     --criterion label_smoothed_cross_entropy \
     --source-lang SRC \
-    --lr-scheduler inverse_sqrt \
     --target-lang TGT \
+    --lr-scheduler inverse_sqrt \
     --label-smoothing 0.1 \
     --optimizer adam \
     --adam-betas "(0.9, 0.98)" \
@@ -42,17 +57,17 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
     --user-dir ../model_configs \
-    --update-freq 2 \
-    --distributed-world-size 3 \
+    --update-freq 6 \
+    --distributed-world-size 1 \
     --max-tokens 4096 \
-    --lr 5e-4 \
+    --lr 7.5e-4 \
     --restore-file ../checkpoints/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
     --reset-meters \
     --reset-dataloader \
     --reset-optimizer \
-    --num-workers 8 \
+    --num-workers 16 \
     --validate-interval-updates 500 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
@@ -60,7 +75,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --eval-bleu-remove-bpe \
     --maximize-best-checkpoint-metric \
     --best-checkpoint-metric bleu \
-    --wandb-project Indic-En-Distillation
+    --memory-efficient-fp16
 
     restore_from_dir=$save_to_dir
 done

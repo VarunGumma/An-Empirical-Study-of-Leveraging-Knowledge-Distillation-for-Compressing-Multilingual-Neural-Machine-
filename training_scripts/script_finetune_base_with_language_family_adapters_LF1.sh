@@ -19,17 +19,19 @@ for lang in as-bn-or ta-te-ml-kn hi-pa-gu-mr; do
     --save-interval 1 \
     --arch transformer_1x_v0 \
     --encoder-add-adapters \
-    --encoder-adapter-reduction-factor 2 \
-    --encoder-adapter-lang-ids "[\"as-bn-or\", \"hi-pa-gu-mr\", \"ta-te-ml-kn\"]" \
+    --encoder-adapter-bottleneck-dim 2 \
+    --encoder-adapter-langs as-bn-or,hi-pa-gu-mr,ta-te-ml-kn \
     --encoder-finetune-adapter $lang \
     --decoder-add-adapters \
-    --decoder-adapter-reduction-factor 2 \
-    --decoder-adapter-lang-ids "[\"as-bn-or\", \"hi-pa-gu-mr\", \"ta-te-ml-kn\"]" \
+    --decoder-adapter-bottleneck-dim 2 \
+    --decoder-adapter-langs as-bn-or,hi-pa-gu-mr,ta-te-ml-kn \
     --decoder-finetune-adapter $lang \
+    --adapter-activation-fn relu \
+    --adapter-dropout 0.1 \
+    --target-lang TGT \
     --criterion label_smoothed_cross_entropy \
     --source-lang SRC \
     --lr-scheduler inverse_sqrt \
-    --target-lang TGT \
     --label-smoothing 0.1 \
     --optimizer adam \
     --adam-betas "(0.9, 0.98)" \
@@ -61,7 +63,7 @@ for lang in as-bn-or ta-te-ml-kn hi-pa-gu-mr; do
     --eval-bleu-remove-bpe \
     --maximize-best-checkpoint-metric \
     --best-checkpoint-metric bleu \
-    --wandb-project Indic-En-Distillation
+    --memory-efficient-fp16
     
     restore_from_dir=$save_to_dir
 done
