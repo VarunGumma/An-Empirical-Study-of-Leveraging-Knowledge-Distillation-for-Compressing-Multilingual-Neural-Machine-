@@ -27,7 +27,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --decoder-adapter-bottleneck-dim-trend 256,128,64,64,128,256 \
     --decoder-adapter-langs as,bn,gu,hi,kn,ml,mr,or,pa,ta,te \
     --decoder-finetune-adapter $lang \
-    --adapter-activation-fn relu \
+    --adapter-activation-fn swish \
     --adapter-dropout 0.1 \
     --criterion label_smoothed_cross_entropy \
     --source-lang SRC \
@@ -45,17 +45,17 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
     --user-dir ../model_configs \
-    --update-freq 6 \
-    --distributed-world-size 1 \
-    --max-tokens 4096 \
-    --lr 7.5e-4 \
+    --update-freq 2 \
+    --distributed-world-size 2 \
+    --max-tokens 16384 \
+    --lr 5e-4 \
     --restore-file ../checkpoints/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
     --reset-meters \
     --reset-dataloader \
     --reset-optimizer \
-    --num-workers 16 \
+    --num-workers 12 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \

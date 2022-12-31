@@ -1,6 +1,6 @@
 #!/bin/bash
 
-save_to_dir="VV_base_with_adapters_finetuned_on"
+save_to_dir="base_with_hyperadapters_finetuned_on"
 restore_from_dir="base"
 
 for lang in as bn gu hi kn ml mr or pa ta te; do
@@ -23,25 +23,25 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --hyperadapter-src-lang $lang \
     --hyperadapter-tgt-lang en \
     --hyperadapter-dropout 0.1 \
-    --hyperadapter-activation-fn relu \
+    --hyperadapter-activation-fn swish \
     --encoder-add-hyperadapters \
-    --encoder-hyperadapter-lang-embedding-dim 64 \
-    --encoder-hyperadapter-layer-embedding-dim 64 \
-    --encoder-hyperadapter-bottleneck-dim 64 \
-    --encoder-hyperadapter-hidden-dim 64 \
+    --encoder-hyperadapter-lang-embedding-dim 50 \
+    --encoder-hyperadapter-layer-embedding-dim 50 \
+    --encoder-hyperadapter-bottleneck-dim 128 \
+    --encoder-hyperadapter-hidden-dim 102 \
     --encoder-hyperadapter-num-hidden-layers 2 \
     --encoder-hyperadapter-generate-layernorm \
     --encoder-hyperadapter-language-embedding-tied \
     --encoder-hyperadapter-inputs src,tgt,layer \
     --decoder-add-hyperadapters \
-    --decoder-hyperadapter-lang-embedding-dim 64 \
-    --decoder-hyperadapter-layer-embedding-dim 64 \
-    --decoder-hyperadapter-bottleneck-dim 64 \
-    --decoder-hyperadapter-hidden-dim 64 \
+    --decoder-hyperadapter-lang-embedding-dim 50 \
+    --decoder-hyperadapter-layer-embedding-dim 50 \
+    --decoder-hyperadapter-bottleneck-dim 128 \
+    --decoder-hyperadapter-hidden-dim 102 \
     --decoder-hyperadapter-num-hidden-layers 2 \
     --decoder-hyperadapter-generate-layernorm \
     --decoder-hyperadapter-language-embedding-tied \
-    --decoder-hyperadapter-inputs src,tgt,layer \
+    --decoder-hyperadapter-inputs tgt,layer \
     --criterion label_smoothed_cross_entropy \
     --source-lang SRC \
     --target-lang TGT \
@@ -58,24 +58,23 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
     --user-dir ../model_configs \
-    --update-freq 6 \
+    --update-freq 4 \
     --distributed-world-size 1 \
-    --max-tokens 4096 \
-    --lr 7.5e-4 \
+    --max-tokens 16384 \
+    --lr 5e-4 \
     --restore-file ../checkpoints/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
     --reset-meters \
     --reset-dataloader \
     --reset-optimizer \
-    --num-workers 16 \
+    --num-workers 6 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \
     --eval-bleu-remove-bpe \
     --maximize-best-checkpoint-metric \
-    --best-checkpoint-metric bleu \
-    --memory-efficient-fp16
+    --best-checkpoint-metric bleu
 
     restore_from_dir=$save_to_dir
 done

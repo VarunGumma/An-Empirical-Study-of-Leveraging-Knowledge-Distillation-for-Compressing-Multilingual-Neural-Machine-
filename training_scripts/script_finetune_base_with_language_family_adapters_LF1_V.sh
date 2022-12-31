@@ -26,7 +26,7 @@ for lang in as-bn-or ta-te-ml-kn hi-pa-gu-mr; do
     --decoder-adapter-bottleneck-dim-trend 256,128,64,64,128,256 \
     --decoder-adapter-langs as-bn-or,hi-pa-gu-mr,ta-te-ml-kn \
     --decoder-finetune-adapter $lang \
-    --adapter-activation-fn relu \
+    --adapter-activation-fn swish \
     --adapter-dropout 0.1 \
     --criterion label_smoothed_cross_entropy \
     --source-lang SRC \
@@ -45,24 +45,23 @@ for lang in as-bn-or ta-te-ml-kn hi-pa-gu-mr; do
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
     --user-dir ../model_configs \
-    --update-freq 3 \
+    --update-freq 4 \
     --distributed-world-size 1 \
-    --max-tokens 8192 \
-    --lr 7.5e-4 \
+    --max-tokens 16384 \
+    --lr 5e-4 \
     --restore-file ../checkpoints/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
     --reset-meters \
     --reset-dataloader \
     --reset-optimizer \
-    --num-workers 32 \
+    --num-workers 6 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \
     --eval-bleu-remove-bpe \
     --maximize-best-checkpoint-metric \
-    --best-checkpoint-metric bleu \
-    --memory-efficient-fp16
+    --best-checkpoint-metric bleu
     
     restore_from_dir=$save_to_dir
 done

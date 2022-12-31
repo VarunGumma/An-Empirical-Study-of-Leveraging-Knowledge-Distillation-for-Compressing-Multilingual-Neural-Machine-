@@ -2,7 +2,7 @@ fairseq-train ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 4096 \
+--max-tokens 8192 \
 --arch transformer_4x_rs \
 --dropout 0.2 \
 --criterion label_smoothed_cross_entropy \
@@ -15,20 +15,20 @@ fairseq-train ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --clip-norm 1.0 \
 --warmup-init-lr 1e-07 \
 --lr 3e-5 \
---restore-file ../checkpoints/4x_RS_layers/checkpoint_best.pt \
+--restore-file ../checkpoints/4x_RS_layers_2.0/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
 --reset-optimizer \
 --warmup-updates 4000 \
---save-dir ../checkpoints/HQ_4x_RS_layers \
+--save-dir ../checkpoints/HQ_4x_RS_layers_2.0 \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
---distributed-world-size 6 \
+--distributed-world-size 3 \
 --num-workers 16 \
 --user-dir ../model_configs \
 --eval-bleu \
