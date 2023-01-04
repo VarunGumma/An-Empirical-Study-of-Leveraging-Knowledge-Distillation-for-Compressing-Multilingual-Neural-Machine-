@@ -18,15 +18,14 @@ echo -e "[INFO]\tremoving overlap between train and devtest"
 
 python3 scripts/remove_train_devtest_overlaps.py -t $train_dir -d $devtest_dir -l $languages_list
 
-if [ ! -d $devtest_dir/all ]; then
-    echo -e "[INFO]\tmerging devtest files"
-    bash merge_benchmarks.sh $devtest_dir $languages_list flores101_dataset
-fi 
+rm -rf $devtest_dir/all
+echo -e "[INFO]\tmerging devtest files"
+bash merge_benchmarks.sh $devtest_dir $languages_list flores101_dataset
 
 echo -e "[INFO]\tcopying data"
 cp -r $train_dir/* $exp_dir
 mkdir -p $exp_dir/devtest
-cp -r $devtest_dir/all $exp_dir/devtest/
+cp -r $devtest_dir/all $exp_dir/devtest
 
 echo -e "[INFO]\tpreparing data. It is recommened to use a multicore processor or a GPU for this."
 bash prepare_data_joint_training.sh $exp_dir $src_lang $tgt_lang $languages_list sep $exp_dir $exp_dir/devtest/all true $vocab_bpe_dir
