@@ -94,9 +94,10 @@ if __name__ == '__main__':
     out_dir = sys.argv[2]
     src_lang = sys.argv[3]
     tgt_lang = sys.argv[4]
-    split = sys.argv[5]
+    languages_list = sys.argv[5]
+    split = sys.argv[6]
 
-    INDIC_LANGS = src_lang.split('-')
+    INDIC_LANGS = languages_list.split(',')
     lang_pair_list = [(['en', lang] if src_lang == 'en' else [lang, 'en']) for lang in INDIC_LANGS]
 
     concat_data(in_dir, out_dir, lang_pair_list, split=split)

@@ -18,7 +18,7 @@ devtest_processed_dir=$exp_dir/data
 mkdir -p $train_processed_dir
 mkdir -p $devtest_processed_dir
 
-IFS='-' read -ra langs <<< $languages_list
+IFS=',' read -ra langs <<< $languages_list
 
 for lang in ${langs[@]}; do
 	if [[ "$src_lang" == en ]]; then
@@ -74,9 +74,9 @@ done
 echo $src_lang
 echo $tgt_lang
 
-python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang 'train'
-python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang 'dev'
-python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang 'test'
+python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'train'
+python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'dev'
+python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'test'
 
 if [[ "$reuse_bpe_vocab" == false ]]; then
 	echo "Learning bpe. This will take a very long time depending on the size of the dataset"

@@ -23,7 +23,12 @@ echo -e "[INFO]\tmerging devtest files"
 bash merge_benchmarks.sh $devtest_dir $languages_list flores101_dataset
 
 echo -e "[INFO]\tcopying data"
-cp -r $train_dir/* $exp_dir
+IFS=',' read -ra langs <<< $languages_list
+for lang in ${langs[@]}; do
+    # copy only data you want to work with
+    # saves space and is more efficient
+    cp -r $train_dir/en-$lang $exp_dir
+done
 mkdir -p $exp_dir/devtest
 cp -r $devtest_dir/all $exp_dir/devtest
 

@@ -235,7 +235,7 @@ def remove_train_devtest_overlaps(train_dir, devtest_dir, many2many=False):
 
             len_after = len(new_src_train)
             print(
-                f"Detected overlaps between train and devetest for {pair} is {len_before - len_after}"
+                f"Detected overlaps between train and devtest for {pair} is {len_before - len_after}"
             )
             print(f"saving new files at {train_dir}/{pair}/")
             create_txt(f"{train_dir}/{pair}/train.{src_lang}", new_src_train)
@@ -247,8 +247,8 @@ if __name__ == "__main__":
     parser.add_argument("-t", "--train-dir", type=str)
     parser.add_argument("-d", "--devtest-dir", type=str)
     parser.add_argument("-m2m", "--many2many", action="store_true")
-    parser.add_argument("-l", "--languages", type=str, default="as-bn-gu-hi-kn-ml-mr-or-pa-ta-te")
+    parser.add_argument("-l", "--languages-list", type=str, default="as,bn,gu,hi,kn,ml,mr,or,pa,ta,te")
     args = parser.parse_args()
 
-    INDIC_LANGS = args.languages.split('-')
+    INDIC_LANGS = args.languages_list.split(',')
     remove_train_devtest_overlaps(args.train_dir, args.devtest_dir, args.many2many)
