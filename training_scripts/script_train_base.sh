@@ -16,10 +16,11 @@ fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../checkpoints/base_2.0 \
+--save-dir ../checkpoints/base \
 --save-interval 1 \
 --save-interval-updates 5000 \
---keep-last-epochs 1 \
+--keep-interval-updates 0 \
+--no-epoch-checkpoints \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
@@ -33,5 +34,5 @@ fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
---memory-efficient-fp16 \
 --wandb-project Indic-En-Distillation \
+--memory-efficient-fp16

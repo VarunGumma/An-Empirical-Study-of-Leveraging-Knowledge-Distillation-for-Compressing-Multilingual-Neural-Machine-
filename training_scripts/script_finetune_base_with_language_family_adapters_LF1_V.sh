@@ -37,10 +37,10 @@ for lang in as-bn-or ta-te-ml-kn hi-pa-gu-mr; do
     --adam-betas "(0.9, 0.98)" \
     --clip-norm 1.0 \
     --warmup-init-lr 1e-07 \
-    --warmup-updates 400 \
+    --warmup-updates 4000 \
     --dropout 0.2 \
     --save-dir ../checkpoints/$save_to_dir \
-    --save-interval-updates 500 \
+    --save-interval-updates 1000 \
     --keep-last-epochs 1 \
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
