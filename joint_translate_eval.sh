@@ -16,8 +16,18 @@ data_bin_dir=$exp_dir/final_bin
 model_path=$ckpt_dir/checkpoint_best.pt
 
 ### normalization and script conversion
-
-declare -A adapters_dict=( ["as"]="as-bn-or" ["bn"]="as-bn-or" ["gu"]="hi-pa-gu-mr" ["hi"]="hi-pa-gu-mr" ["kn"]="ta-te-ml-kn" ["ml"]="ta-te-ml-kn" ["mr"]="hi-pa-gu-mr" ["or"]="as-bn-or" ["pa"]="hi-pa-gu-mr" ["ta"]="ta-te-ml-kn" ["te"]="ta-te-ml-kn")
+# declare -A adapters_dict
+# adapters_dict[as]="as+bn+or"
+# adapters_dict[bn]="as+bn+or"
+# adapters_dict[gu]="hi+pa+gu+mr" 
+# adapters_dict[hi]="hi+pa+gu+mr" 
+# adapters_dict[kn]="ta+te+kn+ml" 
+# adapters_dict[ml]="ta+te+kn+ml" 
+# adapters_dict[mr]="hi+pa+gu+mr" 
+# adapters_dict[or]="as+bn+or" 
+# adapters_dict[pa]="hi+pa+gu+mr" 
+# adapters_dict[ta]="ta+te+kn+ml" 
+# adapters_dict[te]="ta+te+kn+ml"
 
 echo -e "[INFO]\tApplying normalization and script conversion"
 input_size=`python scripts/preprocess_translate.py $infname $outfname.norm $src_lang true`
@@ -58,8 +68,6 @@ fairseq-interactive $data_bin_dir \
     --input $src_input_bpe_fname \
     --num-workers $num_workers \
     --user-dir model_configs \
-    --enc-adapter $src_lang \
-    --dec-adapter $src_lang \
     --memory-efficient-fp16  >  $tgt_output_fname.log 2>&1
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"

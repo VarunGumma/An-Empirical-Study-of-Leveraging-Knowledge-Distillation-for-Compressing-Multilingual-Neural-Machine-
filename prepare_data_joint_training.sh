@@ -18,7 +18,7 @@ devtest_processed_dir=$exp_dir/data
 mkdir -p $train_processed_dir
 mkdir -p $devtest_processed_dir
 
-IFS=',' read -ra langs <<< $languages_list
+IFS='+' read -ra langs <<< $languages_list
 
 for lang in ${langs[@]}; do
 	if [[ "$src_lang" == en ]]; then

@@ -23,7 +23,7 @@ echo -e "[INFO]\tmerging devtest files"
 bash merge_benchmarks.sh $devtest_dir $languages_list flores101_dataset
 
 echo -e "[INFO]\tcopying data"
-IFS=',' read -ra langs <<< $languages_list
+IFS='+' read -ra langs <<< $languages_list
 for lang in ${langs[@]}; do
     # copy only data you want to work with
     # saves space and is more efficient

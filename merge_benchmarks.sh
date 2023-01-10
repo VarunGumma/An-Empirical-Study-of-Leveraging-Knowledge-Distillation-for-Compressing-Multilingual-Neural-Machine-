@@ -10,8 +10,8 @@ allArgs=("$@")
 rm -rf $base_path/all
 mkdir $base_path/all
 
-# languages separated by ','
-IFS=',' read -ra languages_split <<< $languages
+# languages separated by '+'
+IFS='+' read -ra languages_split <<< $languages
 
 for lang in "${languages_split[@]}"; do
     mkdir $base_path/all/en-$lang

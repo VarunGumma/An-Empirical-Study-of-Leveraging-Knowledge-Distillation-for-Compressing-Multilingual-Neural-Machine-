@@ -247,8 +247,8 @@ if __name__ == "__main__":
     parser.add_argument("-t", "--train-dir", type=str)
     parser.add_argument("-d", "--devtest-dir", type=str)
     parser.add_argument("-m2m", "--many2many", action="store_true")
-    parser.add_argument("-l", "--languages-list", type=str, default="as,bn,gu,hi,kn,ml,mr,or,pa,ta,te")
+    parser.add_argument("-l", "--languages-list", type=str, default="as+bn+gu+hi+kn+ml+mr+or+pa+ta+te")
     args = parser.parse_args()
 
-    INDIC_LANGS = args.languages_list.split(',')
+    INDIC_LANGS = args.languages_list.split('+')
     remove_train_devtest_overlaps(args.train_dir, args.devtest_dir, args.many2many)
