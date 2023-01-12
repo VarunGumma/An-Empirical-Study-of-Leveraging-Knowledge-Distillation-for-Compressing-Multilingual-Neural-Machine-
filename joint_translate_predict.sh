@@ -5,14 +5,15 @@ outfname=$2
 src_lang=$3
 tgt_lang=$4
 exp_dir=$5
-ref_fname=$6
+ckpt_dir=$6
+ref_fname=$7
 
 SRC_PREFIX='SRC'
 TGT_PREFIX='TGT'
 
 SUBWORD_NMT_DIR='subword-nmt'
 data_bin_dir=$exp_dir/final_bin
-model_path=$exp_dir/model/checkpoint_best.pt
+model_path=$ckpt_dir/checkpoint_best.pt
 
 ### normalization and script conversion
 
@@ -43,11 +44,11 @@ num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count
 
 fairseq-interactive $data_bin_dir \
     -s $SRC_PREFIX -t $TGT_PREFIX \
-    --distributed-world-size 8 \
+    --distributed-world-size 1 \
     --path $model_path \
-    --batch-size 128 \
-    --buffer-size 130 \
-    --beam 35 \
+    --batch-size 64 \
+    --buffer-size 75 \
+    --beam 5 \
     --max-len-a 1.2 \
     --max-len-b 10 \
     --remove-bpe \
@@ -61,6 +62,6 @@ echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.
 python3 scripts/postprocess_translate.py $tgt_output_fname.log $tgt_output_fname $input_size $tgt_lang true
 
-# rm $outfname.*
+rm $outfname.*
 
 echo -e "[INFO]\tTranslation completed"

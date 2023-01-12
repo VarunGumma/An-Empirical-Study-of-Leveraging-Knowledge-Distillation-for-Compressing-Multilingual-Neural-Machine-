@@ -1,4 +1,5 @@
 checkpoints/
+comet/
 **/wandb/
 benchmarks/
 .ipynb_checkpoints/

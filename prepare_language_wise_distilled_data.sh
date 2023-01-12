@@ -1,12 +1,12 @@
 #!/bin/bash
 
-for langs in as+bn+or hi+pa+gu+mr ta+te+kn+ml; do 
+for langs in ta+kn+ml; do 
     echo "working with ${langs}"
     bash prepare_distilled_data.sh \
-    ../Downloads/data/v2_distilled_indic_en \
-    ../Downloads/data/benchmarks \
+    ../data_raw/v2_distilled_indic_en \
+    ../data_dir/benchmarks \
     ../data_dir/temp/$langs \
-    ../Downloads/indic-en \
+    ../data_dir/v2_indic_en_bin \
     indic \
     en \
     $langs
