@@ -1,18 +1,17 @@
-#/bin/bash
-
-fairseq-train $1/v2_0_binarized/final_bin \
+fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 8192 \
---arch transformer_1x_v0 \ 
+--max-tokens 4096 \
+--arch transformer_1x_v0 \
 --dropout 0.2 \
---task translation \
+--task translation_with_kd \
 --kd-strategy word_and_seq_level \
---teacher-checkpoint-path ../checkpoints/indicTrans/checkpoint_best.pt \
+--teacher-checkpoint-path ../../checkpoints/it/checkpoint_best.pt \
+--teacher-fp16 \
 --criterion label_smoothed_cross_entropy_with_kd \
 --label-smoothing 0.1 \
---alpha 1 \
+--alpha 0.5 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
@@ -22,16 +21,17 @@ fairseq-train $1/v2_0_binarized/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../checkpoints/base_distil_with_best_bleu \
+--save-dir ../../checkpoints/distil \
 --save-interval 1 \
---keep-last-epochs 1 \
+--save-interval-updates 5000 \
+--keep-interval-updates 0 \
+--no-epoch-checkpoints \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --validate-interval-updates 10000 \
---update-freq 1 \
---distributed-world-size 8 \
---num-workers 16 \
---wandb-project Indic-En-Distillation \
+--update-freq 16 \
+--distributed-world-size 1 \
+--num-workers 32 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
@@ -39,4 +39,5 @@ fairseq-train $1/v2_0_binarized/final_bin \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
---user-dir ../model_configs
+--memory-efficient-fp16 \
+--user-dir ../../model_configs
