@@ -2,13 +2,12 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 4096 \
+--max-tokens 8192 \
 --arch transformer_1x_v0 \
 --dropout 0.2 \
 --task translation_with_kd \
 --kd-strategy word_and_seq_level \
 --teacher-checkpoint-path ../../checkpoints/it/checkpoint_best.pt \
---teacher-fp16 \
 --criterion label_smoothed_cross_entropy_with_kd \
 --label-smoothing 0.1 \
 --alpha 0.5 \
@@ -26,10 +25,11 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --save-interval-updates 5000 \
 --keep-interval-updates 0 \
 --no-epoch-checkpoints \
+--run-sanity-validation-steps \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --validate-interval-updates 10000 \
---update-freq 16 \
+--update-freq 8 \
 --distributed-world-size 1 \
 --num-workers 32 \
 --eval-bleu \
