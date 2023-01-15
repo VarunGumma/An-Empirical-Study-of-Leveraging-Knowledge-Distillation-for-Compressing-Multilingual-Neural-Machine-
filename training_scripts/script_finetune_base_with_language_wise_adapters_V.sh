@@ -1,6 +1,6 @@
 #!/bin/bash
 
-save_to_dir="V_base_with_adapters_finetuned_on"
+save_to_dir="V_base_with_language_wise_adapters_finetuned_on"
 restore_from_dir="base"
 
 for lang in as bn gu hi kn ml mr or pa ta te; do

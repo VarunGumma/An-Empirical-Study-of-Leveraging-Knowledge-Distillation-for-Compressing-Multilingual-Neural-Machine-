@@ -33,7 +33,6 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --update-freq 1 \
 --distributed-world-size 8 \
 --num-workers 32 \
---wandb-project Indic-En-Distillation \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
@@ -41,4 +40,5 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
---user-dir ../../model_configs
+--user-dir ../../model_configs \
+--wandb-project Indic-En-Distillation
