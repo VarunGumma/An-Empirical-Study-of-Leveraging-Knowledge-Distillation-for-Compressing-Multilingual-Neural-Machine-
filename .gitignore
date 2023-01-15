@@ -4,6 +4,7 @@ comet/
 benchmarks/
 .ipynb_checkpoints/
 *.out
+*.pt
 data_dir/
 training_scripts/start_interactive.sh
 **/__pycache__/
