@@ -32,7 +32,7 @@ for model in "${models[@]}"; do
 	        fi
             
             if [[ -f $path/test.$src_lang ]]; then
-                bash joint_translate_eval.sh $path/test.$src_lang $path/outfile.test.$tgt_lang $src_lang $tgt_lang $ckpt_base_dir/$model $exp_dir
+                bash joint_translate.sh $path/test.$src_lang $path/outfile.test.$tgt_lang $src_lang $tgt_lang $ckpt_base_dir/$model $exp_dir
                 bash compute_bleu.sh $path/outfile.test.$tgt_lang $path/test.$tgt_lang $src_lang $tgt_lang > $save_path/${temp[1]}.json
             fi
 
