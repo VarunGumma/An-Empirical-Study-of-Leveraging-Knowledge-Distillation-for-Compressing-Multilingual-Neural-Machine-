@@ -1,10 +1,13 @@
-fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
+lang=$1
+type=$2
+
+fairseq-train ../../data_dir/bilingual/$type/$lang/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 16384 \
---arch transformer_1x_v1 \
---dropout 0.2 \
+--max-tokens 4096 \
+--arch transformer_1x_v0 \
+--dropout 0.1 \
 --criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
 --source-lang SRC \
@@ -13,17 +16,16 @@ fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --optimizer adam \
 --adam-betas "(0.9, 0.98)" \
 --clip-norm 1.0 \
---warmup-init-lr 1e-07 \
---lr 0.0005 \
---warmup-updates 4000 \
---save-dir ../checkpoints/base_stable \
+--warmup-init-lr 1e-09 \
+--lr 7e-4 \
+--warmup-updates 120 \
+--save-dir ../checkpoints/base_${lang}_${type} \
 --save-interval 1 \
---save-interval-updates 5000 \
 --keep-interval-updates 0 \
 --no-epoch-checkpoints \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---update-freq 4 \
+--update-freq 8 \
 --distributed-world-size 1 \
 --num-workers 32 \
 --user-dir ../model_configs \
@@ -33,4 +35,6 @@ fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --eval-bleu-remove-bpe \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
---maximize-best-checkpoint-metric
+--maximize-best-checkpoint-metric \
+--wandb-project Indic-En-Distillation \
+--memory-efficient-fp16 
