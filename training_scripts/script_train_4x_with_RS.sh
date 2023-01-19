@@ -4,6 +4,10 @@ fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --max-update 1000000 \
 --max-tokens 16384 \
 --arch transformer_4x_rs \
+--activation-fn gelu \
+--encoder-normalize-before \
+--decoder-normalize-before \
+--layernorm-embedding \
 --dropout 0.2 \
 --criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
@@ -26,7 +30,6 @@ fairseq-train ../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --update-freq 1 \
 --distributed-world-size 4 \
 --num-workers 16 \
---user-dir ../model_configs \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \

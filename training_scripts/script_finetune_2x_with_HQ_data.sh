@@ -4,7 +4,11 @@ fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --max-update 1000000 \
 --save-interval 1 \
 --save-interval-updates 5000 \
---arch transformer_2x_v0 \
+--arch transformer_2x \
+--activation-fn gelu \
+--encoder-normalize-before \
+--decoder-normalize-before \
+--layernorm-embedding \
 --criterion label_smoothed_cross_entropy \
 --source-lang SRC \
 --lr-scheduler inverse_sqrt \
@@ -20,7 +24,6 @@ fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---user-dir ../model_configs \
 --update-freq 1 \
 --distributed-world-size 2 \
 --max-tokens 12288 \

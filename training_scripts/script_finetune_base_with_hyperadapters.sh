@@ -18,7 +18,11 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --max-update 1000000 \
     --save-interval 1 \
     --save-interval-updates 500 \
-    --arch transformer_1x_v0 \
+    --arch transformer \
+    --activation-fn gelu \
+    --encoder-normalize-before \
+    --decoder-normalize-before \
+    --layernorm-embedding \
     --hyperadapter-langs as,bn,gu,hi,kn,ml,mr,or,pa,ta,te,en \
     --hyperadapter-src-lang $lang \
     --hyperadapter-tgt-lang en \
@@ -57,7 +61,6 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --keep-last-epochs 1 \
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
-    --user-dir ../model_configs \
     --update-freq 4 \
     --distributed-world-size 1 \
     --max-tokens 16384 \

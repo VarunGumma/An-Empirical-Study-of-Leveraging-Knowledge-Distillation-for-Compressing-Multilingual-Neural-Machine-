@@ -3,7 +3,11 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 8192 \
---arch transformer_1x_v0 \
+--arch transformer \
+--activation-fn gelu \
+--encoder-normalize-before \
+--decoder-normalize-before \
+--layernorm-embedding \
 --dropout 0.2 \
 --task translation_with_kd \
 --kd-strategy word_and_seq_level \
@@ -38,5 +42,4 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
 --memory-efficient-fp16 \
---user-dir ../../model_configs \
 --wandb-project Indic-En-Distillation

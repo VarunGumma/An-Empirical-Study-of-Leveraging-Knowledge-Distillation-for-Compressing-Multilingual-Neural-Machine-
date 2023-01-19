@@ -1,8 +1,12 @@
-fairseq-train  ../../data_dir/v2_distilled_indic_en_sample_bin/final_bin \
+fairseq-train ../../data_dir/v2_distilled_indic_en_sample_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-epoch 1 \
---arch transformer_1x_v0 \
+--arch transformer \
+--activation-fn gelu \
+--encoder-normalize-before \
+--decoder-normalize-before \
+--layernorm-embedding \
 --task translation_with_fisher_information \
 --criterion label_smoothed_cross_entropy \
 --source-lang SRC \
@@ -19,8 +23,7 @@ fairseq-train  ../../data_dir/v2_distilled_indic_en_sample_bin/final_bin \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --disable-validation \
---user-dir ../model_configs \
---update-freq 32 \
+--update-freq 16 \
 --distributed-world-size 1 \
 --max-tokens 2048 \
 --lr 5e-4 \

@@ -16,7 +16,11 @@ for lang in as+bn+or hi+pa+gu+mr ta+te+kn+ml; do
     --max-source-positions 210 \
     --max-target-positions 210 \
     --max-update 1000000 \
-    --arch transformer_1x_v0 \
+    --arch transformer \
+    --activation-fn gelu \
+    --encoder-normalize-before \
+    --decoder-normalize-before \
+    --layernorm-embedding \
     --encoder-add-adapters \
     --encoder-adapter-bottleneck-dim-trend 256,128,64,64,128,256 \
     --encoder-adapter-langs as+bn+or,hi+pa+gu+mr,ta+te+kn+ml \
@@ -44,7 +48,6 @@ for lang in as+bn+or hi+pa+gu+mr ta+te+kn+ml; do
     --keep-last-epochs 1 \
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
-    --user-dir ../model_configs \
     --update-freq 4 \
     --distributed-world-size 1 \
     --max-tokens 16384 \

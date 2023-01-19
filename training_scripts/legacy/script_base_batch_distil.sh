@@ -13,7 +13,11 @@ srun fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 8192 \
---arch transformer_1x_v0 \
+--arch transformer \
+--activation-fn gelu \
+--encoder-normalize-before \
+--decoder-normalize-before \
+--layernorm-embedding \
 --dropout 0.2 \
 --task translation_with_kd \
 --kd-strategy batch_level \
@@ -36,7 +40,6 @@ srun fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --save-interval-updates 5000 \
 --keep-interval-updates 0 \
 --no-epoch-checkpoints \
---run-sanity-validation-steps \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
@@ -49,5 +52,4 @@ srun fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
---user-dir ../../model_configs \
 --wandb-project Indic-En-Distillation

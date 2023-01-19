@@ -6,7 +6,11 @@ fairseq-train ../../data_dir/bilingual/$type/$lang/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 4096 \
---arch transformer_1x_v0 \
+--arch transformer \
+--activation-fn gelu \
+--encoder-normalize-before \
+--decoder-normalize-before \
+--layernorm-embedding \
 --dropout 0.1 \
 --criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
@@ -28,7 +32,6 @@ fairseq-train ../../data_dir/bilingual/$type/$lang/final_bin \
 --update-freq 8 \
 --distributed-world-size 1 \
 --num-workers 32 \
---user-dir ../model_configs \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
