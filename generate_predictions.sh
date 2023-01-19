@@ -25,12 +25,12 @@ for dir in `ls $original_data_dir`; do
             cp $original_data_dir/$dir/$lang_pair/test.* $pred_data_dir/$dir/$lang_pair
         fi 
 
-        bash joint_translate_predict.sh \
+        bash joint_translate.sh \
             $pred_data_dir/$dir/$lang_pair/test.$src_lang \
-            $pred_data_dir/$dir/$lang_pair/test_it.$tgt_lang \
+            $pred_data_dir/$dir/$lang_pair/test_base.$tgt_lang \
             $src_lang \
             $tgt_lang \
-            $exp_dir \
-            $ckpt_dir
+            $ckpt_dir \
+            $exp_dir
     done
 done

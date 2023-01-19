@@ -3,7 +3,8 @@ from os import listdir
 from subprocess import check_output
 
 base_path = "comet"
-comet_model = "wmt21-comet-qe-mqm"
+comet_model = "checkpoints/indicComet_checkpoint_best.ckpt"
+
 all_results = []
 
 print(f"using {comet_model}")
@@ -14,8 +15,8 @@ for model in ['base', 'it']:
             full_path = f"{base_path}/{dirname}/{lang_pair}"
             tgt = lang_pair.split('-')[-1]
             
-            # cmd = f"comet-score -s {full_path}/test.{tgt} -r {full_path}/test.en -t {full_path}/test_{model}.en --quiet --num_workers 32 --batch_size 256 --seed_everything 2023 --model {comet_model}"
-            cmd = f"comet-score -s {full_path}/test.{tgt} -t {full_path}/test_{model}.en --quiet --num_workers 32 --batch_size 256 --seed_everything 2023 --model {comet_model}"
+            cmd = f"comet-score -s {full_path}/test.{tgt} -r {full_path}/test.en -t {full_path}/test_{model}.en --quiet --num_workers 32 --batch_size 256 --seed_everything 2023 --model {comet_model}"
+            # cmd = f"comet-score -s {full_path}/test.{tgt} -t {full_path}/test_{model}.en --quiet --num_workers 32 --batch_size 256 --seed_everything 2023 --model {comet_model}"
 
             out = check_output(cmd, shell=True, text=True).strip()
             _path, _score = out.split('\t')
