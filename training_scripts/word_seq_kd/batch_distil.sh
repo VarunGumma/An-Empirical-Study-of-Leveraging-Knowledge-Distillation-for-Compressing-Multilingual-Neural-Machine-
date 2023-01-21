@@ -1,4 +1,14 @@
-fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
+#!/bin/bash
+
+#SBATCH --nodes 1
+#SBATCH --ntasks-per-node 1
+#SBATCH --cpus-per-task 16
+#SBATCH --gpus-per-task 8
+#SBATCH --partition ai4bp
+#SBATCH --time=07-00:00:00
+#SBATCH --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090
+
+srun fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -10,11 +20,12 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --layernorm-embedding \
 --dropout 0.2 \
 --task translation_with_kd \
---kd-strategy word_and_seq_level \
+--kd-strategy batch_level \
 --teacher-checkpoint-path ../../checkpoints/it/checkpoint_best.pt \
 --criterion label_smoothed_cross_entropy_with_kd \
 --label-smoothing 0.1 \
 --alpha 0.5 \
+--kd-rate 0.5 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
@@ -24,7 +35,7 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../../checkpoints/distil \
+--save-dir ../../checkpoints/batch_distil \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 0 \
@@ -33,7 +44,7 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
 --distributed-world-size 8 \
---num-workers 64 \
+--num-workers 16 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
@@ -41,5 +52,4 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
---memory-efficient-fp16 \
 --wandb-project Indic-En-Distillation

@@ -12,7 +12,7 @@ for lang in as+bn+or hi+pa+gu+mr ta+te+kn+ml; do
     echo "restoring from ${restore_from_dir}"
     echo "saving checkpoints to ${save_to_dir}"
 
-    fairseq-train ../../data_dir/v2_distilled_indic_en_language_family_LF1_bin/$lang/final_bin \
+    fairseq-train ../../../data_bin/v2_distilled_indic_en_language_family_bin/$lang/final_bin \
     --max-source-positions 210 \
     --max-target-positions 210 \
     --max-update 1000000 \
@@ -42,7 +42,7 @@ for lang in as+bn+or hi+pa+gu+mr ta+te+kn+ml; do
     --warmup-init-lr 1e-07 \
     --warmup-updates 1200 \
     --dropout 0.2 \
-    --save-dir ../checkpoints/$save_to_dir \
+    --save-dir ../../checkpoints/$save_to_dir \
     --save-interval 1 \
     --save-interval-updates 500 \
     --keep-last-epochs 1 \
@@ -52,13 +52,13 @@ for lang in as+bn+or hi+pa+gu+mr ta+te+kn+ml; do
     --distributed-world-size 1 \
     --max-tokens 16384 \
     --lr 5e-4 \
-    --restore-file ../checkpoints/$restore_from_dir/checkpoint_best.pt \
+    --restore-file ../../checkpoints/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
     --reset-meters \
     --reset-dataloader \
     --reset-optimizer \
-    --num-workers 32 \
+    --num-workers 16 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \

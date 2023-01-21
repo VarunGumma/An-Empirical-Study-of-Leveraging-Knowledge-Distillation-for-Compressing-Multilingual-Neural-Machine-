@@ -1,4 +1,4 @@
-fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
+fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -10,14 +10,13 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --layernorm-embedding \
 --dropout 0.2 \
 --task translation_with_kd \
---kd-strategy global_multi_level \
+--kd-strategy global_level \
 --teacher-checkpoint-path ../../checkpoints/it/checkpoint_best.pt \
 --criterion label_smoothed_cross_entropy_with_kd \
 --label-smoothing 0.1 \
 --alpha 0.5 \
---use-adaptive-kd-rates \
---kd-queue-size 5000000 \
---kd-selection-temp 2 \
+--kd-rate 0.5 \
+--kd-queue-size 10000000 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
@@ -27,7 +26,7 @@ fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../../checkpoints/global_multi_adaptive_distil \
+--save-dir ../../checkpoints/global_distil \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 0 \

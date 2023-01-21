@@ -1,4 +1,4 @@
-fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
+fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -20,15 +20,15 @@ fairseq-train  ../../data_dir/v2_distilled_indic_en_HQ_bin/final_bin \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir ../checkpoints/HQ-base \
+--save-dir ../../checkpoints/HQ-base \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---update-freq 2 \
---distributed-world-size 1 \
---max-tokens 12288 \
+--update-freq 1 \
+--distributed-world-size 3 \
+--max-tokens 8192 \
 --lr 3e-5 \
---restore-file ../checkpoints/base/checkpoint_best.pt \
+--restore-file ../../checkpoints/base/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \

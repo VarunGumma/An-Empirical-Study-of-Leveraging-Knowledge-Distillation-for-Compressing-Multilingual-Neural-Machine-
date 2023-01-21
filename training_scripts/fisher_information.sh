@@ -1,4 +1,4 @@
-fairseq-train ../../data_dir/v2_distilled_indic_en_sample_bin/final_bin \
+fairseq-train ../../data_bin/v2_distilled_indic_en_sample_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-epoch 1 \

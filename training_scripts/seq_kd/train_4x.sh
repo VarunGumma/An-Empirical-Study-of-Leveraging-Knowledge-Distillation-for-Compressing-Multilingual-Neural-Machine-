@@ -8,24 +8,19 @@
 #SBATCH --time=07-00:00:00
 #SBATCH --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090
 
-srun fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
+srun fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 8192 \
---arch transformer \
+--arch transformer_4x \
 --activation-fn gelu \
 --encoder-normalize-before \
 --decoder-normalize-before \
 --layernorm-embedding \
 --dropout 0.2 \
---task translation_with_kd \
---kd-strategy batch_level \
---teacher-checkpoint-path ../../checkpoints/it/checkpoint_best.pt \
---criterion label_smoothed_cross_entropy_with_kd \
+--criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
---alpha 0.5 \
---kd-rate 0.5 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
@@ -35,11 +30,12 @@ srun fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../../checkpoints/batch_distil \
+--save-dir ../../checkpoints/4x \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 0 \
 --no-epoch-checkpoints \
+--keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
@@ -52,4 +48,4 @@ srun fairseq-train ../../../data_dir/v2_distilled_indic_en_bin/final_bin \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
---wandb-project Indic-En-Distillation
+--wandb-project Indic-En-Distillation \
