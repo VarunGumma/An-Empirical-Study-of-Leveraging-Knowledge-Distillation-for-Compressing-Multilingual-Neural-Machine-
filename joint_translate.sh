@@ -55,7 +55,6 @@ fairseq-interactive $data_bin_dir \
     --skip-invalid-size-inputs-valid-test \
     --input $src_input_bpe_fname \
     --num-workers $num_workers \
-    --user-dir model_configs \
     --memory-efficient-fp16  >  $tgt_output_fname.log 2>&1
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
