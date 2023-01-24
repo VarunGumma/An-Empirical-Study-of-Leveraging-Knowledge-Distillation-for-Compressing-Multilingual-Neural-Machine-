@@ -21,15 +21,15 @@ fairseq-train ../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --save-interval-updates 5000 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---update-freq 16 \
+--update-freq 8 \
 --distributed-world-size 1 \
---max-tokens 2048 \
+--max-tokens 8192 \
 --lr 5e-4 \
 --restore-file ../checkpoints/base/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
 --reset-optimizer \
---num-workers 16 \
+--num-workers 32 \
 --memory-efficient-fp16 \
---fisher-masks-path ../checkpoints/masks.pt \
+--load-fisher-masks-from ../checkpoints/masks.pt

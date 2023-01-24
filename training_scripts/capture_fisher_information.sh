@@ -1,12 +1,8 @@
-fairseq-train ../../data_bin/v2_distilled_indic_en_hq_bin/final_bin \
+fairseq-train ../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-epoch 1 \
---arch transformer \
---activation-fn gelu \
---encoder-normalize-before \
---decoder-normalize-before \
---layernorm-embedding \
+--arch transformer_1x_v0 \
 --task translation_capture_fisher_information \
 --criterion label_smoothed_cross_entropy \
 --source-lang SRC \
@@ -26,8 +22,9 @@ fairseq-train ../../data_bin/v2_distilled_indic_en_hq_bin/final_bin \
 --update-freq 3 \
 --distributed-world-size 1 \
 --max-tokens 8192 \
---lr 5e-4 \
+--lr 3e-5 \
 --restore-file ../checkpoints/base/checkpoint_best.pt \
+--save-precision-matrices-to ../checkpoints/precision_matrices_hq.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
