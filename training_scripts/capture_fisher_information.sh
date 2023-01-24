@@ -1,4 +1,4 @@
-fairseq-train ../../data_bin/v2_distilled_indic_en_sample_bin/final_bin \
+fairseq-train ../../data_bin/v2_distilled_indic_en_hq_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-epoch 1 \
@@ -7,7 +7,7 @@ fairseq-train ../../data_bin/v2_distilled_indic_en_sample_bin/final_bin \
 --encoder-normalize-before \
 --decoder-normalize-before \
 --layernorm-embedding \
---task translation_with_fisher_information \
+--task translation_capture_fisher_information \
 --criterion label_smoothed_cross_entropy \
 --source-lang SRC \
 --target-lang TGT \
@@ -23,13 +23,13 @@ fairseq-train ../../data_bin/v2_distilled_indic_en_sample_bin/final_bin \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --disable-validation \
---update-freq 16 \
+--update-freq 3 \
 --distributed-world-size 1 \
---max-tokens 2048 \
+--max-tokens 8192 \
 --lr 5e-4 \
 --restore-file ../checkpoints/base/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
 --reset-optimizer \
---num-workers 16
+--num-workers 32
