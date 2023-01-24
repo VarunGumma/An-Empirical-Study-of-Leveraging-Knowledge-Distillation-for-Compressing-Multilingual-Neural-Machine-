@@ -23,8 +23,13 @@ fairseq-train ../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 8 \
 --distributed-world-size 1 \
+<<<<<<< HEAD
 --max-tokens 8192 \
 --lr 5e-4 \
+=======
+--max-tokens 2048 \
+--lr 3e-5 \
+>>>>>>> 8601bdf (.)
 --restore-file ../checkpoints/base/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
