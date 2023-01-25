@@ -92,67 +92,7 @@ def preprocess(infname, outfname, lang, transliterate=False):
     return n
 
 
-def old_preprocess(infname, outfname, lang):
-    """
-    Preparing each corpus file:
-      - Normalization
-      - Tokenization
-      - Script coversion to Devanagari for Indic scripts
-    """
-    n = 0
-    num_lines = sum(1 for line in open(infname, "r"))
-    # reading
-    with open(infname, "r", encoding="utf-8") as infile, open(
-        outfname, "w", encoding="utf-8"
-    ) as outfile:
-
-        if lang == "en":
-            en_tok = MosesTokenizer(lang="en")
-            en_normalizer = MosesPunctNormalizer()
-            for line in tqdm(infile, total=num_lines):
-                outline = " ".join(
-                    en_tok.tokenize(en_normalizer.normalize(line.strip()), escape=False)
-                )
-                outfile.write(outline + "\n")
-                n += 1
-
-        else:
-            normfactory = indic_normalize.IndicNormalizerFactory()
-            normalizer = normfactory.get_normalizer(lang)
-            for line in tqdm(infile, total=num_lines):
-                outline = (
-                    unicode_transliterate.UnicodeIndicTransliterator.transliterate(
-                        " ".join(
-                            indic_tokenize.trivial_tokenize(
-                                normalizer.normalize(line.strip()), lang
-                            )
-                        ),
-                        lang,
-                        "hi",
-                    ).replace(" ् ", "्")
-                )
-
-                outfile.write(outline + "\n")
-                n += 1
-    return n
-
-
 if __name__ == "__main__":
-
-    # INDIC_NLP_LIB_HOME = "indic_nlp_library"
-    # INDIC_NLP_RESOURCES = "indic_nlp_resources"
-    # sys.path.append(r'{}'.format(INDIC_NLP_LIB_HOME))
-    # common.set_resources_path(INDIC_NLP_RESOURCES)
-
-    # data_dir = '../joint_training/v1'
-    # new_dir = data_dir + '.norm'
-    # for path, subdirs, files in os.walk(data_dir):
-    #     for name in files:
-    #         infile = os.path.join(path, name)
-    #         lang = infile.split('.')[-1]
-    #         outfile = os.path.join(path.replace(data_dir, new_dir), name)
-    #         preprocess(infile, outfile, lang)
-    # loader.load()
 
     infname = sys.argv[1]
     outfname = sys.argv[2]

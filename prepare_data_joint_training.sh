@@ -8,7 +8,9 @@ vocab_type=${5:-"sep"} # sep or joint
 train_data_dir=${6:-"$exp_dir"}
 devtest_data_dir=${7:-"$exp_dir/devtest/all"}
 reuse_bpe_vocab=${8:-false}
-vocab_bpe_dir=${9-"none"}
+vocab_bpe_dir=${9:-"none"}
+transliterate=${10:-true}
+num_operations=${11:-32000}
 
 echo "Running experiment ${exp_dir} on ${src_langs} to ${tgt_lang}"
 
@@ -19,6 +21,10 @@ mkdir -p $train_processed_dir
 mkdir -p $devtest_processed_dir
 
 IFS='+' read -ra langs <<< $languages_list
+
+if [[ "$transliterate" == false ]]; then
+	echo "skipping transliteration to Devnagiri"
+fi
 
 for lang in ${langs[@]}; do
 	if [[ "$src_lang" == en ]]; then
@@ -39,8 +45,8 @@ for lang in ${langs[@]}; do
 	train_outfname_tgt=$train_norm_dir/train.$tgt_lang
 	echo "Applying normalization and script conversion for train"
 	# this is for preprocessing text and in for indic langs, we convert all scripts to devnagiri
-	input_size=`python3 scripts/preprocess_translate.py $train_infname_src $train_outfname_src $src_lang true`
-	input_size=`python3 scripts/preprocess_translate.py $train_infname_tgt $train_outfname_tgt $tgt_lang true`
+	input_size=`python3 scripts/preprocess_translate.py $train_infname_src $train_outfname_src $src_lang $transliterate`
+	input_size=`python3 scripts/preprocess_translate.py $train_infname_tgt $train_outfname_tgt $tgt_lang $transliterate`
 	echo "Number of sentences in train: $input_size"
 	# dev preprocessing
 	dev_infname_src=$devtest_data_dir/en-${lang}/dev.$src_lang
@@ -48,8 +54,8 @@ for lang in ${langs[@]}; do
 	dev_outfname_src=$devtest_norm_dir/dev.$src_lang
 	dev_outfname_tgt=$devtest_norm_dir/dev.$tgt_lang
 	echo "Applying normalization and script conversion for dev"
-	input_size=`python3 scripts/preprocess_translate.py $dev_infname_src $dev_outfname_src $src_lang true`
-	input_size=`python3 scripts/preprocess_translate.py $dev_infname_tgt $dev_outfname_tgt $tgt_lang true`
+	input_size=`python3 scripts/preprocess_translate.py $dev_infname_src $dev_outfname_src $src_lang $transliterate`
+	input_size=`python3 scripts/preprocess_translate.py $dev_infname_tgt $dev_outfname_tgt $tgt_lang $transliterate`
 	echo "Number of sentences in dev: $input_size"
 	# test preprocessing
 	test_infname_src=$devtest_data_dir/en-${lang}/test.$src_lang
@@ -57,8 +63,8 @@ for lang in ${langs[@]}; do
 	test_outfname_src=$devtest_norm_dir/test.$src_lang
 	test_outfname_tgt=$devtest_norm_dir/test.$tgt_lang
 	echo "Applying normalization and script conversion for test"
-	input_size=`python3 scripts/preprocess_translate.py $test_infname_src $test_outfname_src $src_lang true`
-	input_size=`python3 scripts/preprocess_translate.py $test_infname_tgt $test_outfname_tgt $tgt_lang true`
+	input_size=`python3 scripts/preprocess_translate.py $test_infname_src $test_outfname_src $src_lang $transliterate`
+	input_size=`python3 scripts/preprocess_translate.py $test_infname_tgt $test_outfname_tgt $tgt_lang $transliterate`
 	echo "Number of sentences in test: $input_size"
 done
 
@@ -71,9 +77,6 @@ done
 # lang1-lang2 n1
 # lang1-lang3 n2
 
-echo $src_lang
-echo $tgt_lang
-
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'train'
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'dev'
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'test'
@@ -82,9 +85,9 @@ if [[ "$reuse_bpe_vocab" == false ]]; then
 	echo "Learning bpe. This will take a very long time depending on the size of the dataset"
 	echo `date`
 	if [[ "$vocab_type" == "sep" ]]; then
-	    bash learn_single_bpe.sh $exp_dir
+	    bash learn_single_bpe.sh $exp_dir $num_operations
 	else 
-	    bash learn_bpe.sh $exp_dir
+	    bash learn_bpe.sh $exp_dir $num_operations
 	fi
 else
 	echo "reusing old bpe"
@@ -139,8 +142,7 @@ if [ "$reuse_bpe_vocab" == true ]; then
 		--tgtdict $exp_dir/final_bin/dict.TGT.txt \
 		--workers $num_workers \
 		--thresholdtgt 5 \
-		--thresholdsrc 5 \
-		--memory-efficient-fp16
+		--thresholdsrc 5
 else
 	echo "Binarizing data"
 	fairseq-preprocess \
@@ -152,6 +154,5 @@ else
 		--destdir $exp_dir/final_bin \
 		--workers $num_workers \
 		--thresholdtgt 5 \
-		--thresholdsrc 5 \
-		--memory-efficient-fp16
+		--thresholdsrc 5
 fi

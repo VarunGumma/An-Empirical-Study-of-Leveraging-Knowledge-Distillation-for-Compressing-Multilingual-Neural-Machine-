@@ -1,11 +1,10 @@
 lang=$1
-type=$2
 
-fairseq-train ../../data_bin/bilingual/$type/$lang/final_bin \
+fairseq-train ../../data_bin/bilingual_wo_transliteration/distilled/$lang/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 4096 \
+--max-tokens 1024 \
 --arch transformer \
 --activation-fn gelu \
 --encoder-normalize-before \
@@ -20,24 +19,23 @@ fairseq-train ../../data_bin/bilingual/$type/$lang/final_bin \
 --optimizer adam \
 --adam-betas "(0.9, 0.98)" \
 --clip-norm 1.0 \
---warmup-init-lr 1e-09 \
+--warmup-init-lr 1e-07 \
 --lr 7e-4 \
---warmup-updates 120 \
---save-dir ../checkpoints/base_${lang}_${type} \
+--warmup-updates 2000 \
+--save-dir ../../data_bin/bilingual_wo_transliteration/distilled/$lang \
 --save-interval 1 \
---keep-interval-updates 0 \
+--save-interval-updates 1000 \
+--keep-interval-updates 1 \
 --no-epoch-checkpoints \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---update-freq 8 \
+--update-freq 1 \
 --distributed-world-size 1 \
---num-workers 16 \
+--num-workers 32 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
 --eval-bleu-remove-bpe \
---eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
---wandb-project Indic-En-Distillation \
 --memory-efficient-fp16 

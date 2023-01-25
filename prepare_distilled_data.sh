@@ -3,10 +3,13 @@
 train_dir=$1
 devtest_dir=$2
 exp_dir=$3
-vocab_bpe_dir=$4
-src_lang=$5
-tgt_lang=$6
-languages_list=$7
+src_lang=$4
+tgt_lang=$5
+languages_list=$6
+reuse_bpe_vocab=$7
+vocab_bpe_dir=$8
+transliterate=$9
+num_operations=${10}
 
 echo `date`
 echo -e "[IMPORTANT]\tMAKE SURE THE VOCAB FOLDER IN THE EXPERIMENT DIRECTORY CONTAINS THE BPE CODES AND VOCABULARY OF THE ORIGINAL INDICTRANS MODEL!"
@@ -33,7 +36,7 @@ mkdir -p $exp_dir/devtest
 cp -r $devtest_dir/all $exp_dir/devtest
 
 echo -e "[INFO]\tpreparing data. It is recommened to use a multicore processor or a GPU for this."
-bash prepare_data_joint_training.sh $exp_dir $src_lang $tgt_lang $languages_list sep $exp_dir $exp_dir/devtest/all true $vocab_bpe_dir
+bash prepare_data_joint_training.sh $exp_dir $src_lang $tgt_lang $languages_list sep $exp_dir $exp_dir/devtest/all $reuse_bpe_vocab $vocab_bpe_dir $transliterate $num_operations
 
 echo -e "[INFO]\tcleaning unnecessary files from exp dir to save space"
 rm -rf $exp_dir/bpe $exp_dir/devtest $exp_dir/final $exp_dir/data $exp_dir/norm $exp_dir/en-* $devtest_dir/all
