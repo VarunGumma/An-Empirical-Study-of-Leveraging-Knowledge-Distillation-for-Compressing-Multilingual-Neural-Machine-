@@ -17,7 +17,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
         distributed_world_size=2
     fi
 
-    fairseq-train ../../data_bin/bilingual_wo_transliteration/og/$lang/final_bin \
+    fairseq-train ../../data_bin/bilingual_wo_transliteration/distilled/$lang/final_bin \
     --max-source-positions 210 \
     --max-target-positions 210 \
     --max-update 1000000 \
@@ -39,7 +39,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --warmup-init-lr 1e-09 \
     --lr 7e-4 \
     --warmup-updates $warmup \
-    --save-dir ../checkpoints/og_bilingual_checkpoints/${lang}_wo_transliteration \
+    --save-dir ../checkpoints/distilled_bilingual_checkpoints/${lang}_wo_transliteration \
     --save-interval 1 \
     --save-interval-updates $warmup \
     --keep-interval-updates 1 \

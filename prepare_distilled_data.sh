@@ -9,7 +9,7 @@ languages_list=$6
 reuse_bpe_vocab=$7
 vocab_bpe_dir=$8
 transliterate=$9
-num_operations=${10}
+num_operations=${10:-32000}
 
 echo `date`
 echo -e "[IMPORTANT]\tMAKE SURE THE VOCAB FOLDER IN THE EXPERIMENT DIRECTORY CONTAINS THE BPE CODES AND VOCABULARY OF THE ORIGINAL INDICTRANS MODEL!"
