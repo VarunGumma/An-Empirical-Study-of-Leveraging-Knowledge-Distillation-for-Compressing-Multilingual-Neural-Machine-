@@ -6,6 +6,7 @@ src_lang=$3
 tgt_lang=$4
 ckpt_dir=$5
 exp_dir=$6
+transliterate=$7
 ref_fname=$7
 
 SRC_PREFIX='SRC'
@@ -18,7 +19,7 @@ model_path=$ckpt_dir/checkpoint_best.pt
 ### normalization and script conversion
 
 echo -e "[INFO]\tApplying normalization and script conversion"
-input_size=`python scripts/preprocess_translate.py $infname $outfname.norm $src_lang true`
+input_size=`python scripts/preprocess_translate.py $infname $outfname.norm $src_lang $transliterate`
 echo -e "[INFO]\tNumber of sentences in input: $input_size"
 
 ### apply BPE to input file
@@ -46,8 +47,8 @@ fairseq-interactive $data_bin_dir \
     -s $SRC_PREFIX -t $TGT_PREFIX \
     --distributed-world-size 1 \
     --path $model_path \
-    --batch-size 64 \
-    --buffer-size 75 \
+    --batch-size 96 \
+    --buffer-size 100 \
     --beam 5 \
     --max-len-a 1.2 \
     --max-len-b 10 \
