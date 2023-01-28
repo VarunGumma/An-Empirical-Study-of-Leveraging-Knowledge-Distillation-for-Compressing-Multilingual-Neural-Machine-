@@ -7,7 +7,7 @@ exp_dir=$3
 src_lang=$4
 tgt_lang=$5
 transliterate=$6
-shift 5
+shift 6
 
 models=("$@")
 
@@ -32,9 +32,9 @@ for model in "${models[@]}"; do
 		        src_lang=${temp[1]}
 	        fi
             
-            if [[ -f $path/test.$src_lang ]]; then
-                bash joint_translate.sh $path/test.$src_lang $path/outfile.test.$tgt_lang $src_lang $tgt_lang $ckpt_base_dir/$model $exp_dir $transliterate
-                bash compute_bleu.sh $path/outfile.test.$tgt_lang $path/test.$tgt_lang $src_lang $tgt_lang > $save_path/${temp[1]}.json
+            if [[ -f $path/dev.$src_lang ]]; then
+                bash joint_translate.sh $path/dev.$src_lang $path/outfile.$tgt_lang $src_lang $tgt_lang $ckpt_base_dir/$model $exp_dir $transliterate
+                bash compute_bleu.sh $path/outfile.$tgt_lang $path/dev.$tgt_lang $src_lang $tgt_lang > $save_path/${temp[1]}.json
             fi
 
         done 

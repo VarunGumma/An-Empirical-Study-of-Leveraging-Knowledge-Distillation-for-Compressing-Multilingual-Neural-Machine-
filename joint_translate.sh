@@ -7,7 +7,7 @@ tgt_lang=$4
 ckpt_dir=$5
 exp_dir=$6
 transliterate=$7
-ref_fname=$7
+ref_fname=$8
 
 SRC_PREFIX='SRC'
 TGT_PREFIX='TGT'
@@ -47,8 +47,8 @@ fairseq-interactive $data_bin_dir \
     -s $SRC_PREFIX -t $TGT_PREFIX \
     --distributed-world-size 1 \
     --path $model_path \
-    --batch-size 96 \
-    --buffer-size 100 \
+    --batch-size 64 \
+    --buffer-size 70 \
     --beam 5 \
     --max-len-a 1.2 \
     --max-len-b 10 \
