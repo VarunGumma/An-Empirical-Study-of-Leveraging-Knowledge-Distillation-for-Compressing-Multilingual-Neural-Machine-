@@ -27,9 +27,9 @@ fairseq-train ../../data_bin/v2_distilled_indic_en_wo_transliteration_bin/final_
 --no-epoch-checkpoints \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---update-freq 1 \
---distributed-world-size 4 \
---num-workers 8 \
+--update-freq 2 \
+--distributed-world-size 2 \
+--num-workers 12 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
