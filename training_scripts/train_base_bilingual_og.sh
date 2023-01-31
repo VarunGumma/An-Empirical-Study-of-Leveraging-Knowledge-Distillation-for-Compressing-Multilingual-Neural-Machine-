@@ -5,19 +5,19 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
         distributed_world_size=1
     elif [[ "$lang" == gu ]]; then
         warmup=2000
-        update_freq=4
-        distributed_world_size=2
-    elif [[ "$lang" == or ]]; then
-        warmup=4000
         update_freq=1
-        distributed_world_size=1
+        distributed_world_size=4
+    elif [[ "$lang" == or ]]; then
+        warmup=1600
+        update_freq=1
+        distributed_world_size=4
     else
         warmup=4000
-        update_freq=4
-        distributed_world_size=2
+        update_freq=1
+        distributed_world_size=4
     fi
 
-    fairseq-train ../../data_bin/bilingual/distilled/$lang/final_bin \
+    fairseq-train ../../data_bin/bilingual/og/$lang/final_bin \
     --max-source-positions 210 \
     --max-target-positions 210 \
     --max-update 1000000 \
@@ -39,7 +39,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --warmup-init-lr 1e-09 \
     --lr 7e-4 \
     --warmup-updates $warmup \
-    --save-dir ../checkpoints/distilled_bilingual_checkpoints/${lang} \
+    --save-dir ../checkpoints/og_bilingual/${lang} \
     --save-interval 1 \
     --save-interval-updates $warmup \
     --keep-interval-updates 1 \
@@ -48,7 +48,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --skip-invalid-size-inputs-valid-test \
     --update-freq $update_freq \
     --distributed-world-size $distributed_world_size \
-    --num-workers 8 \
+    --num-workers 16 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \

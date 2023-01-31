@@ -1,18 +1,8 @@
-#!/bin/bash
-
-#SBATCH --nodes 1
-#SBATCH --ntasks-per-node 1
-#SBATCH --cpus-per-task 16
-#SBATCH --gpus-per-task 8
-#SBATCH --partition ai4bp
-#SBATCH --time=07-00:00:00
-#SBATCH --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090
-
-srun fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
+fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 8192 \
+--max-tokens 16384 \
 --arch transformer_4x \
 --activation-fn gelu \
 --encoder-normalize-before \
@@ -38,9 +28,9 @@ srun fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---update-freq 1 \
---distributed-world-size 8 \
---num-workers 16 \
+--update-freq 2 \
+--distributed-world-size 2 \
+--num-workers 8 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
@@ -49,3 +39,4 @@ srun fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
 --wandb-project Indic-En-Distillation \
+--memory-efficient-fp16
