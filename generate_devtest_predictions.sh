@@ -26,11 +26,12 @@ for dir in `ls $original_data_dir`; do
         fi 
 
         bash joint_translate.sh \
-            $pred_data_dir/$dir/$lang_pair/test.$src_lang \
-            $pred_data_dir/$dir/$lang_pair/test_base.$tgt_lang \
-            $src_lang \
-            $tgt_lang \
-            $ckpt_dir \
-            $exp_dir
+        $pred_data_dir/$dir/$lang_pair/test.$src_lang \
+        $pred_data_dir/$dir/$lang_pair/test_base.$tgt_lang \
+        $src_lang \
+        $tgt_lang \
+        $ckpt_dir \
+        $exp_dir \
+        true
     done
 done

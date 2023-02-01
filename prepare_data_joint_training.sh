@@ -1,19 +1,43 @@
-#/bin/bash
+#!/bin/bash
 
-exp_dir=$1
-src_langs=$2
-tgt_lang=$3
-languages_list=$4
-vocab_type=${5:-"sep"} # sep or joint
-train_data_dir=${6:-"$exp_dir"}
-devtest_data_dir=${7:-"$exp_dir/devtest/all"}
-reuse_bpe_vocab=${8:-false}
-vocab_bpe_dir=${9:-"none"}
+train_dir=$1
+devtest_dir=$2
+exp_dir=$3
+src_lang=$4
+tgt_lang=$5
+languages_list=$6
+reuse_bpe_vocab=$7
+vocab_bpe_dir=$8
+vocab_type=${9:-sep} # sep or joint
 transliterate=${10:-true}
 num_operations=${11:-32000}
 
-echo "Running experiment ${exp_dir} on ${src_langs} to ${tgt_lang}"
+echo `date`
+rm -rf $exp_dir
+mkdir -p $exp_dir
 
+echo -e "[INFO]\tremoving overlap between train and devtest"
+python3 scripts/remove_train_devtest_overlaps.py -t $train_dir -d $devtest_dir -l $languages_list
+
+echo -e "[INFO]\tmerging devtest files"
+rm -rf $devtest_dir/all
+bash merge_benchmarks.sh $devtest_dir flores101_dataset $languages_list
+
+echo -e "[INFO]\tcopying data"
+IFS='+' read -ra langs <<< $languages_list
+for lang in ${langs[@]}; do
+    # copy only data you want to work with
+    # saves space and is more efficient
+    cp -r $train_dir/en-$lang $exp_dir
+done
+mkdir -p $exp_dir/devtest
+cp -r $devtest_dir/all $exp_dir/devtest
+
+echo -e "[INFO]\tpreparing data. It is recommened to use a multicore processor for this."
+train_data_dir=$exp_dir
+devtest_data_dir=$exp_dir/devtest/all
+
+echo "Running experiment ${exp_dir} on ${src_lang} to ${tgt_lang}"
 train_processed_dir=$exp_dir/data
 devtest_processed_dir=$exp_dir/data
 
@@ -83,7 +107,6 @@ python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_
 
 if [[ "$reuse_bpe_vocab" == false ]]; then
 	echo "Learning bpe. This will take a very long time depending on the size of the dataset"
-	echo `date`
 	if [[ "$vocab_type" == "sep" ]]; then
 	    bash learn_single_bpe.sh $exp_dir $num_operations
 	else 
@@ -98,15 +121,16 @@ else
 	cp -r  $vocab_bpe_dir/final_bin/dict.* $exp_dir/final_bin
 fi
 
-
-echo `date`
 echo "Applying bpe"
-
 if [[ "$vocab_type" == "sep" ]]
 then
-    bash apply_single_bpe_traindevtest_notag.sh $exp_dir
+    bash apply_single_bpe_traindevtest_notag.sh $exp_dir 'train'
+	bash apply_single_bpe_traindevtest_notag.sh $exp_dir 'dev'
+	bash apply_single_bpe_traindevtest_notag.sh $exp_dir 'test'
 else 
-    bash apply_bpe_traindevtest_notag.sh $exp_dir
+    bash apply_bpe_traindevtest_notag.sh $exp_dir 'train'
+	bash apply_bpe_traindevtest_notag.sh $exp_dir 'dev'
+	bash apply_bpe_traindevtest_notag.sh $exp_dir 'test'
 fi
 
 mkdir -p $exp_dir/final
@@ -117,13 +141,6 @@ echo "Adding language tags"
 python3 scripts/add_joint_tags_translate.py $exp_dir 'train'
 python3 scripts/add_joint_tags_translate.py $exp_dir 'dev'
 python3 scripts/add_joint_tags_translate.py $exp_dir 'test'
-
-# # this is important step if you are training with tpu and using num_batch_buckets
-# # the currnet implementation does not remove outliers before bucketing and hence
-# # removing these large sentences ourselves helps with getting better buckets
-# python3 scripts/remove_large_sentences.py $exp_dir/bpe/train.SRC $exp_dir/bpe/train.TGT $exp_dir/final/train.SRC $exp_dir/final/train.TGT
-# python3 scripts/remove_large_sentences.py $exp_dir/bpe/dev.SRC $exp_dir/bpe/dev.TGT $exp_dir/final/dev.SRC $exp_dir/final/dev.TGT
-# python3 scripts/remove_large_sentences.py $exp_dir/bpe/test.SRC $exp_dir/bpe/test.TGT $exp_dir/final/test.SRC $exp_dir/final/test.TGT
 
 # use cpu_count to get num_workers instead of setting it manually when running in different instances
 num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count())"`
@@ -156,3 +173,8 @@ else
 		--thresholdtgt 5 \
 		--thresholdsrc 5
 fi
+
+echo -e "[INFO]\tcleaning unnecessary files from exp dir to save space"
+rm -rf $exp_dir/bpe $exp_dir/devtest $exp_dir/final $exp_dir/data $exp_dir/norm $exp_dir/en-* $devtest_dir/all
+
+echo -e "[INFO]\tcompleted!"

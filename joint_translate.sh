@@ -7,14 +7,11 @@ tgt_lang=$4
 ckpt_dir=$5
 exp_dir=$6
 transliterate=$7
-ref_fname=$8
+# ref_fname=$8
 
 SRC_PREFIX='SRC'
 TGT_PREFIX='TGT'
-
 SUBWORD_NMT_DIR='subword-nmt'
-data_bin_dir=$exp_dir/final_bin
-model_path=$ckpt_dir/checkpoint_best.pt
 
 ### normalization and script conversion
 
@@ -38,15 +35,13 @@ python3 scripts/add_tags_translate.py $outfname._bpe $outfname.bpe $src_lang $tg
 
 echo -e "[INFO]\tDecoding"
 
-src_input_bpe_fname=$outfname.bpe
-tgt_output_fname=$outfname
-
 num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count())"`
 
-fairseq-interactive $data_bin_dir \
+fairseq-interactive \
+    $exp_dir/final_bin \
     -s $SRC_PREFIX -t $TGT_PREFIX \
-    --distributed-world-size 2 \
-    --path $model_path \
+    --distributed-world-size 1 \
+    --path $ckpt_dir/checkpoint_best.pt \
     --batch-size 64 \
     --buffer-size 70 \
     --beam 5 \
@@ -54,13 +49,13 @@ fairseq-interactive $data_bin_dir \
     --max-len-b 10 \
     --remove-bpe \
     --skip-invalid-size-inputs-valid-test \
-    --input $src_input_bpe_fname \
+    --input $outfname.bpe \
     --num-workers $num_workers \
-    --memory-efficient-fp16  >  $tgt_output_fname.log 2>&1
+    --memory-efficient-fp16  >  $outfname.log 2>&1
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.
-python3 scripts/postprocess_translate.py $tgt_output_fname.log $tgt_output_fname $input_size $tgt_lang true
+python3 scripts/postprocess_translate.py $outfname.log $outfname $input_size $tgt_lang $transliterate
 
 rm $outfname.*
 
