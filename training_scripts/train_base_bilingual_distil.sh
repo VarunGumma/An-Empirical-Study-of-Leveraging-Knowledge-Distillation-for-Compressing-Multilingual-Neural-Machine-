@@ -1,4 +1,4 @@
-for lang in as bn gu hi kn ml mr or pa ta te; do
+for lang in  bn gu hi kn ml mr or pa ta te; do
     if [[ "$lang" == as ]]; then
         warmup=1000
         update_freq=1

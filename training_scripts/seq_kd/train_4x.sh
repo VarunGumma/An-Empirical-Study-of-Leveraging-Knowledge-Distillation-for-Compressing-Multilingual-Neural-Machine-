@@ -2,7 +2,7 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 16384 \
+--max-tokens 8192 \
 --arch transformer_4x \
 --activation-fn gelu \
 --encoder-normalize-before \
@@ -29,8 +29,8 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 2 \
---distributed-world-size 2 \
---num-workers 8 \
+--distributed-world-size 4 \
+--num-workers 16 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
@@ -38,5 +38,4 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
---wandb-project Indic-En-Distillation \
---memory-efficient-fp16
+--wandb-project Indic-En-Distillation

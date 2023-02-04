@@ -4,23 +4,24 @@ import pandas as pd
 import json
 
 bleu_results = []
-chrf2pp_results = []
+chrf2_results = []
+base_path = "results"
 
 for model in argv[1:]:
-    for benchmark in sorted(listdir(f"results/{model}")):
-        for lang_pair in sorted(listdir(f"results/{model}/{benchmark}")):
+    for benchmark in sorted(listdir(f"{base_path}/{model}")):
+        for lang_pair in sorted(listdir(f"{base_path}/{model}/{benchmark}")):
 
             lang = lang_pair.split('-')[1]
-            with open(f"results/{model}/{benchmark}/{lang_pair}/{lang}.json", 'r') as f:
-                bleu_dict, chrf2pp_dict = json.load(f)
+            with open(f"{base_path}/{model}/{benchmark}/{lang_pair}/{lang}.json", 'r') as f:
+                bleu_dict, chrf2_dict = json.load(f)
             
             bleu_results.append([f"{benchmark} - {lang}", model, bleu_dict["score"]])
-            chrf2pp_results.append([f"{benchmark} - {lang}", model, chrf2pp_dict["score"]])
+            chrf2_results.append([f"{benchmark} - {lang}", model, chrf2_dict["score"]])
 
 df_bleu = pd.DataFrame(bleu_results, columns=["benchmark", "model", "score"])
 df_bleu = df_bleu.pivot(*df_bleu).rename_axis(columns=None).reset_index()
-df_bleu.to_csv("bleu.csv", index=False)
+df_bleu.to_csv("{base_path}/bleu.csv", index=False)
 
-df_chrf2pp = pd.DataFrame(chrf2pp_results, columns=["benchmark", "model", "score"])
-df_chrf2pp = df_chrf2pp.pivot(*df_chrf2pp).rename_axis(columns=None).reset_index()
-df_chrf2pp.to_csv("chrf2pp.csv", index=False)
+df_chrf2 = pd.DataFrame(chrf2_results, columns=["benchmark", "model", "score"])
+df_chrf2 = df_chrf2.pivot(*df_chrf2).rename_axis(columns=None).reset_index()
+df_chrf2.to_csv("{base_path}/chrf2.csv", index=False)

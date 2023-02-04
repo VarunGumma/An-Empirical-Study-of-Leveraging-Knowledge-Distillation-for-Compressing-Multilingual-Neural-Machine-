@@ -1,0 +1,30 @@
+fairseq-train ../../data_hq_bin/v2_hq2_indic_en_bin/final_bin \
+--max-source-positions 210 \
+--max-target-positions 210 \
+--max-update 1000000 \
+--max-tokens 16384 \
+--arch transformer_4x \
+--dropout 0.2 \
+--criterion label_smoothed_cross_entropy \
+--label-smoothing 0.1 \
+--source-lang SRC \
+--target-lang TGT \
+--lr-scheduler inverse_sqrt \
+--optimizer adam \
+--adam-betas "(0.9, 0.98)" \
+--clip-norm 1.0 \
+--warmup-init-lr 1e-07 \
+--lr 0.0005 \
+--warmup-updates 3000 \
+--save-dir ../checkpoints/it_hq2 \
+--save-interval 1 \
+--save-interval-updates 1000 \
+--keep-interval-updates 1 \
+--no-epoch-checkpoints \
+--patience 5 \
+--skip-invalid-size-inputs-valid-test \
+--update-freq 2 \
+--distributed-world-size 2 \
+--num-workers 16 \
+--memory-efficient-fp16 \
+--tensorboard-logdir ../tensorboard_logs/it_hq2

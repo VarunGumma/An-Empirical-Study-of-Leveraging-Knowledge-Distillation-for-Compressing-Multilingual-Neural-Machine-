@@ -1,4 +1,5 @@
 checkpoints/
+tensorboard_logs/
 comet/
 **/wandb/
 benchmarks/

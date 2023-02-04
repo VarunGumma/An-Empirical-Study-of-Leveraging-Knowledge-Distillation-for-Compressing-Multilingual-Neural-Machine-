@@ -16,7 +16,7 @@ $indirname/final_bin \
 --distributed-world-size 1 \
 --path $ckpt_path/checkpoint_best.pt \
 --gen-subset train \
---batch-size 256 \
+--max-tokens 65536 \
 --beam 5 \
 --max-len-a 1.2 \
 --max-len-b 10 \

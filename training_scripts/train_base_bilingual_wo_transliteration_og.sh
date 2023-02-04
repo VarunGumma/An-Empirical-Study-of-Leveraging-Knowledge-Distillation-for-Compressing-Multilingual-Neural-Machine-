@@ -5,16 +5,16 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
         distributed_world_size=1
     elif [[ "$lang" == gu ]]; then
         warmup=2000
-        update_freq=4
-        distributed_world_size=2
-    elif [[ "$lang" == or ]]; then
-        warmup=4000
         update_freq=1
-        distributed_world_size=1
+        distributed_world_size=4
+    elif [[ "$lang" == or ]]; then
+        warmup=1600
+        update_freq=1
+        distributed_world_size=4
     else
         warmup=4000
-        update_freq=4
-        distributed_world_size=2
+        update_freq=1
+        distributed_world_size=4
     fi
 
     fairseq-train ../../data_bin/bilingual_wo_transliteration/og/$lang/final_bin \
@@ -39,7 +39,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --warmup-init-lr 1e-09 \
     --lr 7e-4 \
     --warmup-updates $warmup \
-    --save-dir ../checkpoints/og_bilingual_checkpoints/${lang}_wo_transliteration \
+    --save-dir ../checkpoints/og_bilingual/${lang}_wo_transliteration \
     --save-interval 1 \
     --save-interval-updates $warmup \
     --keep-interval-updates 1 \

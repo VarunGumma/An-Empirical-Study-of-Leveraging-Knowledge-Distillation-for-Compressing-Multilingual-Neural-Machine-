@@ -7,7 +7,6 @@ tgt_lang=$4
 ckpt_dir=$5
 exp_dir=$6
 transliterate=$7
-# ref_fname=$8
 
 SRC_PREFIX='SRC'
 TGT_PREFIX='TGT'
@@ -40,10 +39,9 @@ num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count
 fairseq-interactive \
     $exp_dir/final_bin \
     -s $SRC_PREFIX -t $TGT_PREFIX \
-    --distributed-world-size 1 \
+    --distributed-world-size 2 \
     --path $ckpt_dir/checkpoint_best.pt \
-    --batch-size 64 \
-    --buffer-size 70 \
+    --max-tokens 65536 \
     --beam 5 \
     --max-len-a 1.2 \
     --max-len-b 10 \
@@ -57,6 +55,6 @@ echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.
 python3 scripts/postprocess_translate.py $outfname.log $outfname $input_size $tgt_lang $transliterate
 
-rm $outfname.*
+# rm $outfname.*
 
 echo -e "[INFO]\tTranslation completed"
