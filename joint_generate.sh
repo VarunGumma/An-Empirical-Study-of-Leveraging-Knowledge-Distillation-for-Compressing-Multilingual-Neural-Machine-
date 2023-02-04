@@ -10,20 +10,19 @@ echo -e "[INFO]\tDecoding"
 
 num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count())"`
 
-fairseq-generate \
-$indirname/final_bin \
--s SRC -t TGT \
---distributed-world-size 1 \
---path $ckpt_path/checkpoint_best.pt \
---gen-subset train \
---batch-size 256 \
---beam 5 \
---max-len-a 1.2 \
---max-len-b 10 \
---remove-bpe \
---memory-efficient-fp16 \
---num-workers $num_workers \
---skip-invalid-size-inputs-valid-test > $outfname.log 2>&1
+fairseq-generate $indirname/final_bin \
+    -s SRC -t TGT \
+    --distributed-world-size 1 \
+    --path $ckpt_path/checkpoint_best.pt \
+    --gen-subset train \
+    --batch-size 512 \
+    --beam 5 \
+    --max-len-a 1.2 \
+    --max-len-b 10 \
+    --remove-bpe \
+    --memory-efficient-fp16 \
+    --num-workers $num_workers \
+    --skip-invalid-size-inputs-valid-test > $outfname.log 2>&1
 
 value=`cat $indirname/final_bin/preprocess.log | grep train.SRC`
 array=($value)
