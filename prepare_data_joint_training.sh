@@ -17,6 +17,7 @@ rm -rf $exp_dir
 mkdir -p $exp_dir
 
 echo -e "[INFO]\tremoving overlap between train and devtest"
+echo -e "[WARNING]\tthis operation will alter the train set you have passed!"
 python3 scripts/remove_train_devtest_overlaps.py -t $train_dir -d $devtest_dir -l $languages_list
 
 echo -e "[INFO]\tmerging devtest files"
