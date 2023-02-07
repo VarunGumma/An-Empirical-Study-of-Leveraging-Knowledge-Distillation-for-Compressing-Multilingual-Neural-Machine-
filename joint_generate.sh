@@ -13,10 +13,10 @@ num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count
 fairseq-generate \
 $indirname/final_bin \
 -s SRC -t TGT \
---distributed-world-size 1 \
+--distributed-world-size 4 \
 --path $ckpt_path/checkpoint_best.pt \
 --gen-subset train \
---max-tokens 65536 \
+--max-tokens 16384 \
 --beam 5 \
 --max-len-a 1.2 \
 --max-len-b 10 \
