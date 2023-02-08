@@ -20,8 +20,8 @@ for model in argv[1:]:
 
 df_bleu = pd.DataFrame(bleu_results, columns=["benchmark", "model", "score"])
 df_bleu = df_bleu.pivot(*df_bleu).rename_axis(columns=None).reset_index()
-df_bleu.to_csv("{base_path}/bleu.csv", index=False)
+df_bleu.to_csv(f"{base_path}/bleu.csv", index=False)
 
 df_chrf2 = pd.DataFrame(chrf2_results, columns=["benchmark", "model", "score"])
 df_chrf2 = df_chrf2.pivot(*df_chrf2).rename_axis(columns=None).reset_index()
-df_chrf2.to_csv("{base_path}/chrf2.csv", index=False)
+df_chrf2.to_csv(f"{base_path}/chrf2.csv", index=False)
