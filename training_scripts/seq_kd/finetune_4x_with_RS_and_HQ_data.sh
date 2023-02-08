@@ -41,4 +41,5 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
+--memory-efficient-fp16 \
 --wandb-project Indic-En-Distillation

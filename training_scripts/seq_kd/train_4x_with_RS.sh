@@ -23,7 +23,7 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --save-dir ../../checkpoints/4x_RS \
 --save-interval 1 \
 --save-interval-updates 5000 \
---keep-interval-updates 0 \
+--keep-interval-updates 1 \
 --no-epoch-checkpoints \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
@@ -36,4 +36,5 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --eval-bleu-remove-bpe \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
+--memory-efficient-fp16 \
 --maximize-best-checkpoint-metric

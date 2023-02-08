@@ -1,14 +1,4 @@
-#!/bin/bash
-
-#SBATCH --nodes 1
-#SBATCH --ntasks-per-node 1
-#SBATCH --cpus-per-task 16
-#SBATCH --gpus-per-task 4
-#SBATCH --partition ai4bp
-#SBATCH --time=07-00:00:00
-#SBATCH --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090
-
-srun fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
+fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -33,7 +23,7 @@ srun fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --save-dir ../../checkpoints/2x \
 --save-interval 1 \
 --save-interval-updates 5000 \
---keep-interval-updates 0 \
+--keep-interval-updates 1 \
 --no-epoch-checkpoints \
 --keep-last-epochs 1 \
 --patience 5 \

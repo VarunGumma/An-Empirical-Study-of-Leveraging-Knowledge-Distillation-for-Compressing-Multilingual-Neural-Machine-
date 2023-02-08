@@ -14,8 +14,6 @@ if [ "$n_gpus" -eq "0" ]; then
           --partition=ai4bp \
           --time=07-00:00:00 \
           --cpus-per-task=$n_cpus \
-          --mail-type=BEGIN,END,FAIL \
-          --mail-user=cs21m070@smail.iitm.ac.in \
           --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090 \
           --pty \
           /bin/bash
@@ -27,8 +25,6 @@ else
           --time=07-00:00:00 \
           --cpus-per-task=$n_cpus \
           --gpus-per-task=$n_gpus \
-          --mail-type=BEGIN,END,FAIL \
-          --mail-user=cs21m070@smail.iitm.ac.in \
           --export=ALL,http_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090,https_proxy=http://dgx-proxy-mn.mgmt.siddhi.param:9090 \
           --pty \
           /bin/bash

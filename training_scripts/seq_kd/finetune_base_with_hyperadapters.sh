@@ -77,7 +77,8 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --eval-bleu-detok moses \
     --eval-bleu-remove-bpe \
     --maximize-best-checkpoint-metric \
-    --best-checkpoint-metric bleu
+    --best-checkpoint-metric bleu \
+    --memory-efficient-fp16
 
     restore_from_dir=$save_to_dir
 done

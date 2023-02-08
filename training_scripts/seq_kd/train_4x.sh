@@ -23,7 +23,7 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --save-dir ../../checkpoints/4x \
 --save-interval 1 \
 --save-interval-updates 5000 \
---keep-interval-updates 0 \
+--keep-interval-updates 1 \
 --no-epoch-checkpoints \
 --keep-last-epochs 1 \
 --patience 5 \

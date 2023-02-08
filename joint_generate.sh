@@ -16,7 +16,7 @@ $indirname/final_bin \
 --distributed-world-size 4 \
 --path $ckpt_path/checkpoint_best.pt \
 --gen-subset train \
---max-tokens 16384 \
+--batch-size 128 \
 --beam 5 \
 --max-len-a 1.2 \
 --max-len-b 10 \
@@ -32,4 +32,4 @@ input_size=${array[2]}
 echo "Number of sentences: $input_size"
 python3 scripts/postprocess_translate.py $outfname.log $outfname $input_size $tgt_lang $transliterate
 
-# rm $outfname.*
+rm $outfname.*

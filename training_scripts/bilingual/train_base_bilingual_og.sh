@@ -1,4 +1,4 @@
-for lang in kn mr ta te; do
+for lang in te; do
     if [[ "$lang" == as ]]; then
         warmup=1000
         update_freq=1
@@ -48,7 +48,7 @@ for lang in kn mr ta te; do
     --skip-invalid-size-inputs-valid-test \
     --update-freq $update_freq \
     --distributed-world-size $distributed_world_size \
-    --num-workers 16 \
+    --num-workers 10 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \

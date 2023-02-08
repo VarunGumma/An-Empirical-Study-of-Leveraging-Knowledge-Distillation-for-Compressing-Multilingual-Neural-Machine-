@@ -4,7 +4,7 @@ fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --max-update 1000000 \
 --save-interval 1 \
 --save-interval-updates 5000 \
---arch transformer_2x \
+--arch transformer_4x \
 --activation-fn gelu \
 --encoder-normalize-before \
 --decoder-normalize-before \

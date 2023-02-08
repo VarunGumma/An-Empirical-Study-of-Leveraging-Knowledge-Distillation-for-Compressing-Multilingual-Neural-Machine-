@@ -20,7 +20,7 @@ fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir ../../checkpoints/HQ-base \
+--save-dir ../../checkpoints/HQ_2x \
 --keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
@@ -28,7 +28,7 @@ fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --distributed-world-size 3 \
 --max-tokens 8192 \
 --lr 3e-5 \
---restore-file ../../checkpoints/base/checkpoint_best.pt \
+--restore-file ../../checkpoints/2x/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
@@ -41,4 +41,5 @@ fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --eval-bleu-remove-bpe \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
+--memory-efficient-fp16 \
 --maximize-best-checkpoint-metric
