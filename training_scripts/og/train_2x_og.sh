@@ -30,7 +30,7 @@ fairseq-train ../../../data_bin/v2_indic_en_bin/final_bin \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
 --distributed-world-size 4 \
---num-workers 16 \
+--num-workers 10 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \

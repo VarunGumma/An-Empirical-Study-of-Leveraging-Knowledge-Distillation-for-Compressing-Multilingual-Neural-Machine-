@@ -29,7 +29,7 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --save-dir ../../checkpoints/global_distil \
 --save-interval 1 \
 --save-interval-updates 5000 \
---keep-interval-updates 0 \
+--keep-interval-updates 1 \
 --no-epoch-checkpoints \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \

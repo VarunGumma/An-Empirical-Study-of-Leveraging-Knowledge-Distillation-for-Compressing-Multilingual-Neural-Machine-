@@ -39,10 +39,10 @@ num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count
 fairseq-interactive \
     $exp_dir/final_bin \
     -s $SRC_PREFIX -t $TGT_PREFIX \
-    --distributed-world-size 4 \
+    --distributed-world-size 1 \
     --path $ckpt_dir/checkpoint_best.pt \
-    --batch-size 128 \
-    --buffer-size 130 \
+    --batch-size 70 \
+    --buffer-size 75 \
     --beam 5 \
     --max-len-a 1.2 \
     --max-len-b 10 \

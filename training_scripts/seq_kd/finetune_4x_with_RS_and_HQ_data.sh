@@ -19,13 +19,13 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --clip-norm 1.0 \
 --warmup-init-lr 1e-07 \
 --lr 3e-5 \
---restore-file ../../checkpoints/4x_RS_layers_2.0/checkpoint_best.pt \
+--restore-file ../../checkpoints/4x_RS/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
 --reset-optimizer \
 --warmup-updates 4000 \
---save-dir ../../checkpoints/HQ_4x_RS_layers_2.0 \
+--save-dir ../../checkpoints/HQ-4x_RS \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-last-epochs 1 \
