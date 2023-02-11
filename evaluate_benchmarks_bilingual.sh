@@ -20,19 +20,11 @@ for dir in `ls $devtest_base_dir`; do
 
         IFS='-' read -ra temp <<< $lang_pair
 
-        if [[ "$transliterate" == true ]]; then
-            model=${temp[1]}
-        else
-            model=${temp[1]}_wo_transliteration 
-        fi
-
         if [[ "$src_lang" == en ]]; then
             tgt_lang=${temp[1]}
         else
             src_lang=${temp[1]}
         fi
-
-        echo "reading model - checkpoints/${ckpt_base_dir}/${model}"
         
         if [[ -f $path/test.$src_lang ]] && [[ -d checkpoints/$ckpt_base_dir/$model ]]; then
             mkdir -p $save_path

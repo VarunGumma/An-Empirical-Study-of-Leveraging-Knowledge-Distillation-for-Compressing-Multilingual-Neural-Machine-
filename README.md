@@ -15,29 +15,3 @@ pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cud
 ```
 
 It is recommended you use ```Python 3.10+``` and the latest version of [Pytorch](https://pytorch.org/get-started/locally/) for best results.
-
-We have created an _incrementally distilled_ version of samanantar and it can be found [here](https://drive.google.com/file/d/1RH-37irLEHDFRkjtzw67XKGyLWW_fA_M/view?usp=share_link). It is _incremental_ in the sense that the data contains a random X% of original Samanantar data and 100-X% distilled data in it and vary X from 0 (completely distilled) to 100% (completely original). In the zip folder given above, the ```v2_X_binarized``` directory contains the Samananatar data with X% originality.
-
-Before training, create a ```checkpoints``` folder in the ```Indic-En``` directory. This will hold all checkpoints of the all the trained models.
-
-
-### Training
-Each model being trained is programmed to use 8 GPUs and 16 CPUs. In case required you can change these in the scripts by modifying the ```--distributed-world-size``` and ```--num-workers``` arguments. After modification make sure that the global batch size ```(distributed_world_size * max_tokens * update_freq)``` is 64K. Since ```fp16``` mixed-precision is prone to underflow during distillation or training deeper models, we recommend using ```fp32``` itself.
-
-All the files present in the ```training_scripts``` folder which contain the term ```distil``` perform ```word + seq level``` distillation (training a smaller model using distilled data and teacher distibution signal). 
-
-Files which contain the term ```train``` perform ```seq level``` distillation (training a smaller model using distilled data only)
-
-If a file contains the term ```4x```, the dimension of the model which will be trained is 1536, which is same as IndicTrans, else it is a ```base``` model with dimension 512.
-
-we use ```--activation-fn=gelu```, ```--encoder-normalize-before```, ```--decoder-normalize-before``` and ```--layernorm-embedding``` arguments to stablize the training of all the distilled models. Note that these tweaks are not present in the original IndicTrans model.
-
-
-### Evaluation
-Once all the required models have been trained, their checkpoints will be available in the ```checkpoints``` directory. You can use the following commands to generate a ```csv``` of benchmark scores.
-```
-bash evaluate_benchmarks.sh <ckpt-folder-1> <ckpt-folder-2> <ckpt-folder-3> <ckpt-folder-3> ... 
-```
-This evaluation program requires 1 GPU and once it has executed, all the required results will be available in the ```results/benchmark_scores.csv``` file. 
-
-Make sure the ```results``` folder always contains the ```indicTrans.txt``` file which contains the standard benchmark scores of IndicTrans model (as given [here](https://github.com/AI4Bharat/indicTrans))
