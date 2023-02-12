@@ -1,4 +1,4 @@
-fairseq-train ../../../data_bin/v2_hq_indic_en_bin/final_bin \
+fairseq-train ../../../data_bin/v2_indic_en_bin/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -15,10 +15,10 @@ fairseq-train ../../../data_bin/v2_hq_indic_en_bin/final_bin \
 --clip-norm 1.0 \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
---warmup-updates 3000 \
---save-dir ../../checkpoints/it_hq2 \
+--warmup-updates 4000 \
+--save-dir ../../checkpoints/it \
 --save-interval 1 \
---save-interval-updates 1000 \
+--save-interval-updates 5000 \
 --keep-interval-updates 1 \
 --no-epoch-checkpoints \
 --patience 5 \
