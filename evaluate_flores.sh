@@ -13,7 +13,7 @@ models=("$@")
 rm -rf results/*
 
 for model in "${models[@]}"; do
-    for lang_pair in `ls $flores_dir; do
+    for lang_pair in `ls $flores_dir`; do
 
         echo "working on ${lang_pair}"
         path="${flores_dir}/${lang_pair}"

@@ -34,22 +34,19 @@ python3 scripts/add_tags_translate.py $outfname._bpe $outfname.bpe $src_lang $tg
 
 echo -e "[INFO]\tDecoding"
 
-num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count())"`
-
 fairseq-interactive \
     $exp_dir/final_bin \
     -s $SRC_PREFIX -t $TGT_PREFIX \
-    --distributed-world-size 1 \
     --path $ckpt_dir/checkpoint_best.pt \
-    --batch-size 70 \
-    --buffer-size 75 \
+    --batch-size 64 \
+    --buffer-size 70 \
     --beam 5 \
     --max-len-a 1.2 \
     --max-len-b 10 \
     --remove-bpe \
     --skip-invalid-size-inputs-valid-test \
     --input $outfname.bpe \
-    --num-workers $num_workers \
+    --num-workers 16 \
     --memory-efficient-fp16  >  $outfname.log 2>&1
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
