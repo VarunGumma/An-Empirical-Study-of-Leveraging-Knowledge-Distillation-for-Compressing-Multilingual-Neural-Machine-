@@ -27,8 +27,8 @@ fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
---distributed-world-size 8 \
---max-tokens 3072 \
+--distributed-world-size 4 \
+--max-tokens 6144 \
 --lr 3e-5 \
 --restore-file ../../checkpoints/base_grande/checkpoint_best.pt \
 --reset-lr-scheduler \
