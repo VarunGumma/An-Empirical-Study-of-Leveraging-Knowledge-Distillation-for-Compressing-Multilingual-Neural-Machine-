@@ -39,7 +39,7 @@ fairseq-interactive \
     -s $SRC_PREFIX -t $TGT_PREFIX \
     --path $ckpt_dir/checkpoint_best.pt \
     --batch-size 64 \
-    --buffer-size 70 \
+    --buffer-size 128 \
     --beam 5 \
     --max-len-a 1.2 \
     --max-len-b 10 \
