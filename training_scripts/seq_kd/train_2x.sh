@@ -3,7 +3,13 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 16384 \
---arch transformer_2x \
+--arch transformer \
+--encoder-embed-dim 1024
+--decoder-embed-dim 1024
+--encoder-ffn-embed-dim 4096 \
+--decoder-ffn-embed-dim 4096 \
+--encoder-attention-heads 16 \
+--decoder-attention-heads 16 \
 --activation-fn gelu \
 --encoder-normalize-before \
 --decoder-normalize-before \
@@ -25,7 +31,6 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \
 --no-epoch-checkpoints \
---keep-last-epochs 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \

@@ -48,9 +48,9 @@ for lang in as+bn+or hi+pa+gu+mr ta+te+kn+ml; do
     --keep-last-epochs 1 \
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
-    --update-freq 4 \
+    --update-freq $update_freq \
     --distributed-world-size 1 \
-    --max-tokens 16384 \
+    --max-tokens 2048 \
     --lr 5e-4 \
     --restore-file ../../checkpoints/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \

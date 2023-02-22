@@ -17,7 +17,9 @@ rm -rf $exp_dir
 mkdir -p $exp_dir
 
 echo -e "[INFO]\tremoving overlap between train and devtest"
-echo -e "[WARNING]\tthis operation will alter the train set you have passed!"
+echo -e "[INFO]\tthis will create a temporary copy of the train set, but remove it at the end of the program"
+cp -r $train_dir $train_dir-copy
+train_dir=$train_dir-copy
 python3 scripts/remove_train_devtest_overlaps.py -t $train_dir -d $devtest_dir -l $languages_list
 
 echo -e "[INFO]\tmerging devtest files"
@@ -176,6 +178,6 @@ else
 fi
 
 echo -e "[INFO]\tcleaning unnecessary files from exp dir to save space"
-rm -rf $exp_dir/bpe $exp_dir/devtest $exp_dir/final $exp_dir/data $exp_dir/norm $exp_dir/en-* $devtest_dir/all
+rm -rf $exp_dir/bpe $exp_dir/devtest $exp_dir/final $exp_dir/data $exp_dir/norm $exp_dir/en-* $devtest_dir/all $train_dir
 
 echo -e "[INFO]\tcompleted!"

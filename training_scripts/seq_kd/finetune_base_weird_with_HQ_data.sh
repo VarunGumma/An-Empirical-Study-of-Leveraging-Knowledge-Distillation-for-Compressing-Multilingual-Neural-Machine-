@@ -23,7 +23,8 @@ fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --warmup-updates 4000 \
 --dropout 0.2 \
 --save-dir ../../checkpoints/HQ-base_weird \
---keep-last-epochs 1 \
+--no-epoch-checkpoints \
+--keep-interval-updates 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \

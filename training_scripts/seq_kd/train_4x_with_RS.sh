@@ -3,7 +3,15 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 16384 \
---arch transformer_4x_rs \
+--arch transformer \
+--encoder-embed-dim 1536 \
+--decoder-embed-dim 1536 \
+--encoder-ffn-embed-dim 4096 \
+--decoder-ffn-embed-dim 4096 \
+--encoder-attention-heads 16 \
+--decoder-attention-heads 16 \
+--encoder-recurrent-stacking 6 \
+--decoder-recurrent-stacking 6 \
 --activation-fn gelu \
 --encoder-normalize-before \
 --decoder-normalize-before \

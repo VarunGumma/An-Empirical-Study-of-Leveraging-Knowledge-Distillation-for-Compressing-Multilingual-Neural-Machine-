@@ -3,7 +3,15 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 8192 \
---arch transformer_4x_rs \
+--arch transformer \
+--encoder-embed-dim 1536 \
+--decoder-embed-dim 1536 \
+--encoder-ffn-embed-dim 4096 \
+--decoder-ffn-embed-dim 4096 \
+--encoder-attention-heads 16 \
+--decoder-attention-heads 16 \
+--encoder-recurrent-stacking 6 \
+--decoder-recurrent-stacking 6 \
 --activation-fn gelu \
 --encoder-normalize-before \
 --decoder-normalize-before \
@@ -26,9 +34,10 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --reset-optimizer \
 --warmup-updates 4000 \
 --save-dir ../../checkpoints/HQ-4x_RS \
---save-interval 1 \
+--no-epoch-checkpoints \
 --save-interval-updates 5000 \
---keep-last-epochs 1 \
+--keep-interval-updates 1 \
+--save-interval 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \

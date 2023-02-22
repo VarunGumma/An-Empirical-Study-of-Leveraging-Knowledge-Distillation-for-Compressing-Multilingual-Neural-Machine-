@@ -3,7 +3,13 @@ fairseq-train ../../../data_bin/v2_indic_en_bin/final_bin \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 16384 \
---arch transformer_small \
+--arch transformer \
+--encoder-embed-dim 256
+--decoder-embed-dim 256
+--encoder-ffn-embed-dim 1024 \
+--decoder-ffn-embed-dim 1024 \
+--encoder-attention-heads 4 \
+--decoder-attention-heads 4 \
 --activation-fn gelu \
 --encoder-normalize-before \
 --decoder-normalize-before \

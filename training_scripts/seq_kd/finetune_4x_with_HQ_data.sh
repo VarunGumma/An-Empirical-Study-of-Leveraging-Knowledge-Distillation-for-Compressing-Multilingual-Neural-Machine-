@@ -4,7 +4,14 @@ fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --max-update 1000000 \
 --save-interval 1 \
 --save-interval-updates 5000 \
---arch transformer_4x \
+--keep-interval-updates 1 \
+--arch transformer \
+--encoder-embed-dim 1536
+--decoder-embed-dim 1536
+--encoder-ffn-embed-dim 4096 \
+--decoder-ffn-embed-dim 4096 \
+--encoder-attention-heads 16 \
+--decoder-attention-heads 16 \
 --activation-fn gelu \
 --encoder-normalize-before \
 --decoder-normalize-before \
@@ -21,7 +28,7 @@ fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --warmup-updates 4000 \
 --dropout 0.2 \
 --save-dir ../../checkpoints/HQ-4x \
---keep-last-epochs 1 \
+--no-epoch-checkpoints \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
@@ -33,7 +40,7 @@ fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --reset-meters \
 --reset-dataloader \
 --reset-optimizer \
---num-workers 10 \
+--num-workers 16 \
 --wandb-project Indic-En-Distillation \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
