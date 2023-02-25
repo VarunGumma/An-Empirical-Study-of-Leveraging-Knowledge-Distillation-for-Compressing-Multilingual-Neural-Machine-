@@ -18,7 +18,6 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     elif [[ "$lang" == gu ]]; then
         warmup=2000
         update_freq=4
-        distributed_world_size=4
     elif [[ "$lang" == or ]]; then
         warmup=1600
         update_freq=4

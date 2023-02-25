@@ -44,7 +44,7 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --dropout 0.2 \
     --save-dir ../../checkpoints/$save_to_dir \
     --save-interval 1 \
-    --save-interval-updates 500 \
+    --save-interval-updates 4000 \
     --keep-last-epochs 1 \
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
