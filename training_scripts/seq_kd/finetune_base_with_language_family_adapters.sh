@@ -1,16 +1,16 @@
 #!/bin/bash
 
-save_to_dir="V_base_with_language_family_adapters_finetuned_on"
+save_to_dir="base_with_language_family_adapters_finetuned_on"
 restore_from_dir="base"
 
-for lang in as+bn+or hi+pa+gu+mr ta+te+kn+ml; do
+for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     echo `date`
     echo -e "\n[INFO]\tfinetuning on ${lang}"
 
     save_to_dir=${save_to_dir}_${lang}
 
-    echo "restoring from ${restore_from_dir}"
-    echo "saving checkpoints to ${save_to_dir}"
+    echo -e "[INFO]\trestoring from ${restore_from_dir}"
+    echo -e "[INFO]\tsaving checkpoints to ${save_to_dir}"
 
     fairseq-train ../../../data_bin/v2_distilled_indic_en_language_family_bin/$lang/final_bin \
     --max-source-positions 210 \
@@ -22,12 +22,12 @@ for lang in as+bn+or hi+pa+gu+mr ta+te+kn+ml; do
     --decoder-normalize-before \
     --layernorm-embedding \
     --encoder-add-adapters \
-    --encoder-adapter-bottleneck-dim-trend 256,128,64,64,128,256 \
-    --encoder-adapter-langs as+bn+or,hi+pa+gu+mr,ta+te+kn+ml \
+    --encoder-adapter-bottleneck-dim 256 \
+    --encoder-adapter-langs as+bn+or,gu+hi+mr+pa,kn+ml+ta+te \
     --encoder-finetune-adapter $lang \
     --decoder-add-adapters \
-    --decoder-adapter-bottleneck-dim-trend 256,128,64,64,128,256 \
-    --decoder-adapter-langs as+bn+or,hi+pa+gu+mr,ta+te+kn+ml \
+    --decoder-adapter-bottleneck-dim 256 \
+    --decoder-adapter-langs as+bn+or,gu+hi+mr+pa,kn+ml+ta+te \
     --decoder-finetune-adapter $lang \
     --adapter-activation-fn swish \
     --adapter-dropout 0.1 \
@@ -40,18 +40,18 @@ for lang in as+bn+or hi+pa+gu+mr ta+te+kn+ml; do
     --adam-betas "(0.9, 0.98)" \
     --clip-norm 1.0 \
     --warmup-init-lr 1e-07 \
-    --warmup-updates 1200 \
+    --warmup-updates 4000 \
     --dropout 0.2 \
     --save-dir ../../checkpoints/$save_to_dir \
     --save-interval 1 \
-    --save-interval-updates 500 \
+    --save-interval-updates 4000 \
     --keep-last-epochs 1 \
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
-    --update-freq $update_freq \
+    --update-freq 3 \
     --distributed-world-size 1 \
-    --max-tokens 2048 \
-    --lr 5e-4 \
+    --max-tokens 8192 \
+    --lr 3e-5 \
     --restore-file ../../checkpoints/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
@@ -68,4 +68,5 @@ for lang in as+bn+or hi+pa+gu+mr ta+te+kn+ml; do
     --memory-efficient-fp16
     
     restore_from_dir=$save_to_dir
+    echo "====================================================================================="
 done

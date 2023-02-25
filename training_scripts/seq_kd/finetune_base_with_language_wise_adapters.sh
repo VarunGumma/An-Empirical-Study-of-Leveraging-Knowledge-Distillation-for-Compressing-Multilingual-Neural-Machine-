@@ -9,8 +9,8 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
 
     save_to_dir=${save_to_dir}_${lang}
 
-    echo "restoring from ${restore_from_dir}"
-    echo "saving checkpoints to ${save_to_dir}"
+    echo -e "[INFO]\trestoring from ${restore_from_dir}"
+    echo -e "[INFO]\tsaving checkpoints to ${save_to_dir}"
 
     if [[ "$lang" == as ]]; then
         warmup=1000
@@ -18,7 +18,6 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     elif [[ "$lang" == gu ]]; then
         warmup=2000
         update_freq=4
-        distributed_world_size=4
     elif [[ "$lang" == or ]]; then
         warmup=1600
         update_freq=4
@@ -84,4 +83,5 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --memory-efficient-fp16
 
     restore_from_dir=$save_to_dir
+    echo "====================================================================================="
 done
