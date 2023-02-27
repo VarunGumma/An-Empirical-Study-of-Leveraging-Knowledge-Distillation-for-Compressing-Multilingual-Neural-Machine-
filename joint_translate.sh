@@ -46,8 +46,8 @@ fairseq-interactive \
     --remove-bpe \
     --skip-invalid-size-inputs-valid-test \
     --input $outfname.bpe \
-    --num-workers 16 \
-    --memory-efficient-fp16  >  $outfname.log
+    --num-workers 2 \
+    --memory-efficient-fp16  >  $outfname.log 2>&1
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.
