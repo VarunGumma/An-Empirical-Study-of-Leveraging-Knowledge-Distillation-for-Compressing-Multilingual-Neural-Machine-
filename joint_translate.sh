@@ -34,6 +34,8 @@ python3 scripts/add_tags_translate.py $outfname._bpe $outfname.bpe $src_lang $tg
 
 echo -e "[INFO]\tDecoding"
 
+# declare -A lang_familes=( ["as"]="as+bn+or" ["bn"]="as+bn+or" ["gu"]="gu+hi+mr+pa" ["hi"]="gu+hi+mr+pa" ["kn"]="kn+ml+ta+te" ["ml"]="kn+ml+ta+te" ["mr"]="gu+hi+mr+pa" ["or"]="as+bn+or" ["pa"]="gu+hi+mr+pa" ["ta"]="kn+ml+ta+te" ["te"]="kn+ml+ta+te" )
+
 fairseq-interactive \
     $exp_dir/final_bin \
     -s $SRC_PREFIX -t $TGT_PREFIX \
@@ -47,7 +49,7 @@ fairseq-interactive \
     --skip-invalid-size-inputs-valid-test \
     --input $outfname.bpe \
     --num-workers 2 \
-    --memory-efficient-fp16  >  $outfname.log 2>&1
+    --memory-efficient-fp16  >  $outfname.log 2>${ckpt_dir}/${src_lang}_${tgt_lang}.out
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.

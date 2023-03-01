@@ -41,11 +41,13 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --encoder-adapter-bottleneck-dim 256 \
     --encoder-adapter-langs as,bn,gu,hi,kn,ml,mr,or,pa,ta,te \
     --encoder-finetune-adapter $lang \
+    --encoder-adapter-type houlsby \
     --decoder-add-adapters \
     --decoder-adapter-bottleneck-dim 256 \
     --decoder-adapter-langs as,bn,gu,hi,kn,ml,mr,or,pa,ta,te \
     --decoder-finetune-adapter $lang \
-    --adapter-activation-fn swish \
+    --decoder-adapter-type houlsby \
+    --adapter-activation-fn gelu \
     --adapter-dropout 0.1 \
     --criterion label_smoothed_cross_entropy \
     --source-lang SRC \
@@ -66,7 +68,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --update-freq $update_freq \
     --distributed-world-size 1 \
     --max-tokens 2048 \
-    --lr 3e-5 \
+    --lr 1e-3 \
     --restore-file ../../checkpoints/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \

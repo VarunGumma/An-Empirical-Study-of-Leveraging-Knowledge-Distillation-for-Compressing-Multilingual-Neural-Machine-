@@ -17,7 +17,7 @@ rm -rf $exp_dir
 mkdir -p $exp_dir
 
 echo -e "[INFO]\tremoving overlap between train and devtest"
-echo -e "[INFO]\tthis will create a temporary copy of the train set, but remove it at the end of the program"
+echo -e "[INFO]\tthis will create a temporary copy of the train directory, but will remove it at the end of the program"
 cp -r $train_dir $train_dir-copy
 train_dir=$train_dir-copy
 python3 scripts/remove_train_devtest_overlaps.py -t $train_dir -d $devtest_dir -l $languages_list
