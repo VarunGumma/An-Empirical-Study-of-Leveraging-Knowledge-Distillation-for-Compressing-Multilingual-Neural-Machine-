@@ -1,4 +1,5 @@
 fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
+--log-interval 1 \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -17,7 +18,7 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --alpha 0.5 \
 --use-adaptive-kd-rates \
 --kd-queue-size 5000000 \
---kd-queue-sampling-temp 2.5 \
+--kd-queue-sampling-temp 10 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
