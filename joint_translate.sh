@@ -36,7 +36,7 @@ echo -e "[INFO]\tDecoding"
 
 # declare -A lang_familes=( ["as"]="as+bn+or" ["bn"]="as+bn+or" ["gu"]="gu+hi+mr+pa" ["hi"]="gu+hi+mr+pa" ["kn"]="kn+ml+ta+te" ["ml"]="kn+ml+ta+te" ["mr"]="gu+hi+mr+pa" ["or"]="as+bn+or" ["pa"]="gu+hi+mr+pa" ["ta"]="kn+ml+ta+te" ["te"]="kn+ml+ta+te" )
 
-fairseq-interactive \
+CUDA_VISIBLE_DEVICES=7 fairseq-interactive \
     $exp_dir/final_bin \
     -s $SRC_PREFIX -t $TGT_PREFIX \
     --path $ckpt_dir/checkpoint_best.pt \
@@ -48,7 +48,7 @@ fairseq-interactive \
     --remove-bpe \
     --skip-invalid-size-inputs-valid-test \
     --input $outfname.bpe \
-    --num-workers 2 \
+    --num-workers 16 \
     --memory-efficient-fp16  >  $outfname.log 2>${ckpt_dir}/${src_lang}_${tgt_lang}.out
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
