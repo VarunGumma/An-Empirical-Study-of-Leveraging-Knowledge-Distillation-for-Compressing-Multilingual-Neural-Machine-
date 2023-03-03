@@ -35,8 +35,8 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --no-epoch-checkpoints \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---update-freq 1 \
---distributed-world-size 8 \
+--update-freq 8 \
+--distributed-world-size 1 \
 --num-workers 16 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
@@ -45,5 +45,4 @@ fairseq-train ../../../data_bin/v2_distilled_indic_en_bin/final_bin \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
---memory-efficient-fp16 \
---wandb-project Indic-En-Distillation
+--memory-efficient-fp16

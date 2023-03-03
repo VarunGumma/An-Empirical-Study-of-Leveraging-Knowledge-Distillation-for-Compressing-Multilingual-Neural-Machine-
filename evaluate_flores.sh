@@ -1,41 +1,53 @@
 #!/bin/bash
-echo `date`
 
+# Assign command line arguments to variables
 flores_dir=$1
 exp_dir=$2
 src_lang=$3
 tgt_lang=$4
 transliterate=$5
 shift 5
-
 models=("$@")
 
+# Remove previous results
 rm -rf results/*
+mkdir -p results
 
 for model in "${models[@]}"; do
-    for lang_pair in `ls $flores_dir`; do
+    for lang_pair in "$flores_dir"/*; do
+        echo "Working on $lang_pair"
+        lang=$(basename "$lang_pair")
 
-        echo "working on ${lang_pair}"
-        path="${flores_dir}/${lang_pair}"
-        save_path="results/${model}/flores/${lang_pair}"
-
-        IFS='-' read -ra temp <<< $lang_pair
-
-        mkdir -p $save_path
-
-        if [[ "$src_lang" == en ]]; then
-            tgt_lang=${temp[1]}
+        # Set source and target languages
+        if [[ "$src_lang" == "en" ]]; then
+            tgt_lang=${lang#*-}
         else
-            src_lang=${temp[1]}
+            src_lang=${lang%-*}
         fi
-        
-        if [[ -f $path/test.$src_lang ]]; then
-            bash joint_translate.sh $path/test.$src_lang $path/outfile.$tgt_lang $src_lang $tgt_lang checkpoints/$model $exp_dir $transliterate
-            bash compute_bleu.sh $path/outfile.$tgt_lang $path/test.$tgt_lang $src_lang $tgt_lang > $save_path/${temp[1]}.json
+
+        # Check if test files exist
+        if [[ ! -f "$lang_pair/test.$src_lang" ]]; then
+            echo "Test files for $lang_pair not found"
+            continue
         fi
-    done 
+
+        # Set paths
+        outfile="$lang_pair/outfile.$tgt_lang"
+        save_path="results/$model/flores/$lang"
+        mkdir -p "$save_path"
+
+        # Translate
+        bash joint_translate.sh "$lang_pair/test.$src_lang" "$outfile" "$src_lang" "$tgt_lang" "checkpoints/$model" "$exp_dir" "$transliterate"
+
+        # Compute BLEU score
+        if [[ -f "$outfile" ]]; then
+            bash compute_bleu.sh "$outfile" "$lang_pair/test.$tgt_lang" "$src_lang" "$tgt_lang" > "$save_path/${tgt_lang}.json"
+        else
+            echo "Translation failed for $lang_pair"
+        fi
+    done
 done
 
-
-echo -e "[INFO]\tconverting all json files to csv"
-python3 json_to_csv.py "$@"
+# Convert JSON files to CSV
+echo -e "[INFO]\tConverting all JSON files to CSV"
+python3 json_to_csv.py "${models[@]}"
