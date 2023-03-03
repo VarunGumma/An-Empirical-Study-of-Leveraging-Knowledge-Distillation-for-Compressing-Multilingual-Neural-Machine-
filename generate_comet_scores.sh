@@ -16,8 +16,6 @@ for lang_pair in $(ls $base_path | sort); do
     
     cmd="comet-score -s ${full_path}/train.${src} -t ${full_path}/train.${tgt} --num_workers 16 --batch_size 256 --seed_everything 2023 --model ${comet_model}"
 
-    echo $cmd
-
     out=$(eval $cmd | sed '$d')
     scores=$(echo "$out" | awk -F"\t" '{print $NF}' | awk -F": " '{print $NF}')
     
