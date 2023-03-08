@@ -23,7 +23,6 @@ train_dir=$train_dir-copy
 python3 scripts/remove_train_devtest_overlaps.py -t $train_dir -d $devtest_dir -l $languages_list
 
 echo -e "[INFO]\tmerging devtest files"
-rm -rf $devtest_dir/all
 bash merge_benchmarks.sh $devtest_dir flores101_dataset $languages_list
 
 echo -e "[INFO]\tcopying data"

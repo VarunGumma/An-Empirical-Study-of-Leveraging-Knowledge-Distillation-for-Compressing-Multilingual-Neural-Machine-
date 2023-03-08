@@ -26,7 +26,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
         update_freq=4
     fi
 
-    fairseq-train ../../../data_bin/v2_distilled_indic_en_language_wise_bin/$lang/final_bin \
+    fairseq-train $1/$lang/final_bin \
     --max-source-positions 210 \
     --max-target-positions 210 \
     --max-update 1000000 \

@@ -1,12 +1,12 @@
-fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
+fairseq-train $1 \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --arch transformer \
---encoder-embed-dim 704 \
---decoder-embed-dim 704 \
+--encoder-layers 18 \
+--decoder-layers 18 \
 --activation-fn gelu \
 --encoder-normalize-before \
 --decoder-normalize-before \
@@ -22,7 +22,7 @@ fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir ../../checkpoints/HQ-base_weird \
+--save-dir ../../checkpoints/HQ-base18L \
 --no-epoch-checkpoints \
 --keep-interval-updates 1 \
 --patience 5 \
@@ -31,7 +31,7 @@ fairseq-train  ../../../data_bin/v2_distilled_indic_en_HQ_bin/final_bin \
 --distributed-world-size 4 \
 --max-tokens 6144 \
 --lr 3e-5 \
---restore-file ../../checkpoints/base_weird/checkpoint_best.pt \
+--restore-file ../../checkpoints/base18L/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \

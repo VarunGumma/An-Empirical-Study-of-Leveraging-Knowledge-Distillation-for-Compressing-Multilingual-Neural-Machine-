@@ -1,4 +1,4 @@
-fairseq-train ../../../data_bin/v2_indic_en_bin/final_bin \
+fairseq-train $1 \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \

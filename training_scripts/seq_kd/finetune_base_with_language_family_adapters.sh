@@ -12,7 +12,7 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     echo -e "[INFO]\trestoring from ${restore_from_dir}"
     echo -e "[INFO]\tsaving checkpoints to ${save_to_dir}"
 
-    fairseq-train ../../../data_bin/v2_distilled_indic_en_language_family_bin/$lang/final_bin \
+    fairseq-train $1/$lang/final_bin \
     --max-source-positions 210 \
     --max-target-positions 210 \
     --max-update 1000000 \
