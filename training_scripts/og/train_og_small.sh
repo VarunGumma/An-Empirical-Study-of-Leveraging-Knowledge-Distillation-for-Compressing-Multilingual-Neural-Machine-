@@ -1,24 +1,22 @@
 fairseq-train $1 \
---log-interval 1 \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 8192 \
+--max-tokens 16384 \
 --arch transformer \
+--encoder-embed-dim 256
+--decoder-embed-dim 256
+--encoder-ffn-embed-dim 1024 \
+--decoder-ffn-embed-dim 1024 \
+--encoder-attention-heads 4 \
+--decoder-attention-heads 4 \
 --activation-fn gelu \
 --encoder-normalize-before \
 --decoder-normalize-before \
 --layernorm-embedding \
 --dropout 0.2 \
---task translation_with_kd \
---kd-strategy global_language_wise \
---teacher-checkpoint-path ../../checkpoints/it/checkpoint_best.pt \
---criterion label_smoothed_cross_entropy_with_kd \
+--criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
---alpha 0.5 \
---use-adaptive-kd-rates \
---kd-queue-size 5000000 \
---kd-queue-sampling-temp 0.7 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
@@ -28,16 +26,16 @@ fairseq-train $1 \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../../checkpoints/global_lang_wise_adaptive_distil \
+--save-dir $2/og_small \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \
 --no-epoch-checkpoints \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
---update-freq 8 \
---distributed-world-size 1 \
---num-workers 16 \
+--update-freq 1 \
+--distributed-world-size 4 \
+--num-workers 12 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
@@ -45,4 +43,5 @@ fairseq-train $1 \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
+--wandb-project Indic-En-Distillation \
 --memory-efficient-fp16

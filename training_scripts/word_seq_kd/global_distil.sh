@@ -11,7 +11,7 @@ fairseq-train $1 \
 --dropout 0.2 \
 --task translation_with_kd \
 --kd-strategy global_level \
---teacher-checkpoint-path ../../checkpoints/it/checkpoint_best.pt \
+--teacher-checkpoint-path $2/it/checkpoint_best.pt \
 --criterion label_smoothed_cross_entropy_with_kd \
 --label-smoothing 0.1 \
 --alpha 0.5 \
@@ -26,7 +26,7 @@ fairseq-train $1 \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../../checkpoints/global_distil \
+--save-dir $2/global_distil \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \

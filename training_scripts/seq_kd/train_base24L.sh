@@ -22,7 +22,7 @@ fairseq-train $1 \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ../../checkpoints/base24L \
+--save-dir $2/base24L \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \

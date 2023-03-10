@@ -20,7 +20,7 @@ fairseq-train $1 \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir ../../checkpoints/HQ-base \
+--save-dir $2/HQ-base \
 --no-epoch-checkpoints \
 --keep-interval-updates 1 \
 --patience 5 \
@@ -29,7 +29,7 @@ fairseq-train $1 \
 --distributed-world-size 4 \
 --max-tokens 6144 \
 --lr 3e-5 \
---restore-file ../../checkpoints/base/checkpoint_best.pt \
+--restore-file $2/base/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \

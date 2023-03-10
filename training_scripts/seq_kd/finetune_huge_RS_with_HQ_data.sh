@@ -2,19 +2,23 @@ fairseq-train $1 \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 16384 \
+--max-tokens 8192 \
 --arch transformer \
+--encoder-embed-dim 1536 \
+--decoder-embed-dim 1536 \
+--encoder-ffn-embed-dim 4096 \
+--decoder-ffn-embed-dim 4096 \
+--encoder-attention-heads 16 \
+--decoder-attention-heads 16 \
+--encoder-recurrent-stacking 6 \
+--decoder-recurrent-stacking 6 \
 --activation-fn gelu \
 --encoder-normalize-before \
 --decoder-normalize-before \
 --layernorm-embedding \
 --dropout 0.2 \
---task translation_with_kd \
---kd-strategy word_and_seq_level \
---teacher-checkpoint-path ../../checkpoints/4x/checkpoint_best.pt \
---criterion label_smoothed_cross_entropy_with_kd \
+--criterion label_smoothed_cross_entropy \
 --label-smoothing 0.1 \
---alpha 0.5 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
@@ -22,17 +26,22 @@ fairseq-train $1 \
 --adam-betas "(0.9, 0.98)" \
 --clip-norm 1.0 \
 --warmup-init-lr 1e-07 \
---lr 0.0005 \
+--lr 3e-5 \
+--restore-file $2/huge_RS/checkpoint_best.pt \
+--reset-lr-scheduler \
+--reset-meters \
+--reset-dataloader \
+--reset-optimizer \
 --warmup-updates 4000 \
---save-dir ../../checkpoints/distil_w_4x \
---save-interval 1 \
+--save-dir $2/HQ-huge_RS \
+--no-epoch-checkpoints \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \
---no-epoch-checkpoints \
+--save-interval 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
---distributed-world-size 4 \
+--distributed-world-size 3 \
 --num-workers 16 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \

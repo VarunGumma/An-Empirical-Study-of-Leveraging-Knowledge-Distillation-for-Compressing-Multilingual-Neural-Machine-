@@ -60,7 +60,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --warmup-init-lr 1e-07 \
     --warmup-updates $warmup \
     --dropout 0.2 \
-    --save-dir ../../checkpoints/$save_to_dir \
+    --save-dir $2/$save_to_dir \
     --no-epoch-checkpoints \
     --keep-interval-updates 1 \
     --patience 5 \
@@ -69,7 +69,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --distributed-world-size 1 \
     --max-tokens 2048 \
     --lr 1e-3 \
-    --restore-file ../../checkpoints/$restore_from_dir/checkpoint_best.pt \
+    --restore-file $2/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
     --reset-meters \

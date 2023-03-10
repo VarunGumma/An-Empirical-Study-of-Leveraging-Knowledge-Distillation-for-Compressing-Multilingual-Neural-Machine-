@@ -44,7 +44,7 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --warmup-init-lr 1e-07 \
     --warmup-updates 4000 \
     --dropout 0.2 \
-    --save-dir ../../checkpoints/$save_to_dir \
+    --save-dir $2/$save_to_dir \
     --save-interval 1 \
     --save-interval-updates 4000 \
     --keep-last-epochs 1 \
@@ -54,7 +54,7 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --distributed-world-size 1 \
     --max-tokens 8192 \
     --lr 1e-3 \
-    --restore-file ../../checkpoints/$restore_from_dir/checkpoint_best.pt \
+    --restore-file $2/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
     --reset-meters \
