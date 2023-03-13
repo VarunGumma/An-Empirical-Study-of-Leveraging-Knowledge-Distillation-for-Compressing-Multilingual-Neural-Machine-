@@ -34,30 +34,27 @@ python3 scripts/add_tags_translate.py $outfname._bpe $outfname.bpe $src_lang $tg
 
 echo -e "[INFO]\tDecoding"
 
-declare -A lang_familes=( ["as"]="as+bn+or" ["bn"]="as+bn+or" ["gu"]="gu+hi+mr+pa" ["hi"]="gu+hi+mr+pa" ["kn"]="kn+ml+ta+te" ["ml"]="kn+ml+ta+te" ["mr"]="gu+hi+mr+pa" ["or"]="as+bn+or" ["pa"]="gu+hi+mr+pa" ["ta"]="kn+ml+ta+te" ["te"]="kn+ml+ta+te" )
+# declare -A lang_familes=( ["as"]="as+bn+or" ["bn"]="as+bn+or" ["gu"]="gu+hi+mr+pa" ["hi"]="gu+hi+mr+pa" ["kn"]="kn+ml+ta+te" ["ml"]="kn+ml+ta+te" ["mr"]="gu+hi+mr+pa" ["or"]="as+bn+or" ["pa"]="gu+hi+mr+pa" ["ta"]="kn+ml+ta+te" ["te"]="kn+ml+ta+te" )
 
-fairseq-interactive \
-    $exp_dir/final_bin \
-    -s $SRC_PREFIX -t $TGT_PREFIX \
-    --path $ckpt_dir/checkpoint_best.pt \
-    --batch-size 64 \
-    --buffer-size 128 \
-    --beam 5 \
-    --max-len-a 1.2 \
-    --max-len-b 10 \
-    --remove-bpe \
-    --skip-invalid-size-inputs-valid-test \
-    --input $outfname.bpe \
-    --num-workers 16 \
-    --enc-adapter ${lang_familes[$src_lang]} \
-    --dec-adapter ${lang_familes[$src_lang]} \
-    --memory-efficient-fp16  >  $outfname.log 2>${ckpt_dir}/${src_lang}_${tgt_lang}.out
+fairseq-interactive $exp_dir/final_bin \
+--source-lang $SRC_PREFIX \
+--target-lang $TGT_PREFIX \
+--path $ckpt_dir/checkpoint_best.pt \
+--batch-size 64 \
+--buffer-size 128 \
+--beam 5 \
+--max-len-a 1.2 \
+--max-len-b 10 \
+--remove-bpe \
+--skip-invalid-size-inputs-valid-test \
+--input $outfname.bpe \
+--num-workers 16 \
+--memory-efficient-fp16  >  $outfname.log 
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.
 python3 scripts/postprocess_translate.py $outfname.log $outfname $input_size $tgt_lang $transliterate
 
 rm $outfname.*
-rm ${ckpt_dir}/*.out
 
 echo -e "[INFO]\tTranslation completed"
