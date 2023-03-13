@@ -1,4 +1,10 @@
-fairseq-train $1 \
+#!/bin/bash
+
+data_dir=$1
+ckpt_dir=$2
+wandb_project=${ckpt_dir#*-}
+
+fairseq-train $data_dir \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -22,7 +28,7 @@ fairseq-train $1 \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir $2/base12L \
+--save-dir $ckpt_dir/base12L \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \
@@ -39,5 +45,5 @@ fairseq-train $1 \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
---wandb-project Indic-En-Distillation \
+--wandb-project $wandb_project \
 --memory-efficient-fp16

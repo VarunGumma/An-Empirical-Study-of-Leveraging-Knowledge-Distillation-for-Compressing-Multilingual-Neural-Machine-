@@ -1,4 +1,10 @@
-fairseq-train $1 \
+#!/bin/bash
+
+data_dir=$1
+ckpt_dir=$2
+wandb_project=${ckpt_dir#*-}
+
+fairseq-train $data_dir \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -11,7 +17,7 @@ fairseq-train $1 \
 --dropout 0.2 \
 --task translation_with_kd \
 --kd-strategy global_language_wise \
---teacher-checkpoint-path $2/it/checkpoint_best.pt \
+--teacher-checkpoint-path $ckpt_dir/it/checkpoint_best.pt \
 --criterion label_smoothed_cross_entropy_with_kd \
 --label-smoothing 0.1 \
 --alpha 0.5 \
@@ -26,7 +32,7 @@ fairseq-train $1 \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir $2/global_lang_wise_distil \
+--save-dir $ckpt_dir/global_lang_wise_distil \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \
@@ -44,4 +50,4 @@ fairseq-train $1 \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
 --memory-efficient-fp16 \
---wandb-project Indic-En-Distillation
+--wandb-project $wandb_project

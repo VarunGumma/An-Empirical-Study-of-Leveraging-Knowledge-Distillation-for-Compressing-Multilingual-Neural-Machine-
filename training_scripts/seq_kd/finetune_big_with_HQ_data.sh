@@ -1,4 +1,10 @@
-fairseq-train  $1 \
+#!/bin/bash
+
+data_dir=$1
+ckpt_dir=$2
+wandb_project=${ckpt_dir#*-}
+
+fairseq-train $data_dir \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -27,7 +33,7 @@ fairseq-train  $1 \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir $2/HQ-big \
+--save-dir $ckpt_dir/HQ-big \
 --no-epoch-checkpoints \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
@@ -35,13 +41,13 @@ fairseq-train  $1 \
 --distributed-world-size 4 \
 --max-tokens 6144 \
 --lr 3e-5 \
---restore-file $2/big/checkpoint_best.pt \
+--restore-file $ckpt_dir/big/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
 --reset-optimizer \
 --num-workers 16 \
---wandb-project Indic-En-Distillation \
+--wandb-project $wandb_project \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \

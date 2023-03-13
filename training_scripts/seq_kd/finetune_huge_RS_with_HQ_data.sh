@@ -1,8 +1,14 @@
-fairseq-train $1 \
+#!/bin/bash
+
+data_dir=$1
+ckpt_dir=$2
+wandb_project=${ckpt_dir#*-}
+
+fairseq-train $data_dir \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 8192 \
+--max-tokens 6144 \
 --arch transformer \
 --encoder-embed-dim 1536 \
 --decoder-embed-dim 1536 \
@@ -27,13 +33,13 @@ fairseq-train $1 \
 --clip-norm 1.0 \
 --warmup-init-lr 1e-07 \
 --lr 3e-5 \
---restore-file $2/huge_RS/checkpoint_best.pt \
+--restore-file $ckpt_dir/huge_RS/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
 --reset-optimizer \
 --warmup-updates 4000 \
---save-dir $2/HQ-huge_RS \
+--save-dir $ckpt_dir/HQ-huge_RS \
 --no-epoch-checkpoints \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \
@@ -41,7 +47,7 @@ fairseq-train $1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
---distributed-world-size 3 \
+--distributed-world-size 4 \
 --num-workers 16 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
@@ -51,4 +57,4 @@ fairseq-train $1 \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
 --memory-efficient-fp16 \
---wandb-project Indic-En-Distillation
+--wandb-project $wandb_project

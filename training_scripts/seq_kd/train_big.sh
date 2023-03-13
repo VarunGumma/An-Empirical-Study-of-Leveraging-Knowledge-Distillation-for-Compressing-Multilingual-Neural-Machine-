@@ -1,11 +1,17 @@
-fairseq-train $1 \
+#!/bin/bash
+
+data_dir=$1
+ckpt_dir=$2
+wandb_project=${ckpt_dir#*-}
+
+fairseq-train $data_dir \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 16384 \
 --arch transformer \
---encoder-embed-dim 1024
---decoder-embed-dim 1024
+--encoder-embed-dim 1024 \
+--decoder-embed-dim 1024 \
 --encoder-ffn-embed-dim 4096 \
 --decoder-ffn-embed-dim 4096 \
 --encoder-attention-heads 16 \
@@ -26,7 +32,7 @@ fairseq-train $1 \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir $2/big \
+--save-dir $ckpt_dir/big \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \
@@ -44,4 +50,4 @@ fairseq-train $1 \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
 --memory-efficient-fp16 \
---wandb-project Indic-En-Distillation \
+--wandb-project $wandb_project

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+data_dir=$1
+ckpt_dir=$2
+wandb_project=${ckpt_dir#*-}
+
 save_to_dir="base_with_language_family_adapters_finetuned_on"
 restore_from_dir="base"
 
@@ -12,7 +16,7 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     echo -e "[INFO]\trestoring from ${restore_from_dir}"
     echo -e "[INFO]\tsaving checkpoints to ${save_to_dir}"
 
-    fairseq-train $1/$lang/final_bin \
+    fairseq-train $data_dir/$lang/final_bin \
     --max-source-positions 210 \
     --max-target-positions 210 \
     --max-update 1000000 \
@@ -44,17 +48,17 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --warmup-init-lr 1e-07 \
     --warmup-updates 4000 \
     --dropout 0.2 \
-    --save-dir $2/$save_to_dir \
+    --save-dir $ckpt_dir/$save_to_dir \
     --save-interval 1 \
     --save-interval-updates 4000 \
     --keep-last-epochs 1 \
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
-    --update-freq 3 \
+    --update-freq 4 \
     --distributed-world-size 1 \
-    --max-tokens 8192 \
+    --max-tokens 6144 \
     --lr 1e-3 \
-    --restore-file $2/$restore_from_dir/checkpoint_best.pt \
+    --restore-file $ckpt_dir/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
     --reset-meters \
