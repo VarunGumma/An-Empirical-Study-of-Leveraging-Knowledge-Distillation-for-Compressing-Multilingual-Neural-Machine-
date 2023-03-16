@@ -1,5 +1,5 @@
 ## Indic-En
-This repository contains scripts to distil the [IndicTrans](https://github.com/AI4Bharat/indicTrans) ```XX-En``` model. 
+This repository contains scripts to distill [IndicTrans](https://github.com/AI4Bharat/indicTrans)
 
 ### Setup
 Clone this repository, and it will act as the main experiment directory from now on.
