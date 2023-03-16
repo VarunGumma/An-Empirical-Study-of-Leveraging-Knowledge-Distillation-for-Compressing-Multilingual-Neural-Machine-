@@ -12,8 +12,8 @@ fairseq-train $data_dir \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \
 --arch transformer \
---encoder-embed-dim 1024
---decoder-embed-dim 1024
+--encoder-embed-dim 1024 \
+--decoder-embed-dim 1024 \
 --encoder-ffn-embed-dim 4096 \
 --decoder-ffn-embed-dim 4096 \
 --encoder-attention-heads 16 \
@@ -38,8 +38,8 @@ fairseq-train $data_dir \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
---distributed-world-size 4 \
---max-tokens 6144 \
+--distributed-world-size 8 \
+--max-tokens 3072 \
 --lr 3e-5 \
 --restore-file $ckpt_dir/big/checkpoint_best.pt \
 --reset-lr-scheduler \

@@ -9,7 +9,7 @@ fairseq-train $data_dir \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
---max-tokens 16384 \
+--max-tokens 8192 \
 --arch transformer \
 --activation-fn gelu \
 --encoder-normalize-before \
@@ -39,7 +39,7 @@ fairseq-train $data_dir \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
---distributed-world-size 4 \
+--distributed-world-size 8 \
 --num-workers 16 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \

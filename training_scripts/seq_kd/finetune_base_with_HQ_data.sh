@@ -32,8 +32,8 @@ fairseq-train $data_dir \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
---distributed-world-size 4 \
---max-tokens 6144 \
+--distributed-world-size 8 \
+--max-tokens 3072 \
 --lr 3e-5 \
 --restore-file $ckpt_dir/base/checkpoint_best.pt \
 --reset-lr-scheduler \

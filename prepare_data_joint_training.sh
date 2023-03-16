@@ -23,7 +23,7 @@ train_dir=$train_dir-copy
 python3 scripts/remove_train_devtest_overlaps.py -t $train_dir -d $devtest_dir -l $languages_list
 
 echo -e "[INFO]\tmerging devtest files"
-bash merge_benchmarks.sh $devtest_dir flores101_dataset $languages_list
+bash merge_benchmarks.sh $devtest_dir flores101 $languages_list
 
 echo -e "[INFO]\tcopying data"
 IFS='+' read -ra langs <<< $languages_list
@@ -83,15 +83,6 @@ for lang in ${langs[@]}; do
 	input_size=`python3 scripts/preprocess_translate.py $dev_infname_src $dev_outfname_src $src_lang $transliterate`
 	input_size=`python3 scripts/preprocess_translate.py $dev_infname_tgt $dev_outfname_tgt $tgt_lang $transliterate`
 	echo "Number of sentences in dev: $input_size"
-	# test preprocessing
-	test_infname_src=$devtest_data_dir/en-${lang}/test.$src_lang
-	test_infname_tgt=$devtest_data_dir/en-${lang}/test.$tgt_lang
-	test_outfname_src=$devtest_norm_dir/test.$src_lang
-	test_outfname_tgt=$devtest_norm_dir/test.$tgt_lang
-	echo "Applying normalization and script conversion for test"
-	input_size=`python3 scripts/preprocess_translate.py $test_infname_src $test_outfname_src $src_lang $transliterate`
-	input_size=`python3 scripts/preprocess_translate.py $test_infname_tgt $test_outfname_tgt $tgt_lang $transliterate`
-	echo "Number of sentences in test: $input_size"
 done
 
 # this concatenates lang pair data and creates text files to keep track of number of lines in each lang pair.
@@ -105,7 +96,6 @@ done
 
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'train'
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'dev'
-python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'test'
 
 if [[ "$reuse_bpe_vocab" == false ]]; then
 	echo "Learning bpe. This will take a very long time depending on the size of the dataset"
@@ -128,11 +118,9 @@ if [[ "$vocab_type" == "sep" ]]
 then
     bash apply_single_bpe_traindevtest_notag.sh $exp_dir 'train'
 	bash apply_single_bpe_traindevtest_notag.sh $exp_dir 'dev'
-	bash apply_single_bpe_traindevtest_notag.sh $exp_dir 'test'
 else 
     bash apply_bpe_traindevtest_notag.sh $exp_dir 'train'
 	bash apply_bpe_traindevtest_notag.sh $exp_dir 'dev'
-	bash apply_bpe_traindevtest_notag.sh $exp_dir 'test'
 fi
 
 mkdir -p $exp_dir/final
@@ -142,7 +130,6 @@ mkdir -p $exp_dir/final
 echo "Adding language tags"
 python3 scripts/add_joint_tags_translate.py $exp_dir 'train'
 python3 scripts/add_joint_tags_translate.py $exp_dir 'dev'
-python3 scripts/add_joint_tags_translate.py $exp_dir 'test'
 
 # use cpu_count to get num_workers instead of setting it manually when running in different instances
 num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count())"`
@@ -155,7 +142,6 @@ if [ "$reuse_bpe_vocab" == true ]; then
 		--target-lang TGT \
 		--trainpref $exp_dir/final/train \
 		--validpref $exp_dir/final/dev \
-		--testpref $exp_dir/final/test \
 		--destdir $exp_dir/final_bin \
 		--srcdict $exp_dir/final_bin/dict.SRC.txt \
 		--tgtdict $exp_dir/final_bin/dict.TGT.txt \
@@ -169,7 +155,6 @@ else
 		--target-lang TGT \
 		--trainpref $exp_dir/final/train \
 		--validpref $exp_dir/final/dev \
-		--testpref $exp_dir/final/test \
 		--destdir $exp_dir/final_bin \
 		--workers $num_workers \
 		--thresholdtgt 5 \
