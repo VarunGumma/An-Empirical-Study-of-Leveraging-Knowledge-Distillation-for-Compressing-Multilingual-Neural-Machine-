@@ -92,7 +92,7 @@ class Model:
         tagged_sents = truncate_long_sentences(tagged_sents)
         tagged_sents = [x.strip().split(" ") for x in tagged_sents]
 
-        translations = self.translator.translate_batch(tagged_sents, beam_size=5, max_batch_size=256)
+        translations = self.translator.translate_batch(tagged_sents, beam_size=beam_size, max_batch_size=max_batch_size)       
         translations = [" ".join(x.hypotheses[0]) for x in translations]
         postprocessed_sents = [x.replace("@@ ", "") for x in self.postprocess(translations, tgt_lang)]
 
