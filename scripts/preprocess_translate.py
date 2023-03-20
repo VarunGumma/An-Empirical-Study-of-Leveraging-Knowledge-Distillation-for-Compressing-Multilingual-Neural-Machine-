@@ -101,11 +101,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 4:
         transliterate = False
     elif len(sys.argv) == 5:
-        transliterate = sys.argv[4]
-        if transliterate.lower() == "true":
-            transliterate = True
-        else:
-            transliterate = False
+        transliterate = sys.argv[4].lower() == "true"
     else:
         print(f"Invalid arguments: {sys.argv}")
         exit()
