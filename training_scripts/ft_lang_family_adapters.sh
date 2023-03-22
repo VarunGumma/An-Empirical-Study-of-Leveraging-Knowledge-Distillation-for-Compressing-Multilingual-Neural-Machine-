@@ -1,20 +1,11 @@
 #!/bin/bash
 
 data_dir=$1
-ckpt_dir=$2
-wandb_project=$3
-
-save_to_dir="base_with_lang_family_adapters_finetuned_on"
-restore_from_dir="base"
+restore_from_dir=$2
 
 for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     echo `date`
     echo -e "\n[INFO]\tfinetuning on ${lang}"
-
-    save_to_dir=${save_to_dir}_${lang}
-
-    echo -e "[INFO]\trestoring from ${restore_from_dir}"
-    echo -e "[INFO]\tsaving checkpoints to ${save_to_dir}"
 
     fairseq-train $data_dir/$lang/final_bin \
     --max-source-positions 210 \
@@ -44,7 +35,8 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --warmup-init-lr 1e-07 \
     --warmup-updates 4000 \
     --dropout 0.2 \
-    --save-dir $ckpt_dir/$save_to_dir \
+    --restore-file $data_dir/$restore_from_dir/checkpoint_best.pt \
+    --save-dir $data_dir/lang_family_adapters/${restore_from_dir}_$lang \
     --save-interval 1 \
     --save-interval-updates 4000 \
     --keep-last-epochs 1 \
@@ -54,7 +46,6 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --distributed-world-size 1 \
     --max-tokens 6144 \
     --lr 1e-3 \
-    --restore-file $ckpt_dir/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
     --reset-meters \
@@ -67,7 +58,8 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --eval-bleu-remove-bpe \
     --maximize-best-checkpoint-metric \
     --best-checkpoint-metric bleu \
-    --memory-efficient-fp16
+    --memory-efficient-fp16 \
+    --user-dir ../model_configs
     
     restore_from_dir=$save_to_dir
     echo "====================================================================================="

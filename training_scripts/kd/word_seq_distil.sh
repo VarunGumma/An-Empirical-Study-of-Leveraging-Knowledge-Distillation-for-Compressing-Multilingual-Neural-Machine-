@@ -1,7 +1,7 @@
 #!/bin/bash
 
 data_dir=$1
-ckpt_dir=$2
+teacher_ckpt_dir=$2
 wandb_project=$3
 
 fairseq-train $data_dir \
@@ -13,7 +13,7 @@ fairseq-train $data_dir \
 --dropout 0.2 \
 --task translation_with_kd \
 --kd-strategy word_seq_level \
---teacher-checkpoint-path $ckpt_dir/it/checkpoint_best.pt \
+--teacher-checkpoint-path $teacher_ckpt_dir/it/checkpoint_best.pt \
 --criterion label_smoothed_cross_entropy_with_kd \
 --label-smoothing 0.1 \
 --alpha 0.5 \
@@ -26,7 +26,7 @@ fairseq-train $data_dir \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir $ckpt_dir/word_seq_distil \
+--save-dir $data_dir/word_seq_distil \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \
@@ -44,4 +44,5 @@ fairseq-train $data_dir \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
 --memory-efficient-fp16 \
---wandb-project $wandb_project
+--wandb-project $wandb_project \
+--user-dir ../model_configs

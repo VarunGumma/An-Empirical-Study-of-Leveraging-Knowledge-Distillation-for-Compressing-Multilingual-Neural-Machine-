@@ -1,9 +1,8 @@
 #!/bin/bash
 
 data_dir=$1
-ckpt_dir=$2
-model_name=$3
-wandb_project=$4
+model_name=$2
+wandb_project=$3
 
 fairseq-train $data_dir/final_bin \
 --max-source-positions 210 \
@@ -23,7 +22,7 @@ fairseq-train $data_dir/final_bin \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir $ckpt_dir/HQ-$model_name \
+--save-dir $data_dir/HQ-$model_name \
 --no-epoch-checkpoints \
 --keep-interval-updates 1 \
 --patience 5 \
@@ -32,7 +31,7 @@ fairseq-train $data_dir/final_bin \
 --distributed-world-size 8 \
 --max-tokens 3072 \
 --lr 3e-5 \
---restore-file $ckpt_dir/$model_name/checkpoint_best.pt \
+--restore-file $data_dir/$model_name/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \
@@ -46,4 +45,5 @@ fairseq-train $data_dir/final_bin \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
 --memory-efficient-fp16 \
---maximize-best-checkpoint-metric
+--maximize-best-checkpoint-metric \
+--user-dir ../model_configs

@@ -1,20 +1,11 @@
 #!/bin/bash
 
 data_dir=$1
-ckpt_dir=$2
-wandb_project=$3
-
-save_to_dir="base_with_lang_wise_adapters_finetuned_on"
-restore_from_dir="base"
+restore_from_dir=$2
 
 for lang in as bn gu hi kn ml mr or pa ta te; do
     echo `date`
     echo -e "\n[INFO]\tfinetuning on ${lang}"
-
-    save_to_dir=${save_to_dir}_${lang}
-
-    echo -e "[INFO]\trestoring from ${restore_from_dir}"
-    echo -e "[INFO]\tsaving checkpoints to ${save_to_dir}"
 
     if [[ "$lang" == as ]]; then
         warmup=1000
@@ -60,7 +51,8 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --warmup-init-lr 1e-07 \
     --warmup-updates $warmup \
     --dropout 0.2 \
-    --save-dir $ckpt_dir/$save_to_dir \
+    --restore-file $data_dir/$restore_from_dir/checkpoint_best.pt \
+    --save-dir $data_dir/lang_family_adapters/${restore_from_dir}_$lang \
     --no-epoch-checkpoints \
     --keep-interval-updates 1 \
     --patience 5 \
@@ -69,7 +61,6 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --distributed-world-size 1 \
     --max-tokens 2048 \
     --lr 1e-3 \
-    --restore-file $ckpt_dir/$restore_from_dir/checkpoint_best.pt \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
     --reset-meters \
@@ -82,7 +73,8 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --eval-bleu-remove-bpe \
     --maximize-best-checkpoint-metric \
     --best-checkpoint-metric bleu \
-    --memory-efficient-fp16
+    --memory-efficient-fp16 \
+    --user-dir ../model_configs
 
     restore_from_dir=$save_to_dir
     echo "====================================================================================="

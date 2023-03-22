@@ -1,9 +1,8 @@
 #!/bin/bash
 
 data_dir=$1
-ckpt_dir=$2
-model_name=$3
-wandb_project=$4
+model_name=$2
+wandb_project=$3
 
 fairseq-train $data_dir/final_bin \
 --max-source-positions 210 \
@@ -23,7 +22,7 @@ fairseq-train $data_dir/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir $ckpt_dir/$model_name \
+--save-dir $data_dir/$model_name \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \
@@ -41,4 +40,5 @@ fairseq-train $data_dir/final_bin \
 --best-checkpoint-metric bleu \
 --maximize-best-checkpoint-metric \
 --wandb-project $wandb_project \
---memory-efficient-fp16
+--memory-efficient-fp16 \
+--user-dir ../model_configs
