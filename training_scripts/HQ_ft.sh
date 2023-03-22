@@ -2,46 +2,37 @@
 
 data_dir=$1
 ckpt_dir=$2
-wandb_project=${ckpt_dir#*-}
+model_name=$3
+wandb_project=$4
 
-fairseq-train $data_dir \
+fairseq-train $data_dir/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
 --save-interval 1 \
 --save-interval-updates 5000 \
---keep-interval-updates 1 \
---arch transformer \
---encoder-embed-dim 1024 \
---decoder-embed-dim 1024 \
---encoder-ffn-embed-dim 4096 \
---decoder-ffn-embed-dim 4096 \
---encoder-attention-heads 16 \
---decoder-attention-heads 16 \
---activation-fn gelu \
---encoder-normalize-before \
---decoder-normalize-before \
---layernorm-embedding \
+--arch transformer_$model_name \
 --criterion label_smoothed_cross_entropy \
 --source-lang SRC \
---lr-scheduler inverse_sqrt \
 --target-lang TGT \
 --label-smoothing 0.1 \
+--lr-scheduler inverse_sqrt \
 --optimizer adam \
 --adam-betas "(0.9, 0.98)" \
 --clip-norm 1.0 \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir $ckpt_dir/HQ-big \
+--save-dir $ckpt_dir/HQ-$model_name \
 --no-epoch-checkpoints \
+--keep-interval-updates 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
 --distributed-world-size 8 \
 --max-tokens 3072 \
 --lr 3e-5 \
---restore-file $ckpt_dir/big/checkpoint_best.pt \
+--restore-file $ckpt_dir/$model_name/checkpoint_best.pt \
 --reset-lr-scheduler \
 --reset-meters \
 --reset-dataloader \

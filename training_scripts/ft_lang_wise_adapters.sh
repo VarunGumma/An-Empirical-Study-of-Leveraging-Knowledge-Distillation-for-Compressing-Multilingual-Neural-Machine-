@@ -2,9 +2,9 @@
 
 data_dir=$1
 ckpt_dir=$2
-wandb_project=${ckpt_dir#*-}
+wandb_project=$3
 
-save_to_dir="base_with_language_wise_adapters_finetuned_on"
+save_to_dir="base_with_lang_wise_adapters_finetuned_on"
 restore_from_dir="base"
 
 for lang in as bn gu hi kn ml mr or pa ta te; do
@@ -36,11 +36,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --max-update 1000000 \
     --save-interval 1 \
     --save-interval-updates $warmup \
-    --arch transformer \
-    --activation-fn gelu \
-    --encoder-normalize-before \
-    --decoder-normalize-before \
-    --layernorm-embedding \
+    --arch transformer_base \
     --encoder-add-adapters \
     --encoder-adapter-bottleneck-dim 256 \
     --encoder-adapter-langs as,bn,gu,hi,kn,ml,mr,or,pa,ta,te \

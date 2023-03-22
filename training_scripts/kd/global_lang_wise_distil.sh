@@ -2,29 +2,23 @@
 
 data_dir=$1
 ckpt_dir=$2
-wandb_project=${ckpt_dir#*-}
+wandb_project=$3
 
 fairseq-train $data_dir \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
 --max-tokens 8192 \
---arch transformer \
---encoder-embed-dim 1536 \
---decoder-embed-dim 1536 \
---encoder-ffn-embed-dim 4096 \
---decoder-ffn-embed-dim 4096 \
---encoder-attention-heads 16 \
---decoder-attention-heads 16 \
---encoder-recurrent-stacking 6 \
---decoder-recurrent-stacking 6 \
---activation-fn gelu \
---encoder-normalize-before \
---decoder-normalize-before \
---layernorm-embedding \
+--arch transformer_base \
 --dropout 0.2 \
---criterion label_smoothed_cross_entropy \
+--task translation_with_kd \
+--kd-strategy global_language_wise \
+--teacher-checkpoint-path $ckpt_dir/it/checkpoint_best.pt \
+--criterion label_smoothed_cross_entropy_with_kd \
 --label-smoothing 0.1 \
+--alpha 0.5 \
+--kd-rate 0.5 \
+--kd-queue-size 5000000 \
 --source-lang SRC \
 --target-lang TGT \
 --lr-scheduler inverse_sqrt \
@@ -34,7 +28,7 @@ fairseq-train $data_dir \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir $ckpt_dir/huge_RS \
+--save-dir $ckpt_dir/global_lang_wise_distil \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \
@@ -50,6 +44,6 @@ fairseq-train $data_dir \
 --eval-bleu-remove-bpe \
 --eval-bleu-print-samples \
 --best-checkpoint-metric bleu \
---memory-efficient-fp16 \
 --maximize-best-checkpoint-metric \
+--memory-efficient-fp16 \
 --wandb-project $wandb_project

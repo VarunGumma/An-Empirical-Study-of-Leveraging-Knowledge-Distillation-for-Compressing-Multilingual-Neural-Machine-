@@ -1,16 +1,22 @@
 import torch
-from os import listdir
+from os import listdir, system, makedirs
 from sys import argv
 from engine import Model
+from tqdm import tqdm
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 devtest_dir, exp_dir, ckpt_dir, src, tgt, beam_size, batch_size, model_list = argv[1:]
 
 for model_name in model_list.split(','):
     print(f"[INFO]\tevaluating {model_name}")
-    model = Model(exp_dir=exp_dir, ckpt_dir=f"{ckpt_dir}/{model_name}", device=device)
+    
+    model = Model(
+        exp_dir=exp_dir, 
+        ckpt_dir=f"{ckpt_dir}/{model_name}", 
+        device=device
+    )
 
-    for lang_pair in sorted(listdir(devtest_dir)):
+    for lang_pair in tqdm(listdir(devtest_dir)):
         if src == 'en':
             tgt = lang_pair.split('-')[1]
         else:
@@ -30,4 +36,5 @@ for model_name in model_list.split(','):
         with open(f"{devtest_dir}/{lang_pair}/outfile.{tgt}", 'w', encoding='utf-8') as f:
             f.write('\n'.join(translated_sents))
     
-    system(f"bash ../compute_bleu.sh {devtest_dir}/{lang_pair}/test.{src} {devtest_dir}/{lang_pair}/test.{src} {src} {tgt} > results/{lang_pair}.json"")
+    makedirs("../results/{model_name}", exist_ok=True)
+    system(f"bash ../compute_bleu.sh {devtest_dir}/{lang_pair}/test.{src} {devtest_dir}/{lang_pair}/test.{src} {src} {tgt} > ../results/{model_name}/{lang_pair}.json")

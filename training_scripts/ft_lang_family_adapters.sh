@@ -2,9 +2,9 @@
 
 data_dir=$1
 ckpt_dir=$2
-wandb_project=${ckpt_dir#*-}
+wandb_project=$3
 
-save_to_dir="base_with_language_family_adapters_finetuned_on"
+save_to_dir="base_with_lang_family_adapters_finetuned_on"
 restore_from_dir="base"
 
 for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
@@ -20,11 +20,7 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --max-source-positions 210 \
     --max-target-positions 210 \
     --max-update 1000000 \
-    --arch transformer \
-    --activation-fn gelu \
-    --encoder-normalize-before \
-    --decoder-normalize-before \
-    --layernorm-embedding \
+    --arch transformer_base \
     --encoder-add-adapters \
     --encoder-adapter-bottleneck-dim 256 \
     --encoder-adapter-langs as+bn+or,gu+hi+mr+pa,kn+ml+ta+te \
