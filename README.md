@@ -1,4 +1,4 @@
-## Indic-En
+## IndicDistillation
 This repository contains scripts to distill [IndicTrans](https://github.com/AI4Bharat/indicTrans)
 
 ### Setup
