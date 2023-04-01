@@ -4,7 +4,7 @@ data_dir=$1
 teacher_ckpt_dir=$2
 wandb_project=$3
 
-fairseq-train $data_dir \
+fairseq-train $data_dir/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -13,7 +13,7 @@ fairseq-train $data_dir \
 --dropout 0.2 \
 --task translation_with_kd \
 --kd-strategy word_seq_level \
---teacher-checkpoint-path $teacher_ckpt_dir/it/checkpoint_best.pt \
+--teacher-checkpoint-path $teacher_ckpt_dir/checkpoint_best.pt \
 --criterion label_smoothed_cross_entropy_with_kd \
 --label-smoothing 0.1 \
 --alpha 0.5 \
@@ -45,4 +45,4 @@ fairseq-train $data_dir \
 --maximize-best-checkpoint-metric \
 --memory-efficient-fp16 \
 --wandb-project $wandb_project \
---user-dir ../model_configs
+--user-dir ../../model_configs

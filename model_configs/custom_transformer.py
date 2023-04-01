@@ -5,7 +5,7 @@ from fairseq.models.transformer import base_architecture
 @register_model_architecture("transformer", "transformer_base")
 def transformer_base(args):
     args.encoder_normalize_before = getattr(args, "encoder_normalize_before", True)
-    args.encoder_normalize_before = getattr(args, "decoder_normalize_before", True)
+    args.decoder_normalize_before = getattr(args, "decoder_normalize_before", True)
     args.layernorm_embedding = getattr(args, "layernorm_embedding", True)
     args.activation_fn = getattr(args, "activation_fn", "gelu")
     base_architecture(args)

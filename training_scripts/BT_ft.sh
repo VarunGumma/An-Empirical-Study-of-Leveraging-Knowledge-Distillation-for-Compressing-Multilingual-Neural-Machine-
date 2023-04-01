@@ -23,14 +23,14 @@ fairseq-train $data_dir/final_bin \
 --warmup-init-lr 1e-07 \
 --warmup-updates 4000 \
 --dropout 0.2 \
---save-dir $data_dir/clean_without_any_nway_ft-$model_name \
+--save-dir $data_dir/BT_clean_wo_nway_ft-${model_name} \
 --no-epoch-checkpoints \
 --keep-interval-updates 1 \
 --patience 5 \
 --skip-invalid-size-inputs-valid-test \
 --update-freq 1 \
---distributed-world-size 4 \
---max-tokens 6144 \
+--distributed-world-size 8 \
+--max-tokens 3072 \
 --lr 3e-5 \
 --restore-file $pretrained_ckpt/checkpoint_best.pt \
 --reset-lr-scheduler \

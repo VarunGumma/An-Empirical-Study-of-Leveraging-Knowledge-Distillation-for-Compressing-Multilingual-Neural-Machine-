@@ -3,8 +3,8 @@ from sys import argv
 import numpy as np 
 
 total, total_hq = 0, 0
-base_path = "../sam_v0.3/distilled_indic_en"
-base_path_hq = "../sam_v0.3/distilled_indic_en_HQ"
+base_path = "../sam_v0.3/og"
+base_path_hq = "../sam_v0.3/og_HQ"
 k = float(argv[1])
 
 for lang_pair in sorted(listdir(base_path)):
@@ -20,7 +20,7 @@ for lang_pair in sorted(listdir(base_path)):
     print(lang_pair, u, s)
     total += len(indic)
 
-    msk = labse > (u + k*s)
+    msk = labse > k
     # msk = labse > k
     # indic_hq, en_hq = indic[msk], en[msk]
     indic_hq, en_hq, labse_hq = indic[msk], en[msk], labse[msk] 

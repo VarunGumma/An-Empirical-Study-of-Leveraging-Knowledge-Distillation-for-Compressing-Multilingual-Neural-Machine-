@@ -4,13 +4,15 @@ infname=$1
 outfname=$2
 src_lang=$3
 tgt_lang=$4
-ckpt_dir=$5
-exp_dir=$6
+exp_dir=$5
+model=$6
 transliterate=$7
 
 SRC_PREFIX='SRC'
 TGT_PREFIX='TGT'
 SUBWORD_NMT_DIR='subword-nmt'
+
+echo $exp_dir
 
 ### normalization and script conversion
 
@@ -39,7 +41,7 @@ echo -e "[INFO]\tDecoding"
 fairseq-interactive $exp_dir/final_bin \
 --source-lang $SRC_PREFIX \
 --target-lang $TGT_PREFIX \
---path $ckpt_dir/checkpoint_best.pt \
+--path $exp_dir/$model/checkpoint_best.pt \
 --batch-size 64 \
 --buffer-size 128 \
 --beam 5 \
@@ -49,6 +51,7 @@ fairseq-interactive $exp_dir/final_bin \
 --skip-invalid-size-inputs-valid-test \
 --input $outfname.bpe \
 --num-workers 16 \
+--user-dir model_configs \
 --memory-efficient-fp16  >  $outfname.log 2>&1
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"

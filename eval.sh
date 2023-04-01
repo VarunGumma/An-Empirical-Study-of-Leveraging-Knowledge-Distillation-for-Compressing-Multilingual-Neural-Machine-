@@ -3,11 +3,10 @@
 # Assign command line arguments to variables
 flores_dir=$1
 exp_dir=$2
-ckpt_dir=$3
-src_lang=$4
-tgt_lang=$5
-transliterate=$6
-shift 6
+src_lang=$3
+tgt_lang=$4
+transliterate=$5
+shift 5
 
 models=("$@")
 
@@ -39,7 +38,7 @@ for model in "${models[@]}"; do
         mkdir -p "$save_path"
 
         # Translate
-        bash joint_translate.sh "$lang_pair/test.$src_lang" "$outfile" "$src_lang" "$tgt_lang" "$ckpt_dir/$model" "$exp_dir" "$transliterate"
+        bash joint_translate.sh "$lang_pair/test.$src_lang" "$outfile" "$src_lang" "$tgt_lang" "$exp_dir" "$model" "$transliterate"
 
         # Compute BLEU score
         if [[ -f "$outfile" ]]; then
