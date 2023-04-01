@@ -12,21 +12,21 @@ def transformer_base(args):
 
 
 @register_model_architecture("transformer", "transformer_base12L")
-def transformer_base(args):
+def transformer_base12L(args):
     args.encoder_layers = getattr("encoder_layers", 12)
     args.decoder_layers = getattr("decoder_layers", 12)
     transformer_base(args)
 
 
 @register_model_architecture("transformer", "transformer_base18L")
-def transformer_base(args):
+def transformer_base18L(args):
     args.encoder_layers = getattr("encoder_layers", 18)
     args.decoder_layers = getattr("decoder_layers", 18)
     transformer_base(args)
 
 
 @register_model_architecture("transformer", "transformer_base24L")
-def transformer_base(args):
+def transformer_base24L(args):
     args.encoder_layers = getattr("encoder_layers", 24)
     args.decoder_layers = getattr("decoder_layers", 24)
     transformer_base(args)
