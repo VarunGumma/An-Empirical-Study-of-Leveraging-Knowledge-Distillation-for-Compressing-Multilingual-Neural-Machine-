@@ -38,7 +38,7 @@ echo -e "[INFO]\tDecoding"
 
 # declare -A lang_familes=( ["as"]="as+bn+or" ["bn"]="as+bn+or" ["gu"]="gu+hi+mr+pa" ["hi"]="gu+hi+mr+pa" ["kn"]="kn+ml+ta+te" ["ml"]="kn+ml+ta+te" ["mr"]="gu+hi+mr+pa" ["or"]="as+bn+or" ["pa"]="gu+hi+mr+pa" ["ta"]="kn+ml+ta+te" ["te"]="kn+ml+ta+te" )
 
-CUDA_VISIBLE_DEVICES=7 fairseq-interactive $exp_dir/final_bin \
+fairseq-interactive $exp_dir/final_bin \
 --source-lang $SRC_PREFIX \
 --target-lang $TGT_PREFIX \
 --path $exp_dir/$model/checkpoint_best.pt \
@@ -52,7 +52,7 @@ CUDA_VISIBLE_DEVICES=7 fairseq-interactive $exp_dir/final_bin \
 --input $outfname.bpe \
 --num-workers 16 \
 --user-dir model_configs \
---memory-efficient-fp16  >  $outfname.log 2>&1
+--memory-efficient-fp16  >  $outfname.log 2>&1 
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.
