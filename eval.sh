@@ -46,9 +46,12 @@ for model in "${models[@]}"; do
         else
             echo "Translation failed for $lang_pair"
         fi
+
+        rm -rf $lang_pair/outfile.* $lang_pair/*.tok
+        # rm $exp_dir/$model/*.out
     done
 done
 
 # Convert JSON files to CSV
 echo -e "[INFO]\tConverting all JSON files to CSV"
-python3 json_to_csv.py "${models[@]}"
+python3 json_to_csv.py "results" "${models[@]}"

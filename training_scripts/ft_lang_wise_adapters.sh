@@ -11,17 +11,17 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
         warmup=1000
         update_freq=1
     elif [[ "$lang" == gu ]]; then
-        warmup=2000
+        warmup=4000
         update_freq=4
     elif [[ "$lang" == or ]]; then
-        warmup=1600
+        warmup=2000
         update_freq=4
     else
         warmup=4000
         update_freq=4
     fi
 
-    fairseq-train $data_dir/$lang/final_bin \
+    fairseq-train ${data_dir}/$lang/final_bin \
     --max-source-positions 210 \
     --max-target-positions 210 \
     --max-update 1000000 \
@@ -51,8 +51,8 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --warmup-init-lr 1e-07 \
     --warmup-updates $warmup \
     --dropout 0.2 \
-    --restore-file $data_dir/$restore_from_dir/checkpoint_best.pt \
-    --save-dir $data_dir/lang_family_adapters/${restore_from_dir}_$lang \
+    --restore-file ${restore_from_dir}/checkpoint_best.pt \
+    --save-dir ${data_dir}/$lang \
     --no-epoch-checkpoints \
     --keep-interval-updates 1 \
     --patience 5 \
@@ -66,7 +66,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --reset-meters \
     --reset-dataloader \
     --reset-optimizer \
-    --num-workers 16 \
+    --num-workers 15 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \
@@ -76,6 +76,6 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --memory-efficient-fp16 \
     --user-dir ../model_configs
 
-    restore_from_dir=$save_to_dir
+    restore_from_dir=${data_dir}/$lang
     echo "====================================================================================="
 done

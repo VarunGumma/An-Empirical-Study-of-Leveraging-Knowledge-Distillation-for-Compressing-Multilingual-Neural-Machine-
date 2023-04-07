@@ -35,15 +35,16 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --warmup-init-lr 1e-07 \
     --warmup-updates 4000 \
     --dropout 0.2 \
-    --restore-file $data_dir/$restore_from_dir/checkpoint_best.pt \
-    --save-dir $data_dir/lang_family_adapters/${restore_from_dir}_$lang \
+    --restore-file ${restore_from_dir}/checkpoint_best.pt \
+    --save-dir ${data_dir}/$lang \
     --save-interval 1 \
     --save-interval-updates 4000 \
-    --keep-last-epochs 1 \
+    --no-epoch-checkpoints \
+    --keep-interval-updates 1 \
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
-    --update-freq 4 \
-    --distributed-world-size 1 \
+    --update-freq 2 \
+    --distributed-world-size 2 \
     --max-tokens 6144 \
     --lr 1e-3 \
     --load-checkpoint-liberally \
@@ -51,7 +52,7 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --reset-meters \
     --reset-dataloader \
     --reset-optimizer \
-    --num-workers 16 \
+    --num-workers 15 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \
@@ -61,6 +62,6 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --memory-efficient-fp16 \
     --user-dir ../model_configs
     
-    restore_from_dir=$save_to_dir
+    restore_from_dir=${data_dir}/$lang
     echo "====================================================================================="
 done

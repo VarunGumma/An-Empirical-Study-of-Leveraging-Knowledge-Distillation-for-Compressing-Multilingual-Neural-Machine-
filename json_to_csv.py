@@ -5,9 +5,10 @@ import json
 
 bleu_results = []
 chrf2_results = []
-base_path = "results"
 
-for model in argv[1:]:
+base_path = argv[1]
+
+for model in argv[2:]:
     for lang_pair in sorted(listdir(f"{base_path}/{model}")):
         lang = lang_pair.split('-')[1].split('.')[0]
         with open(f"{base_path}/{model}/{lang_pair}", 'r') as f:

@@ -13,22 +13,22 @@ def transformer_base(args):
 
 @register_model_architecture("transformer", "transformer_base12L")
 def transformer_base12L(args):
-    args.encoder_layers = getattr("encoder_layers", 12)
-    args.decoder_layers = getattr("decoder_layers", 12)
+    args.encoder_layers = getattr(args, "encoder_layers", 12)
+    args.decoder_layers = getattr(args, "decoder_layers", 12)
     transformer_base(args)
 
 
 @register_model_architecture("transformer", "transformer_base18L")
 def transformer_base18L(args):
-    args.encoder_layers = getattr("encoder_layers", 18)
-    args.decoder_layers = getattr("decoder_layers", 18)
+    args.encoder_layers = getattr(args, "encoder_layers", 18)
+    args.decoder_layers = getattr(args, "decoder_layers", 18)
     transformer_base(args)
 
 
 @register_model_architecture("transformer", "transformer_base24L")
 def transformer_base24L(args):
-    args.encoder_layers = getattr("encoder_layers", 24)
-    args.decoder_layers = getattr("decoder_layers", 24)
+    args.encoder_layers = getattr(args, "encoder_layers", 24)
+    args.decoder_layers = getattr(args, "decoder_layers", 24)
     transformer_base(args)
 
 
@@ -56,11 +56,13 @@ def transformer_it(args):
 
 @register_model_architecture("transformer", "transformer_huge")
 def transformer_huge(args):
-    args.encoder_normalize_before = getattr(args, "encoder_normalize_before", True)
-    args.encoder_normalize_before = getattr(args, "decoder_normalize_before", True)
-    args.layernorm_embedding = getattr(args, "layernorm_embedding", True)
-    args.activation_fn = getattr(args, "activation_fn", "gelu")
-    transformer_it(args)
+    args.encoder_embed_dim = getattr(args, "encoder_embed_dim", 1536)
+    args.decoder_embed_dim = getattr(args, "decoder_embed_dim", 1536)
+    args.encoder_ffn_embed_dim = getattr(args, "encoder_ffn_embed_dim", 4096)
+    args.decoder_ffn_embed_dim = getattr(args, "decoder_ffn_embed_dim", 4096)
+    args.encoder_attention_heads = getattr(args, "encoder_attention_heads", 16)
+    args.decoder_attention_heads = getattr(args, "decoder_attention_heads", 16)
+    transformer_base(args)
 
 
 @register_model_architecture("transformer", "transformer_huge_RS")

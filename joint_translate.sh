@@ -38,12 +38,12 @@ echo -e "[INFO]\tDecoding"
 
 # declare -A lang_familes=( ["as"]="as+bn+or" ["bn"]="as+bn+or" ["gu"]="gu+hi+mr+pa" ["hi"]="gu+hi+mr+pa" ["kn"]="kn+ml+ta+te" ["ml"]="kn+ml+ta+te" ["mr"]="gu+hi+mr+pa" ["or"]="as+bn+or" ["pa"]="gu+hi+mr+pa" ["ta"]="kn+ml+ta+te" ["te"]="kn+ml+ta+te" )
 
-fairseq-interactive $exp_dir/final_bin \
+CUDA_VISIBLE_DEVICES=7 fairseq-interactive $exp_dir/final_bin \
 --source-lang $SRC_PREFIX \
 --target-lang $TGT_PREFIX \
 --path $exp_dir/$model/checkpoint_best.pt \
---batch-size 64 \
---buffer-size 128 \
+--batch-size 128 \
+--buffer-size 2500 \
 --beam 5 \
 --max-len-a 1.2 \
 --max-len-b 10 \
@@ -57,7 +57,5 @@ fairseq-interactive $exp_dir/final_bin \
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.
 python3 scripts/postprocess_translate.py $outfname.log $outfname $input_size $tgt_lang $transliterate
-
-rm $outfname.*
 
 echo -e "[INFO]\tTranslation completed"

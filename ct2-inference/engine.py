@@ -12,6 +12,7 @@ from indicnlp.transliterate import unicode_transliterate
 from mosestokenizer import MosesSentenceSplitter
 from indicnlp.tokenize import sentence_tokenize
 from ctranslate2 import Translator
+import pdb
 
 
 INDIC = ["as", "bn", "gu", "hi", "kn", "ml", "mr", "or", "pa", "ta", "te"]
@@ -58,18 +59,14 @@ def truncate_long_sentences(sents):
         words = sent.strip().split()
         num_words = len(words)
         if num_words > MAX_SEQ_LEN:
-            # print_str = " ".join(words[:5]) + " .... " + " ".join(words[-5:])
             sent = " ".join(words[:MAX_SEQ_LEN])
-            # print(
-            #     f"WARNING: Sentence {print_str} truncated to 200 tokens as it exceeds maximum length limit"
-            # )
 
         new_sents.append(sent)
     return new_sents
 
 
 class Model:
-    def __init__(self, exp_dir, ckpt_dir, device="cuda"):
+    def __init__(self, exp_dir, model_name, device="cuda"):
         self.en_tok = MosesTokenizer(lang="en")
         self.en_normalizer = MosesPunctNormalizer()
         self.en_detok = MosesDetokenizer(lang="en")
@@ -80,10 +77,10 @@ class Model:
         self.bpe = BPE(codecs.open(f"{exp_dir}/vocab/bpe_codes.32k.SRC", encoding="utf-8"), -1, "@@", self.vocabulary, None)
 
         print("Initializing model for translation")
-        self.translator = Translator(ckpt_dir, device=device)
+        self.translator = Translator(f"{exp_dir}/{model_name}/ct2-converted", device=device)
 
     # translate a batch of sentences from src_lang to tgt_lang
-    def batch_translate(self, batch, src_lang, tgt_lang, beam_size=5, max_batch_size=2):
+    def batch_translate(self, batch, src_lang, tgt_lang, beam_size=5, max_batch_size=2, max_decoding_length=210):
 
         assert isinstance(batch, list)
         preprocessed_sents = self.preprocess(batch, lang=src_lang)
@@ -92,7 +89,13 @@ class Model:
         tagged_sents = truncate_long_sentences(tagged_sents)
         tagged_sents = [x.strip().split(" ") for x in tagged_sents]
 
-        translations = self.translator.translate_batch(tagged_sents, beam_size=beam_size, max_batch_size=max_batch_size)       
+        translations = self.translator.translate_batch(
+            tagged_sents, 
+            beam_size=beam_size, 
+            max_batch_size=max_batch_size,
+            max_decoding_length=max_decoding_length
+        )    
+
         translations = [" ".join(x.hypotheses[0]) for x in translations]
         postprocessed_sents = [x.replace("@@ ", "") for x in self.postprocess(translations, tgt_lang)]
 
