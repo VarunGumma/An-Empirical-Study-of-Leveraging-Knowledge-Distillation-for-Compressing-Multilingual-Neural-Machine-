@@ -36,7 +36,7 @@ python3 scripts/add_tags_translate.py $outfname._bpe $outfname.bpe $src_lang $tg
 
 echo -e "[INFO]\tDecoding"
 
-# declare -A lang_familes=( ["as"]="as+bn+or" ["bn"]="as+bn+or" ["gu"]="gu+hi+mr+pa" ["hi"]="gu+hi+mr+pa" ["kn"]="kn+ml+ta+te" ["ml"]="kn+ml+ta+te" ["mr"]="gu+hi+mr+pa" ["or"]="as+bn+or" ["pa"]="gu+hi+mr+pa" ["ta"]="kn+ml+ta+te" ["te"]="kn+ml+ta+te" )
+declare -A lang_familes=( ["as"]="as+bn+or" ["bn"]="as+bn+or" ["gu"]="gu+hi+mr+pa" ["hi"]="gu+hi+mr+pa" ["kn"]="kn+ml+ta+te" ["ml"]="kn+ml+ta+te" ["mr"]="gu+hi+mr+pa" ["or"]="as+bn+or" ["pa"]="gu+hi+mr+pa" ["ta"]="kn+ml+ta+te" ["te"]="kn+ml+ta+te" )
 
 fairseq-interactive $exp_dir/final_bin \
 --source-lang $SRC_PREFIX \
@@ -51,6 +51,8 @@ fairseq-interactive $exp_dir/final_bin \
 --skip-invalid-size-inputs-valid-test \
 --input $outfname.bpe \
 --num-workers 16 \
+--enc-adapter ${lang_familes[$src_lang]} \
+--dec-adapter ${lang_familes[$src_lang]} \
 --user-dir model_configs \
 --memory-efficient-fp16  >  $outfname.log 2>&1 
 

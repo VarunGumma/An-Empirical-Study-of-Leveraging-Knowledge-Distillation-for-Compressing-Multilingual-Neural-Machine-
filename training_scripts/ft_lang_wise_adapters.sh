@@ -11,10 +11,10 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
         warmup=1000
         update_freq=1
     elif [[ "$lang" == gu ]]; then
-        warmup=4000
+        warmup=2000
         update_freq=4
     elif [[ "$lang" == or ]]; then
-        warmup=2000
+        warmup=1600
         update_freq=4
     else
         warmup=4000

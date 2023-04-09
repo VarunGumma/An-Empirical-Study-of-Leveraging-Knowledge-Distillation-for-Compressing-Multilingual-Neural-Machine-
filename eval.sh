@@ -49,7 +49,7 @@ for model in "${models[@]}"; do
         fi
 
         rm -rf $lang_pair/outfile.* $lang_pair/*.tok
-        rm -rf $exp_dir/$model/*.out
+        # rm -rf $exp_dir/$model/*.out
     done
 done
 

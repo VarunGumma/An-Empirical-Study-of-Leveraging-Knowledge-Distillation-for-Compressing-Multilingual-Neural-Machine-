@@ -43,9 +43,9 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --keep-interval-updates 1 \
     --patience 5 \
     --skip-invalid-size-inputs-valid-test \
-    --update-freq 2 \
-    --distributed-world-size 2 \
-    --max-tokens 6144 \
+    --update-freq 3 \
+    --distributed-world-size 1 \
+    --max-tokens 8192 \
     --lr 1e-3 \
     --load-checkpoint-liberally \
     --reset-lr-scheduler \
