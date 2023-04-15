@@ -1,9 +1,0 @@
-[submodule "indic_nlp_library"]
-	path = indic_nlp_library
-	url = https://github.com/anoopkunchukuttan/indic_nlp_library.git
-[submodule "indic_nlp_resources"]
-	path = indic_nlp_resources
-	url = https://github.com/anoopkunchukuttan/indic_nlp_resources.git
-[submodule "subword-nmt"]
-	path = subword-nmt
-	url = https://github.com/rsennrich/subword-nmt.git
