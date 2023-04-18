@@ -11,10 +11,12 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
         warmup=1000
         update_freq=1
     elif [[ "$lang" == gu ]]; then
-        warmup=2000
+        warmup=2000 # for xx-en
+        # warmup=4000 # for en-xx
         update_freq=4
     elif [[ "$lang" == or ]]; then
-        warmup=1600
+        warmup=1600 # for xx-en
+        # warmup=2000 # for en-xx
         update_freq=4
     else
         warmup=4000
@@ -66,7 +68,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
     --reset-meters \
     --reset-dataloader \
     --reset-optimizer \
-    --num-workers 15 \
+    --num-workers 16 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \

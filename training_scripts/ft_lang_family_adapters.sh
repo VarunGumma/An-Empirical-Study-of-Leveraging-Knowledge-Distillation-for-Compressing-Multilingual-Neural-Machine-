@@ -52,7 +52,7 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
     --reset-meters \
     --reset-dataloader \
     --reset-optimizer \
-    --num-workers 15 \
+    --num-workers 16 \
     --eval-bleu \
     --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
     --eval-bleu-detok moses \
