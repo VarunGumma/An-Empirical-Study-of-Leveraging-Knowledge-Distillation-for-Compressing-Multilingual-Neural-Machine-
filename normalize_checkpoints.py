@@ -4,14 +4,14 @@ from sys import argv
 
 def func(path):
     for fname in os.listdir(path):
-        if os.path.isdir(fname):
-            func(f"{path}/{fname}")
+        temp_path = os.path.join(path, fname)
+        if os.path.isdir(temp_path):
+            func(temp_path)
         elif fname.endswith('.pt'):
-            model_path = f"{path}/{fname}"
-            print(f"normalizing {model_path}")
-            ckpt = torch.load(model_path)
+            print(f"normalizing {temp_path}")
+            ckpt = torch.load(temp_path)
             ckpt['cfg']['model']._arch = 'transformer'
             ckpt['cfg']['model']._name = 'transformer'
-            torch.save(ckpt, model_path)
+            torch.save(ckpt, temp_path)
 
 func(argv[1])

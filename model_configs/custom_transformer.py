@@ -66,7 +66,7 @@ def transformer_huge(args):
 
 
 @register_model_architecture("transformer", "transformer_huge_RS")
-def transformer_huge(args):
+def transformer_huge_RS(args):
     args.encoder_recurrent_stacking = getattr(args, "encoder_recurrent_stacking", 6)
     args.decoder_recurrent_stacking = getattr(args, "decoder_recurrent_stacking", 6)
     transformer_huge(args)

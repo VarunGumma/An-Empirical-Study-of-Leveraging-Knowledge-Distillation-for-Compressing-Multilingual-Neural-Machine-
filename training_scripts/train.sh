@@ -4,7 +4,7 @@ data_dir=$1
 model_name=$2
 wandb_project=$3
 
-fairseq-train $data_dir/final_bin \
+CUDA_VISIBLE_DEVICES=1,2 fairseq-train $data_dir/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -22,7 +22,7 @@ fairseq-train $data_dir/final_bin \
 --warmup-init-lr 1e-07 \
 --lr 0.0005 \
 --warmup-updates 4000 \
---save-dir ${data_dir}/${model_name}_patience_10 \
+--save-dir ${data_dir}/${model_name} \
 --save-interval 1 \
 --save-interval-updates 5000 \
 --keep-interval-updates 1 \

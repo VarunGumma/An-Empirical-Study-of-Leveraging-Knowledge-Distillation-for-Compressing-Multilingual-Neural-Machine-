@@ -43,7 +43,7 @@ for model in "${models[@]}"; do
         # Compute BLEU score
         if [[ -f "$outfile" ]]; then
             bash compute_bleu.sh "$outfile" "$lang_pair/test.$tgt_lang" "$src_lang" "$tgt_lang" > "$save_path/$lang.json"
-            comet-score -s "$lang_pair/test.$src_lang" -t "$outfile" -r "$lang_pair/test.$tgt_lang" --num_workers 16 --batch_size 256 --gpus 1 --quiet --only_system > "$save_path/${lang}_comet.txt"
+            # comet-score -s "$lang_pair/test.$src_lang" -t "$outfile" -r "$lang_pair/test.$tgt_lang" --num_workers 16 --batch_size 256 --gpus 1 --quiet --only_system > "$save_path/${lang}_comet.txt"
         else
             echo "Translation failed for $lang_pair"
         fi

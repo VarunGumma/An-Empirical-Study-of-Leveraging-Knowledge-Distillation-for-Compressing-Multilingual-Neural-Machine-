@@ -94,7 +94,7 @@ class Model:
             beam_size=beam_size, 
             max_batch_size=max_batch_size,
             max_decoding_length=max_decoding_length
-        )    
+        )
 
         translations = [" ".join(x.hypotheses[0]) for x in translations]
         postprocessed_sents = [x.replace("@@ ", "") for x in self.postprocess(translations, tgt_lang)]
