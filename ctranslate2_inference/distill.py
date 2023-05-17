@@ -16,6 +16,7 @@ parser.add_argument('--target-lang', '-t', default='en', help='target language')
 parser.add_argument('--beam-size', default=5, type=int, help='beam size for decoding')
 parser.add_argument('--batch-size', default=1024, type=int, help='batch size for inference')
 parser.add_argument('--device', default='cuda', help='device for inference; cpu/cuda')
+parser.add_argument('--dir-num', default=0, type=int, help="temporary flag, will be removed")
 
 args = parser.parse_args()
 src_dir = args.src_dir
@@ -27,6 +28,7 @@ tgt = args.target_lang
 beam_size = args.beam_size
 batch_size = args.batch_size
 device = args.device
+n = args.dir_num
 
 def batch_generator(x, bs=32):
     n = len(x)
@@ -41,9 +43,7 @@ model = Model(
     device=device
 )
 
-for lang_pair in sorted(listdir(src_dir))[9:]:
-    print("working on", lang_pair)
-    sleep(30)
+for lang_pair in sorted(listdir(src_dir))[n:n+1]:
     if src == 'en':
         tgt = lang_pair.split('-')[1]
     else:

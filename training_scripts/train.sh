@@ -4,7 +4,7 @@ data_dir=$1
 model_name=$2
 wandb_project=$3
 
-CUDA_VISIBLE_DEVICES=1,2 fairseq-train $data_dir/final_bin \
+fairseq-train $data_dir/final_bin \
 --max-source-positions 210 \
 --max-target-positions 210 \
 --max-update 1000000 \
@@ -29,9 +29,9 @@ CUDA_VISIBLE_DEVICES=1,2 fairseq-train $data_dir/final_bin \
 --no-epoch-checkpoints \
 --patience 10 \
 --skip-invalid-size-inputs-valid-test \
---update-freq 2 \
---distributed-world-size 2 \
---num-workers 16 \
+--update-freq 1 \
+--distributed-world-size 4 \
+--num-workers 32 \
 --eval-bleu \
 --eval-bleu-args '{"beam": 5, "lenpen": 1.0, "max_len_a": 1.2, "max_len_b": 10}' \
 --eval-bleu-detok moses \
