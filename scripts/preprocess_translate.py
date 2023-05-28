@@ -11,14 +11,11 @@ from indicnlp import loader
 loader.load()
 from sacremoses import MosesPunctNormalizer
 from sacremoses import MosesTokenizer
-from sacremoses import MosesDetokenizer
-from collections import defaultdict
 
 from tqdm import tqdm
 from joblib import Parallel, delayed
 
 from indicnlp.tokenize import indic_tokenize
-from indicnlp.tokenize import indic_detokenize
 from indicnlp.normalize import indic_normalize
 from indicnlp.transliterate import unicode_transliterate
 

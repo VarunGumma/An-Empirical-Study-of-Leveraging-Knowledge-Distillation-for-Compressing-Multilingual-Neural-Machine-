@@ -11,15 +11,9 @@ common.set_resources_path(INDIC_NLP_RESOURCES)
 from indicnlp import loader
 
 loader.load()
-from sacremoses import MosesPunctNormalizer
-from sacremoses import MosesTokenizer
 from sacremoses import MosesDetokenizer
-from collections import defaultdict
 
-import indicnlp
-from indicnlp.tokenize import indic_tokenize
 from indicnlp.tokenize import indic_detokenize
-from indicnlp.normalize import indic_normalize
 from indicnlp.transliterate import unicode_transliterate
 
 
@@ -76,23 +70,11 @@ def postprocess(
 
 
 if __name__ == "__main__":
-    #     # The path to the local git repo for Indic NLP library
-    # INDIC_NLP_LIB_HOME="indic_nlp_library"
-    # INDIC_NLP_RESOURCES = "indic_nlp_resources"
-    # sys.path.append('{}'.format(INDIC_NLP_LIB_HOME))
-    # common.set_resources_path(INDIC_NLP_RESOURCES)
-    #     # The path to the local git repo for Indic NLP Resources
-    #     INDIC_NLP_RESOURCES=""
-
-    #     sys.path.append('{}'.format(INDIC_NLP_LIB_HOME))
-    #     common.set_resources_path(INDIC_NLP_RESOURCES)
-
-    # loader.load()
-
     infname = sys.argv[1]
     outfname = sys.argv[2]
     input_size = int(sys.argv[3])
     lang = sys.argv[4]
+    
     if len(sys.argv) == 5:
         transliterate = False
     elif len(sys.argv) == 6:
