@@ -1,8 +1,8 @@
-from os import truncate
 from sacremoses import MosesPunctNormalizer
 from sacremoses import MosesTokenizer
 from sacremoses import MosesDetokenizer
 from subword_nmt.apply_bpe import BPE, read_vocabulary
+
 import codecs
 from tqdm import tqdm
 from indicnlp.tokenize import indic_tokenize

@@ -1,6 +1,5 @@
-from ct2_engine import Model
-from os import listdir, system, makedirs
-from sys import argv
+from engine import Model
+from os import listdir
 import argparse
 
 
@@ -17,7 +16,7 @@ parser.add_argument('--device', default='cuda', help='device for inference; cpu/
 args = parser.parse_args()
 devtest_dir = args.devtest_dir
 exp_dir = args.exp_dir
-model = args.model
+model_name = args.model
 src = args.source_lang
 tgt = args.target_lang
 beam_size = args.beam_size
