@@ -9,7 +9,6 @@ languages_list=$6
 reuse_bpe_vocab=$7
 vocab_bpe_dir=$8
 vocab_type=${9:-sep} # sep or joint
-transliterate=${10:-true}
 num_operations=${11:-32000}
 
 echo `date`
@@ -48,10 +47,6 @@ mkdir -p $devtest_processed_dir
 
 IFS='+' read -ra langs <<< $languages_list
 
-if [[ "$transliterate" == false ]]; then
-	echo "skipping transliteration to Devnagiri"
-fi
-
 for lang in ${langs[@]}; do
 	if [[ "$src_lang" == en ]]; then
 		tgt_lang=$lang
@@ -71,8 +66,8 @@ for lang in ${langs[@]}; do
 	train_outfname_tgt=$train_norm_dir/train.$tgt_lang
 	echo "Applying normalization and script conversion for train"
 	# this is for preprocessing text and in for indic langs, we convert all scripts to devnagiri
-	input_size=`python3 scripts/preprocess_translate.py $train_infname_src $train_outfname_src $src_lang $transliterate`
-	input_size=`python3 scripts/preprocess_translate.py $train_infname_tgt $train_outfname_tgt $tgt_lang $transliterate`
+	input_size=`python3 scripts/preprocess_translate.py $train_infname_src $train_outfname_src $src_lang true`
+	input_size=`python3 scripts/preprocess_translate.py $train_infname_tgt $train_outfname_tgt $tgt_lang true`
 	echo "Number of sentences in train: $input_size"
 	# dev preprocessing
 	dev_infname_src=$devtest_data_dir/en-${lang}/dev.$src_lang
@@ -80,8 +75,8 @@ for lang in ${langs[@]}; do
 	dev_outfname_src=$devtest_norm_dir/dev.$src_lang
 	dev_outfname_tgt=$devtest_norm_dir/dev.$tgt_lang
 	echo "Applying normalization and script conversion for dev"
-	input_size=`python3 scripts/preprocess_translate.py $dev_infname_src $dev_outfname_src $src_lang $transliterate`
-	input_size=`python3 scripts/preprocess_translate.py $dev_infname_tgt $dev_outfname_tgt $tgt_lang $transliterate`
+	input_size=`python3 scripts/preprocess_translate.py $dev_infname_src $dev_outfname_src $src_lang true`
+	input_size=`python3 scripts/preprocess_translate.py $dev_infname_tgt $dev_outfname_tgt $tgt_lang true`
 	echo "Number of sentences in dev: $input_size"
 done
 
@@ -98,7 +93,9 @@ python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_
 python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'dev'
 
 if [[ "$reuse_bpe_vocab" == false ]]; then
+
 	echo "Learning bpe. This will take a very long time depending on the size of the dataset"
+	
 	if [[ "$vocab_type" == "sep" ]]; then
 	    bash learn_single_bpe.sh $exp_dir $num_operations
 	else 

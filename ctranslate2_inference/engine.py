@@ -12,7 +12,6 @@ from indicnlp.transliterate import unicode_transliterate
 from mosestokenizer import MosesSentenceSplitter
 from indicnlp.tokenize import sentence_tokenize
 from ctranslate2 import Translator
-import pdb
 
 
 INDIC = ["as", "bn", "gu", "hi", "kn", "ml", "mr", "or", "pa", "ta", "te"]
@@ -59,9 +58,14 @@ def truncate_long_sentences(sents):
         words = sent.strip().split()
         num_words = len(words)
         if num_words > MAX_SEQ_LEN:
+            print_str = " ".join(words[:5]) + " .... " + " ".join(words[-5:])
             sent = " ".join(words[:MAX_SEQ_LEN])
+            print(
+                f"WARNING: Sentence {print_str} truncated to {MAX_SEQ_LEN}"
+            )
 
         new_sents.append(sent)
+            
     return new_sents
 
 

@@ -1,7 +1,7 @@
+#!/bin/bash
 pred_fname=$1
 ref_fname=$2
-src_lang=$3
-tgt_lang=$4
+tgt_lang=$3
 
 # we compute and report tokenized bleu scores.
 # For computing BLEU scores, systems should output detokenized outputs. Your MT system might be doing it out of the box if you are using SentencePiece - nothing to do in that case.
@@ -15,7 +15,7 @@ tgt_lang=$4
 # For English output: sacrebleu reffile < outputfile. This internally tokenizes using mteval-v13a
 # For Indian language output, we need tokenized output and reference since we don't know how well the sacrebleu tokenizer works for Indic input.
 # Hence we tokenize both preds and target files with IndicNLP tokenizer and then run: sacrebleu --tokenize none reffile < outputfile
-if [ $tgt_lang == 'en' ]; then
+if [[ $tgt_lang == 'en' ]]; then
     # indic to en models
     sacrebleu $ref_fname < $pred_fname -m bleu chrf --chrf-word-order 2
 else

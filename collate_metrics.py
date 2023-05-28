@@ -35,5 +35,5 @@ for model in argv[2:]:
         #         comet_results.append([lang, model, score])
                 
 write_df(bleu_results, "bleu")
-write_df(chrf2_results, "chrf++")
+write_df(chrf2_results, "chrf2++")
 # write_df(comet_results, "comet")

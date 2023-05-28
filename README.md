@@ -1,5 +1,5 @@
 ## IndicDistillation
-IndicDistillation is a repository that contains scripts for distilling [IndicTrans](https://github.com/AI4Bharat/indicTrans), a multilingual machine translation model for Indic languages.
+IndicDistillation is a repository that contains scripts for distilling [IndicTrans](https://github.com/AI4Bharat/indicTrans), a multilingual machine translation model for Indic languages, and also part of our work [An Empirical Study of Leveraging Knowledge Distillation for Compressing Multilingual Neural Machine Translation Models](https://arxiv.org/abs/2304.09388)
 
 ### Setup
 To get started, clone this repository and use it as the main experiment directory.
@@ -40,3 +40,15 @@ It is recommended to use ```Python 3.10+``` and the latest version of [PyTorch](
 
 ### License
 This project is licensed under the MIT License.
+
+If you use these codes or models do cite our work:
+```
+@misc{gumma2023empirical,
+      title={An Empirical Study of Leveraging Knowledge Distillation for Compressing Multilingual Neural Machine Translation Models}, 
+      author={Varun Gumma and Raj Dabre and Pratyush Kumar},
+      year={2023},
+      eprint={2304.09388},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
