@@ -41,7 +41,8 @@ It is recommended to use ```Python 3.10+``` and the latest version of [PyTorch](
 ### License
 This project is licensed under the MIT License.
 
-If you use these codes or models do cite our work:
+### Ctation
+If you use these codes or models, please do cite our work:
 ```
 @misc{gumma2023empirical,
       title={An Empirical Study of Leveraging Knowledge Distillation for Compressing Multilingual Neural Machine Translation Models}, 
