@@ -38,10 +38,10 @@ pip install --editable ./
 ### Requirements
 It is recommended to use ```Python 3.10+``` and the latest version of [PyTorch](https://pytorch.org/get-started/locally/) for the best results.
 
-### License
+## License
 This project is licensed under the MIT License.
 
-### Ctation
+## Citation
 If you use these codes or models, please do cite our work:
 ```
 @misc{gumma2023empirical,
