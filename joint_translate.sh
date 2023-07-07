@@ -30,13 +30,11 @@ python3 $SUBWORD_NMT_DIR/subword_nmt/apply_bpe.py \
 
 # not needed for joint training
 # echo "Adding language tags"
-python3 scripts/add_tags_translate.py $outfname._bpe $outfname.bpe $src_lang $tgt_lang
+parallel --pipe --keep-order scripts/add_tags_translate.sh $src_lang $tgt_lang < $outfname._bpe > $outfname.bpe
 
 ### run decoder
 
 echo -e "[INFO]\tDecoding"
-
-# declare -A lang_familes=( ["as"]="as+bn+or" ["bn"]="as+bn+or" ["gu"]="gu+hi+mr+pa" ["hi"]="gu+hi+mr+pa" ["kn"]="kn+ml+ta+te" ["ml"]="kn+ml+ta+te" ["mr"]="gu+hi+mr+pa" ["or"]="as+bn+or" ["pa"]="gu+hi+mr+pa" ["ta"]="kn+ml+ta+te" ["te"]="kn+ml+ta+te" )
 
 fairseq-interactive $exp_dir/final_bin \
     --source-lang SRC \
