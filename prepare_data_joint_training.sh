@@ -1,49 +1,50 @@
 #!/bin/bash
 
-train_dir=$1
-devtest_dir=$2
-exp_dir=$3
-src_lang=$4
-tgt_lang=$5
-languages_list=$6
-reuse_bpe_vocab=$7
-vocab_bpe_dir=$8
-vocab_type=${9:-sep} # sep or joint
-num_operations=${11:-32000}
+exp_dir=$1
+train_dir=$2
+devtest_dir=$3
+vocab_dir=$4
+src_lang=$5
+tgt_lang=$6
+languages_list=$7
 
 echo `date`
+# remove old copies
 rm -rf $exp_dir
-mkdir -p $exp_dir
+rm -rf ${train_dir}_copy
 
-echo -e "[INFO]\tremoving overlap between train and devtest"
-echo -e "[INFO]\tthis will create a temporary copy of the train directory, but will remove it at the end of the program"
-cp -r $train_dir $train_dir-copy
-train_dir=$train_dir-copy
-python3 scripts/remove_train_devtest_overlaps.py -t $train_dir -d $devtest_dir -l $languages_list
+echo -e "Removing overlap between train and devtest"
+echo -e "This will create a temporary copy of the train directory, but will remove it at the end of the program"
 
-echo -e "[INFO]\tmerging devtest files"
-bash merge_benchmarks.sh $devtest_dir flores101 $languages_list
+cp -r $train_dir ${train_dir}_copy
+train_dir=${train_dir}_copy
 
-echo -e "[INFO]\tcopying data"
+python scripts/remove_train_devtest_overlaps.py -t $train_dir -d $devtest_dir -l $languages_list
+
+mkdir -p $exp_dir/data
+mkdir -p $exp_dir/final
+mkdir -p $exp_dir/final_bin
+
+# languages separated by '+'
 IFS='+' read -ra langs <<< $languages_list
+
 for lang in ${langs[@]}; do
     # copy only data you want to work with
     # saves space and is more efficient
+	echo -e "Copying en-${lang} data"
     cp -r $train_dir/en-$lang $exp_dir
+	cp -r $devtest_dir/en-$lang/dev.* $exp_dir/en-$lang
 done
-mkdir -p $exp_dir/devtest
-cp -r $devtest_dir/all $exp_dir/devtest
 
-echo -e "[INFO]\tpreparing data. It is recommened to use a multicore processor for this."
-train_data_dir=$exp_dir
-devtest_data_dir=$exp_dir/devtest/all
+# copy the old vocab
+echo -e "Copying vocab and fairseq dictionaries"
+cp -r $vocab_dir/vocab $exp_dir
+cp -r $vocab_dir/final_bin/dict.* $exp_dir/final_bin
 
-echo "Running experiment ${exp_dir} on ${src_lang} to ${tgt_lang}"
-train_processed_dir=$exp_dir/data
-devtest_processed_dir=$exp_dir/data
 
-mkdir -p $train_processed_dir
-mkdir -p $devtest_processed_dir
+echo -e "Preparing data"
+
+echo "exp_dir: ${exp_dir}, ${src_lang}-${tgt_lang}"
 
 IFS='+' read -ra langs <<< $languages_list
 
@@ -53,112 +54,57 @@ for lang in ${langs[@]}; do
 	else
 		src_lang=$lang
 	fi
-	echo "working on $src_lang"
-	train_norm_dir=$exp_dir/norm/$src_lang-$tgt_lang
-	devtest_norm_dir=$exp_dir/norm/$src_lang-$tgt_lang
-	mkdir -p $train_norm_dir
-	mkdir -p $devtest_norm_dir
+
+	echo "Working on '$src_lang'"
+
+	norm_dir=$exp_dir/norm/$src_lang-$tgt_lang
+	mkdir -p $norm_dir
 
 	# train preprocessing
-	train_infname_src=$train_data_dir/en-${lang}/train.$src_lang
-	train_infname_tgt=$train_data_dir/en-${lang}/train.$tgt_lang
-	train_outfname_src=$train_norm_dir/train.$src_lang
-	train_outfname_tgt=$train_norm_dir/train.$tgt_lang
+	train_infname_src=$exp_dir/en-${lang}/train.$src_lang
+	train_infname_tgt=$exp_dir/en-${lang}/train.$tgt_lang
+	train_outfname_src=$norm_dir/train.$src_lang
+	train_outfname_tgt=$norm_dir/train.$tgt_lang
 	echo "Applying normalization and script conversion for train"
-	# this is for preprocessing text and in for indic langs, we convert all scripts to devnagiri
-	input_size=`python3 scripts/preprocess_translate.py $train_infname_src $train_outfname_src $src_lang true`
-	input_size=`python3 scripts/preprocess_translate.py $train_infname_tgt $train_outfname_tgt $tgt_lang true`
-	echo "Number of sentences in train: $input_size"
+	parallel --pipe --keep-order python scripts/preprocess_translate.py $src_lang true < $train_infname_src > $train_outfname_src 
+	parallel --pipe --keep-order python scripts/preprocess_translate.py $tgt_lang true < $train_infname_tgt > $train_outfname_tgt
+
 	# dev preprocessing
-	dev_infname_src=$devtest_data_dir/en-${lang}/dev.$src_lang
-	dev_infname_tgt=$devtest_data_dir/en-${lang}/dev.$tgt_lang
-	dev_outfname_src=$devtest_norm_dir/dev.$src_lang
-	dev_outfname_tgt=$devtest_norm_dir/dev.$tgt_lang
+	dev_infname_src=$exp_dir/en-${lang}/dev.$src_lang
+	dev_infname_tgt=$exp_dir/en-${lang}/dev.$tgt_lang
+	dev_outfname_src=$norm_dir/dev.$src_lang
+	dev_outfname_tgt=$norm_dir/dev.$tgt_lang
 	echo "Applying normalization and script conversion for dev"
-	input_size=`python3 scripts/preprocess_translate.py $dev_infname_src $dev_outfname_src $src_lang true`
-	input_size=`python3 scripts/preprocess_translate.py $dev_infname_tgt $dev_outfname_tgt $tgt_lang true`
-	echo "Number of sentences in dev: $input_size"
+	parallel --pipe --keep-order python scripts/preprocess_translate.py $src_lang true < $dev_infname_src > $dev_outfname_src 
+	parallel --pipe --keep-order python scripts/preprocess_translate.py $tgt_lang true < $dev_infname_tgt > $dev_outfname_tgt 
 done
 
-# this concatenates lang pair data and creates text files to keep track of number of lines in each lang pair.
-# this is imp as for joint training, we will merge all the lang pairs and the indivitual lang lines info
-# would be required for adding specific lang tags later.
 
-# the outputs of these scripts will  be text file like this:
-# <lang1> <lang2> <number of lines>
-# lang1-lang2 n1
-# lang1-lang3 n2
+for split in train dev; do
+	# this concatenates lang pair data and creates text files to keep track of number of lines in each lang pair.
+	# this is imp as for joint training, we will merge all the lang pairs and the indivitual lang lines info
+	# would be required for adding specific lang tags later.
 
-python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'train'
-python3 scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list 'dev'
+	# the outputs of these scripts will  be text file like this:
+	# <lang1> <lang2> <number of lines>
+	# lang1-lang2 n1
+	# lang1-lang3 n2
+	echo "Merging ${split} data of all languages"
+	python scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list $split
 
-if [[ "$reuse_bpe_vocab" == false ]]; then
+	# Apply BPE to concatenated data
+	echo "Applying bpe to ${split}"
+	bash scripts/apply_single_bpe.sh $exp_dir $split
 
-	echo "Learning bpe. This will take a very long time depending on the size of the dataset"
-	
-	if [[ "$vocab_type" == "sep" ]]; then
-	    bash learn_single_bpe.sh $exp_dir $num_operations
-	else 
-	    bash learn_bpe.sh $exp_dir $num_operations
-	fi
-else
-	echo "reusing old bpe"
-	mkdir $exp_dir/final_bin
-	# copy the old vocab
-	cp -r $vocab_bpe_dir/vocab $exp_dir
-	# copy the old dictionaries into the exp_dir/final_bin
-	cp -r  $vocab_bpe_dir/final_bin/dict.* $exp_dir/final_bin
-fi
-
-echo "Applying bpe"
-if [[ "$vocab_type" == "sep" ]]
-then
-    bash apply_single_bpe_traindevtest_notag.sh $exp_dir 'train'
-	bash apply_single_bpe_traindevtest_notag.sh $exp_dir 'dev'
-else 
-    bash apply_bpe_traindevtest_notag.sh $exp_dir 'train'
-	bash apply_bpe_traindevtest_notag.sh $exp_dir 'dev'
-fi
-
-mkdir -p $exp_dir/final
-# # this is only required for joint training
-# we apply language tags to the bpe segmented data
-# if we are translating lang1 to lang2 then <lang1 line> will become __src__ <lang1> __tgt__ <lang2> <lang1 line>
-echo "Adding language tags"
-python3 scripts/add_joint_tags_translate.py $exp_dir 'train'
-python3 scripts/add_joint_tags_translate.py $exp_dir 'dev'
-
-# use cpu_count to get num_workers instead of setting it manually when running in different instances
-num_workers=`python3 -c "import multiprocessing; print(multiprocessing.cpu_count())"`
+	# # this is only required for joint training
+	# we apply language tags to the bpe segmented data
+	# if we are translating lang1 to lang2 then <lang1 line> will become __src__ <lang1> __tgt__ <lang2> <lang1 line>
+	echo "Adding language tags to ${split}"
+	python scripts/add_joint_tags_translate.py $exp_dir $split
+done
 
 # Binarize the training data for using with fairseq train
-if [ "$reuse_bpe_vocab" == true ]; then
-	echo "Binarizing using the existing vocab"
-	fairseq-preprocess \
-		--source-lang SRC \
-		--target-lang TGT \
-		--trainpref $exp_dir/final/train \
-		--validpref $exp_dir/final/dev \
-		--destdir $exp_dir/final_bin \
-		--srcdict $exp_dir/final_bin/dict.SRC.txt \
-		--tgtdict $exp_dir/final_bin/dict.TGT.txt \
-		--workers $num_workers \
-		--thresholdtgt 5 \
-		--thresholdsrc 5
-else
-	echo "Binarizing data"
-	fairseq-preprocess \
-		--source-lang SRC \
-		--target-lang TGT \
-		--trainpref $exp_dir/final/train \
-		--validpref $exp_dir/final/dev \
-		--destdir $exp_dir/final_bin \
-		--workers $num_workers \
-		--thresholdtgt 5 \
-		--thresholdsrc 5
-fi
+bash scripts/fairseq_binarize.sh $exp_dir/final $exp_dir/final_bin
 
-echo -e "[INFO]\tcleaning unnecessary files from exp dir to save space"
-rm -rf $exp_dir/bpe $exp_dir/devtest $exp_dir/final $exp_dir/data $exp_dir/norm $exp_dir/en-* $devtest_dir/all $train_dir
-
-echo -e "[INFO]\tcompleted!"
+echo -e "cleaning unnecessary files from exp dir to save space"
+rm -rf $exp_dir/bpe $exp_dir/devtest $exp_dir/final $exp_dir/data $exp_dir/norm $exp_dir/en-* $train_dir

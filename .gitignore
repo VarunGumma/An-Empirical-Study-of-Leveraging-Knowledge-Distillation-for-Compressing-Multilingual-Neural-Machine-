@@ -5,6 +5,5 @@
 *.csv
 **/__pycache__/
 results/
-indic_nlp_library/
-indic_nlp_resources/
-subword-nmt/
+**/indic_nlp_library/
+**/indic_nlp_resources/

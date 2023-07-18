@@ -30,7 +30,6 @@ def preprocess_line(line, normalizer, lang, transliterate=False):
             en_tok.tokenize(en_normalizer.normalize(line.strip()), escape=False)
         )
     elif transliterate:
-        # line = indic_detokenize.trivial_detokenize(line.strip(), lang)
         return unicode_transliterate.UnicodeIndicTransliterator.transliterate(
             " ".join(
                 indic_tokenize.trivial_tokenize(
@@ -47,59 +46,29 @@ def preprocess_line(line, normalizer, lang, transliterate=False):
         )
 
 
-def preprocess(infname, outfname, lang, transliterate=False):
+def preprocess(lang, transliterate=False):
     """
     Normalize, tokenize and script convert(for Indic)
     return number of sentences input file
 
     """
+    normalizer = indic_normalize.IndicNormalizerFactory().get_normalizer(lang) if lang != 'en' else None
+    out_lines = [preprocess_line(line, normalizer, lang, transliterate) for line in list(sys.stdin)]
 
-    n = 0
-    num_lines = sum(1 for line in open(infname, "r"))
-    if lang == "en":
-        with open(infname, "r", encoding="utf-8") as infile, open(
-            outfname, "w", encoding="utf-8"
-        ) as outfile:
-
-            out_lines = Parallel(n_jobs=-1, backend="multiprocessing")(
-                delayed(preprocess_line)(line, None, lang)
-                for line in tqdm(infile, total=num_lines)
-            )
-
-            for line in out_lines:
-                outfile.write(line + "\n")
-                n += 1
-
-    else:
-        normfactory = indic_normalize.IndicNormalizerFactory()
-        normalizer = normfactory.get_normalizer(lang)
-        # reading
-        with open(infname, "r", encoding="utf-8") as infile, open(
-            outfname, "w", encoding="utf-8"
-        ) as outfile:
-
-            out_lines = Parallel(n_jobs=-1, backend="multiprocessing")(
-                delayed(preprocess_line)(line, normalizer, lang, transliterate)
-                for line in tqdm(infile, total=num_lines)
-            )
-
-            for line in out_lines:
-                outfile.write(line + "\n")
-                n += 1
-    return n
+    for line in out_lines:
+        print(line)
 
 
 if __name__ == "__main__":
 
-    infname = sys.argv[1]
-    outfname = sys.argv[2]
-    lang = sys.argv[3]
+    lang = sys.argv[1]
 
-    if len(sys.argv) == 4:
+    if len(sys.argv) == 2:
         transliterate = False
-    elif len(sys.argv) == 5:
-        transliterate = sys.argv[4].lower() == "true"
+    elif len(sys.argv) == 3:
+        transliterate = (sys.argv[2].lower() == "true")
     else:
         print(f"Invalid arguments: {sys.argv}")
         exit()
-    print(preprocess(infname, outfname, lang, transliterate))
+    
+    preprocess(lang=lang, transliterate=transliterate)

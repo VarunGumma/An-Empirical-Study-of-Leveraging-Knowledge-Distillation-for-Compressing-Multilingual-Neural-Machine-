@@ -46,5 +46,4 @@ fairseq-train $data_dir/final_bin \
     --best-checkpoint-metric bleu \
     --maximize-best-checkpoint-metric \
     --memory-efficient-fp16 \
-    --wandb-project $wandb_project \
-    --user-dir ../../model_configs
+    --wandb-project $wandb_project

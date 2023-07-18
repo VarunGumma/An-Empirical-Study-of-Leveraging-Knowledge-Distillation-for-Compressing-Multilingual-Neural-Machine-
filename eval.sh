@@ -48,11 +48,10 @@ for model in "${models[@]}"; do
         #     --only_system \
         #     > $save_path/${lang}_comet.txt
 
-        rm -rf $lang_pair/predfile.* $lang_pair/*.tok
-        rm -rf $exp_dir/$model/*.out
+        rm -rf $lang_pair/predfile.* $lang_pair/*.tok $exp_dir/$model/*.out
     done
 done
 
 # Convert JSON files to CSV
 echo -e "[INFO]\tConverting all JSON files to CSV"
-python3 collate_metrics.py results ${models[@]}
+python collate_metrics.py results ${models[@]}

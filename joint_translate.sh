@@ -7,35 +7,28 @@ tgt_lang=$4
 exp_dir=$5
 model=$6
 
-SUBWORD_NMT_DIR='subword-nmt'
-
 ### normalization and script conversion
-
 echo -e "[INFO]\tApplying normalization and script conversion"
-input_size=`python scripts/preprocess_translate.py $infname $outfname.norm $src_lang true`
-echo -e "[INFO]\tNumber of sentences in input: $input_size"
+parallel --pipe --keep-order python scripts/preprocess_translate.py $src_lang true < $infname > $outfname.norm 
+
+input_size=$(grep -c '.' $outfname.norm)
+echo "Input size: ${input_size}"
 
 ### apply BPE to input file
-
 echo -e "[INFO]\tApplying BPE"
-
-parallel --pipe --keep-order \
-python3 $SUBWORD_NMT_DIR/subword_nmt/apply_bpe.py \
-    -c $exp_dir/vocab/bpe_codes.32k.SRC \
+subword-nmt apply-bpe \
+    --codes $exp_dir/vocab/bpe_codes.32k.SRC \
     --vocabulary $exp_dir/vocab/vocab.SRC \
     --vocabulary-threshold 5 \
-    --num-workers "-1" \
-    < $outfname.norm 
-    > $outfname._bpe
+    --num-workers -1 < $outfname.norm > $outfname._bpe
 
 # not needed for joint training
-# echo "Adding language tags"
-parallel --pipe --keep-order scripts/add_tags_translate.sh $src_lang $tgt_lang < $outfname._bpe > $outfname.bpe
+echo "[INFO]\tAdding language tags"
+parallel --pipe --keep-order bash scripts/add_tags_translate.sh $src_lang $tgt_lang < $outfname._bpe > $outfname.bpe
 
 ### run decoder
 
 echo -e "[INFO]\tDecoding"
-
 fairseq-interactive $exp_dir/final_bin \
     --source-lang SRC \
     --target-lang TGT \
@@ -48,12 +41,11 @@ fairseq-interactive $exp_dir/final_bin \
     --remove-bpe \
     --skip-invalid-size-inputs-valid-test \
     --input $outfname.bpe \
-    --num-workers 16 \
-    --user-dir model_configs \
-    --memory-efficient-fp16  >  $outfname.log 2>&1 
+    --num-workers 32 \
+    --memory-efficient-fp16 > $outfname.log 2>&1 
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.
-python3 scripts/postprocess_translate.py $outfname.log $outfname $input_size $tgt_lang true
+parallel --pipe --keep-order python scripts/postprocess_translate.py $input_size $tgt_lang true < $outfname.log > $outfname 
 
 echo -e "[INFO]\tTranslation completed"

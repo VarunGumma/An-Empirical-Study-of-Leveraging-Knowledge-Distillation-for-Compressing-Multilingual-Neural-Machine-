@@ -73,8 +73,7 @@ for lang in as bn gu hi kn ml mr or pa ta te; do
         --eval-bleu-remove-bpe \
         --maximize-best-checkpoint-metric \
         --best-checkpoint-metric bleu \
-        --memory-efficient-fp16 \
-        --user-dir ../model_configs
+        --memory-efficient-fp16
 
     restore_from_dir=${data_dir}/$lang/${model_name}
     echo "====================================================================================="

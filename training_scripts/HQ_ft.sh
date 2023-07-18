@@ -46,5 +46,4 @@ fairseq-train $data_dir/final_bin \
     --eval-bleu-print-samples \
     --best-checkpoint-metric bleu \
     --memory-efficient-fp16 \
-    --maximize-best-checkpoint-metric \
-    --user-dir ../model_configs
+    --maximize-best-checkpoint-metric

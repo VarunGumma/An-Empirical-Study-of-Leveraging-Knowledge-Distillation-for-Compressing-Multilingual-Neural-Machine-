@@ -18,7 +18,7 @@ from indicnlp.transliterate import unicode_transliterate
 
 
 def postprocess(
-    infname, outfname, input_size, lang, common_lang="hi", transliterate=False
+    input_size, lang, common_lang="hi", transliterate=False
 ):
     """
     parse fairseq interactive output, convert script back to native Indic script (in case of Indic languages) and detokenize.
@@ -28,65 +28,46 @@ def postprocess(
     input_size: expected number of output sentences
     lang: language
     """
-
-    consolidated_testoutput = []
-    # with open(infname,'r',encoding='utf-8') as infile:
-    # consolidated_testoutput= list(map(lambda x: x.strip(), filter(lambda x: x.startswith('H-'),infile) ))
-    # consolidated_testoutput.sort(key=lambda x: int(x.split('\t')[0].split('-')[1]))
-    # consolidated_testoutput=[ x.split('\t')[2] for x in consolidated_testoutput ]
-
+    
     consolidated_testoutput = [(x, 0.0, "") for x in range(input_size)]
-    temp_testoutput = []
-    with open(infname, "r", encoding="utf-8") as infile:
-        temp_testoutput = list(
-            map(
-                lambda x: x.strip().split("\t"),
-                filter(lambda x: x.startswith("H-"), infile),
-            )
+
+    temp_testoutput = list(
+        map(
+            lambda x: x.strip().split("\t"),
+            filter(lambda x: x.startswith("H-"), list(sys.stdin)),
         )
-        temp_testoutput = list(
-            map(lambda x: (int(x[0].split("-")[1]), float(x[1]), x[2]), temp_testoutput)
-        )
-        for sid, score, hyp in temp_testoutput:
-            consolidated_testoutput[sid] = (sid, score, hyp)
-        consolidated_testoutput = [x[2] for x in consolidated_testoutput]
+    )
+    temp_testoutput = list(
+        map(lambda x: (int(x[0].split("-")[1]), float(x[1]), x[2]), temp_testoutput)
+    )
+    for sid, score, hyp in temp_testoutput:
+        consolidated_testoutput[sid] = (sid, score, hyp)
+
+    consolidated_testoutput = [x[2] for x in consolidated_testoutput]
 
     if lang == "en":
         en_detok = MosesDetokenizer(lang="en")
-        with open(outfname, "w", encoding="utf-8") as outfile:
-            for sent in consolidated_testoutput:
-                outfile.write(en_detok.detokenize(sent.split(" ")) + "\n")
+        for sent in consolidated_testoutput:
+            print(en_detok.detokenize(sent.split(" ")))
     else:
         xliterator = unicode_transliterate.UnicodeIndicTransliterator()
-        with open(outfname, "w", encoding="utf-8") as outfile:
-            for sent in consolidated_testoutput:
-                if transliterate:
-                    outstr = indic_detokenize.trivial_detokenize(
-                        xliterator.transliterate(sent, common_lang, lang), lang
-                    )
-                else:
-                    outstr = indic_detokenize.trivial_detokenize(sent, lang)
-                outfile.write(outstr + "\n")
+        for sent in consolidated_testoutput:
+            sent = xliterator.transliterate(sent, common_lang, lang) if transliterate else sent
+            print(indic_detokenize.trivial_detokenize(sent, lang))
+
 
 
 if __name__ == "__main__":
-    infname = sys.argv[1]
-    outfname = sys.argv[2]
-    input_size = int(sys.argv[3])
-    lang = sys.argv[4]
+
+    input_size = int(sys.argv[1])
+    lang = sys.argv[2]
     
-    if len(sys.argv) == 5:
+    if len(sys.argv) == 3:
         transliterate = False
-    elif len(sys.argv) == 6:
-        transliterate = sys.argv[5]
-        if transliterate.lower() == "true":
-            transliterate = True
-        else:
-            transliterate = False
+    elif len(sys.argv) == 4:
+        transliterate = (sys.argv[3].lower() == "true")
     else:
         print(f"Invalid arguments: {sys.argv}")
         exit()
 
-    postprocess(
-        infname, outfname, input_size, lang, common_lang="hi", transliterate=transliterate
-    )
+    postprocess(input_size, lang, common_lang="hi", transliterate=transliterate)
