@@ -1,7 +1,5 @@
 import sys
 from tqdm import tqdm
-import os
-
 
 def add_token(sent, src_lang, tgt_lang, delimiter=' '):
     """ add special tokens specified by tag_infos to each element in list
@@ -21,8 +19,7 @@ def generate_lang_tag_iterator(infname):
     with open(infname, 'r', encoding='utf-8') as infile:
         for line in infile:
             src, tgt, count = line.strip().split('\t')
-            count = int(count)
-            for _ in range(count):
+            for _ in range(int(count)):
                 yield (src, tgt)
 
 

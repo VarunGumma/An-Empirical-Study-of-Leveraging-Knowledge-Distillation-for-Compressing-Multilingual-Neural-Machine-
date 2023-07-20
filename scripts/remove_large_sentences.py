@@ -8,27 +8,25 @@ def remove_large_sentences(src_path, tgt_path):
     new_tgt_lines = []
     src_num_lines = sum(1 for line in open(src_path, "r", encoding="utf-8"))
     tgt_num_lines = sum(1 for line in open(tgt_path, "r", encoding="utf-8"))
+
     assert src_num_lines == tgt_num_lines
-    with open(src_path, encoding="utf-8") as f1, open(tgt_path, encoding="utf-8") as f2:
+
+    with open(src_path, encoding="utf-8") as f1, \
+         open(tgt_path, encoding="utf-8") as f2:
         for src_line, tgt_line in tqdm(zip(f1, f2), total=src_num_lines):
             src_tokens = src_line.strip().split(" ")
             tgt_tokens = tgt_line.strip().split(" ")
-            if len(src_tokens) > 200 or len(tgt_tokens) > 200:
+            if len(src_tokens) <= 200 and len(tgt_tokens) <= 200:
+                new_src_lines.append(src_line)
+                new_tgt_lines.append(tgt_line)
+            else:
                 count += 1
-                continue
-            new_src_lines.append(src_line)
-            new_tgt_lines.append(tgt_line)
     return count, new_src_lines, new_tgt_lines
 
 
-def create_txt(outFile, lines, add_newline=False):
-    outfile = open("{0}".format(outFile), "w", encoding="utf-8")
-    for line in lines:
-        if add_newline:
-            outfile.write(line + "\n")
-        else:
-            outfile.write(line)
-    outfile.close()
+def create_txt(outFile, lines):
+    with open(f"{outFile}", "w", encoding="utf-8") as outfile:
+        outfile.write('\n'.join([line.strip() for line in lines]))
 
 
 if __name__ == "__main__":

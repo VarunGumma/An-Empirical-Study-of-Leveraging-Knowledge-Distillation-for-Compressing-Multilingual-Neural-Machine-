@@ -90,7 +90,7 @@ for split in train dev; do
 	# lang1-lang2 n1
 	# lang1-lang3 n2
 	echo "Merging ${split} data of all languages"
-	python scripts/concat_joint_data.py $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list $split
+	python scripts/concat_joint_data.sh $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list $split
 
 	# Apply BPE to concatenated data
 	echo "Applying bpe to ${split}"

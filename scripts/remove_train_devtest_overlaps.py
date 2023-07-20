@@ -1,14 +1,11 @@
 import os
 import string
-from collections import defaultdict
 from tqdm import tqdm
-# import sys
+from collections import defaultdict
 from argparse import ArgumentParser
 
 INDIC_LANGS = ["as", "bn", "gu", "hi", "kn", "ml", "mr", "or", "pa", "ta", "te"]
 # we will be testing the overlaps of training data with all these benchmarks
-# benchmarks = ['wat2021-devtest', 'wat2020-devtest', 'wat-2018', 'wmt-news', 'ufal-ta', 'pmi', 'flores-101']
-
 
 def read_lines(path):
     # if path doesnt exist, return empty list
@@ -21,15 +18,12 @@ def read_lines(path):
 
 def create_txt(outFile, lines):
     add_newline = not "\n" in lines[0]
-    outfile = open("{0}".format(outFile), "w")
-    for line in lines:
-        if add_newline:
-            outfile.write(line + "\n")
-        else:
-            outfile.write(line)
-
-    outfile.close()
-
+    with open("{0}".format(outFile), "w") as outfile:
+        for line in lines:
+            if add_newline:
+                outfile.write(line + "\n")
+            else:
+                outfile.write(line)
 
 def pair_dedup_files(src_file, tgt_file):
     src_lines = read_lines(src_file)
