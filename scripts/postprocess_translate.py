@@ -12,13 +12,20 @@ from indicnlp import loader
 
 loader.load()
 from sacremoses import MosesDetokenizer
+from joblib import Parallel, delayed
 
 from indicnlp.tokenize import indic_detokenize
 from indicnlp.transliterate import unicode_transliterate
 
+en_detok = MosesDetokenizer(lang="en")
+
 
 def postprocess(
-    input_size, lang, common_lang="hi", transliterate=False
+    infname,
+    outfname,
+    input_size, 
+    lang, 
+    transliterate=False
 ):
     """
     parse fairseq interactive output, convert script back to native Indic script (in case of Indic languages) and detokenize.
@@ -31,43 +38,41 @@ def postprocess(
     
     consolidated_testoutput = [(x, 0.0, "") for x in range(input_size)]
 
+    with open(infname, "r", encoding="utf-8") as infile:
+        temp_testoutput = list(
+            map(
+                lambda x: x.strip().split("\t"),
+                filter(lambda x: x.startswith("H-"), infile),
+            )
+        )
+
     temp_testoutput = list(
         map(
-            lambda x: x.strip().split("\t"),
-            filter(lambda x: x.startswith("H-"), list(sys.stdin)),
+            lambda x: (int(x[0].split("-")[1]), float(x[1]), x[2]), temp_testoutput
         )
     )
-    temp_testoutput = list(
-        map(lambda x: (int(x[0].split("-")[1]), float(x[1]), x[2]), temp_testoutput)
-    )
+
     for sid, score, hyp in temp_testoutput:
         consolidated_testoutput[sid] = (sid, score, hyp)
 
     consolidated_testoutput = [x[2] for x in consolidated_testoutput]
 
     if lang == "en":
-        en_detok = MosesDetokenizer(lang="en")
-        for sent in consolidated_testoutput:
-            print(en_detok.detokenize(sent.split(" ")))
+        consolidated_testoutput = Parallel(n_jobs=-1)([delayed(en_detok.detokenize)(x.split(' ')) for x in consolidated_testoutput])
     else:
         xliterator = unicode_transliterate.UnicodeIndicTransliterator()
-        for sent in consolidated_testoutput:
-            sent = xliterator.transliterate(sent, common_lang, lang) if transliterate else sent
-            print(indic_detokenize.trivial_detokenize(sent, lang))
+        f = lambda sent: xliterator.transliterate(sent, "hi", lang) if transliterate else sent
+        consolidated_testoutput = Parallel(n_jobs=-1)([delayed(indic_detokenize.trivial_detokenize)(f(x), lang) for x in consolidated_testoutput])
 
+    with open(outfname, "w", encoding="utf-8") as outfile:
+        outfile.write('\n'.join(consolidated_testoutput))
 
 
 if __name__ == "__main__":
+    infname = sys.argv[1]
+    outfname = sys.argv[2]
+    input_size = int(sys.argv[3])
+    lang = sys.argv[4]
+    transliterate = sys.argv[5]
 
-    input_size = int(sys.argv[1])
-    lang = sys.argv[2]
-    
-    if len(sys.argv) == 3:
-        transliterate = False
-    elif len(sys.argv) == 4:
-        transliterate = (sys.argv[3].lower() == "true")
-    else:
-        print(f"Invalid arguments: {sys.argv}")
-        exit()
-
-    postprocess(input_size, lang, common_lang="hi", transliterate=transliterate)
+    postprocess(infname, outfname, input_size, lang, transliterate)

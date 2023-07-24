@@ -53,22 +53,16 @@ def preprocess(lang, transliterate=False):
 
     """
     normalizer = indic_normalize.IndicNormalizerFactory().get_normalizer(lang) if lang != 'en' else None
-    out_lines = [preprocess_line(line, normalizer, lang, transliterate) for line in list(sys.stdin)]
 
-    for line in out_lines:
-        print(line)
+    for line in sys.stdin:
+        print(preprocess_line(line, normalizer, lang, transliterate))
 
 
 if __name__ == "__main__":
 
     lang = sys.argv[1]
+    transliterate = sys.argv[2]
 
-    if len(sys.argv) == 2:
-        transliterate = False
-    elif len(sys.argv) == 3:
-        transliterate = (sys.argv[2].lower() == "true")
-    else:
-        print(f"Invalid arguments: {sys.argv}")
-        exit()
+    transliterate = transliterate.lower() == "true"
     
     preprocess(lang=lang, transliterate=transliterate)
