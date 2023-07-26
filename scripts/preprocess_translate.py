@@ -12,9 +12,6 @@ loader.load()
 from sacremoses import MosesPunctNormalizer
 from sacremoses import MosesTokenizer
 
-from tqdm import tqdm
-from joblib import Parallel, delayed
-
 from indicnlp.tokenize import indic_tokenize
 from indicnlp.normalize import indic_normalize
 from indicnlp.transliterate import unicode_transliterate
@@ -22,6 +19,7 @@ from indicnlp.transliterate import unicode_transliterate
 
 en_tok = MosesTokenizer(lang="en")
 en_normalizer = MosesPunctNormalizer()
+normfactory = indic_normalize.IndicNormalizerFactory()
 
 
 def preprocess_line(line, normalizer, lang, transliterate=False):
@@ -52,7 +50,7 @@ def preprocess(lang, transliterate=False):
     return number of sentences input file
 
     """
-    normalizer = indic_normalize.IndicNormalizerFactory().get_normalizer(lang) if lang != 'en' else None
+    normalizer = normfactory.get_normalizer(lang) if lang != 'en' else None
 
     for line in sys.stdin:
         print(preprocess_line(line, normalizer, lang, transliterate))

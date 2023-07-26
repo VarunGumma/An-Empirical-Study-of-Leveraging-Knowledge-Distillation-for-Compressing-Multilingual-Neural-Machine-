@@ -8,6 +8,9 @@ tgt_lang=$4
 languages_list=$5
 split="$6"
 
+out_src_lang="SRC"
+out_tgt_lang="TGT"
+
 # Create the output directory if it doesn't exist
 mkdir -p $out_dir
 
@@ -26,10 +29,11 @@ done
 
 # Concatenate files
 for pair in ${lang_pair_list[@]}; do
+    echo "$pair"
     in_src_fname="${in_dir}/${pair}/${split}.${src_lang}"
     in_trg_fname="${in_dir}/${pair}/${split}.${tgt_lang}"
-    out_src_fname="${out_dir}/${split}.${src_lang}"
-    out_trg_fname="${out_dir}/${split}.${tgt_lang}"
+    out_src_fname="${out_dir}/${split}.${out_src_lang}"
+    out_trg_fname="${out_dir}/${split}.${out_tgt_lang}"
 
     if [ -e $in_src_fname ] && [ -e $in_trg_fname ]; then
         cat $in_src_fname >> $out_src_fname

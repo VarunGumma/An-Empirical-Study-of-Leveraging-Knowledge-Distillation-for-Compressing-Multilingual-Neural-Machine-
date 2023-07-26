@@ -6,5 +6,5 @@ tgt_lang=$2
 
 while read -r line; do
     # Add tokens and write to output file
-    echo "__src__${src_lang} __tgt__${tgt_lang} ${line}"
+    echo "__src__${src_lang}__ __tgt__${tgt_lang}__ ${line}"
 done 

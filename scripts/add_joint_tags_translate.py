@@ -1,18 +1,9 @@
 import sys
+import concurrent.futures
 from tqdm import tqdm
 
-def add_token(sent, src_lang, tgt_lang, delimiter=' '):
-    """ add special tokens specified by tag_infos to each element in list
 
-    sent: untagged input sentence
-    src_lang: source sentence code
-    tgt_lang: target sentence code
-
-    output is a sentence with source and target language tags of the form "__src__{src_lang} __tgt__{tgt_lang} {sent}"
-
-    """
-
-    return f"__src__{src_lang}{delimiter}__tgt__{tgt_lang}{delimiter}{sent}"
+add_token = lambda sent, src_lang, tgt_lang, delimiter=' ': f"__src__{src_lang}__{delimiter}__tgt__{tgt_lang}__{delimiter}{sent}"
 
 
 def generate_lang_tag_iterator(infname):
@@ -23,8 +14,13 @@ def generate_lang_tag_iterator(infname):
                 yield (src, tgt)
 
 
-if __name__ == '__main__':
+def process_line(data):
+    (l1, l2), src_sent, tgt_sent = data
+    return add_token(src_sent.strip(), l1, l2) + '\n', tgt_sent.strip() + '\n'
 
+
+
+if __name__ == '__main__':
     expdir = sys.argv[1]
     dset = sys.argv[2]
 
@@ -33,7 +29,7 @@ if __name__ == '__main__':
     out_src_fname = f'{expdir}/final/{dset}.SRC'
     out_tgt_fname = f'{expdir}/final/{dset}.TGT'
     meta_fname = f'{expdir}/data/{dset}_lang_pairs.txt'
-    
+
     lang_tag_iterator = generate_lang_tag_iterator(meta_fname)
 
     with open(src_fname, 'r', encoding='utf-8') as srcfile, \
@@ -41,6 +37,12 @@ if __name__ == '__main__':
          open(out_src_fname, 'w', encoding='utf-8') as outsrcfile, \
          open(out_tgt_fname, 'w', encoding='utf-8') as outtgtfile:
 
-        for ((l1, l2), src_sent, tgt_sent) in tqdm(zip(lang_tag_iterator, srcfile, tgtfile)):
-            outsrcfile.write(add_token(src_sent.strip(), l1, l2) + '\n')
-            outtgtfile.write(tgt_sent.strip() + '\n')
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+
+            # zip the iterators into a single iterator
+            data = zip(lang_tag_iterator, srcfile, tgtfile)
+
+            # iterate over results concurrently
+            for result in tqdm(executor.map(process_line, data)):
+                outsrcfile.write(result[0])
+                outtgtfile.write(result[1])

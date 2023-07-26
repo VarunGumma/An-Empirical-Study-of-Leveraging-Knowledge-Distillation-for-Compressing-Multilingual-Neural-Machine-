@@ -14,5 +14,7 @@ def main(path):
             ckpt['cfg']['model']._name = 'transformer'
             torch.save(ckpt, temp_path)
 
+
+
 if __name__ == '__main__':
     main(argv[1])

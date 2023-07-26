@@ -11,19 +11,10 @@ def read_lines(path):
     # if path doesnt exist, return empty list
     if not os.path.exists(path):
         return []
-    with open(path, "r") as f:
-        lines = f.readlines()
+    with open(path, "r", encoding='utf-8') as f:
+        lines = [x.strip() for x in f]
     return lines
 
-
-def create_txt(outFile, lines):
-    add_newline = not "\n" in lines[0]
-    with open("{0}".format(outFile), "w") as outfile:
-        for line in lines:
-            if add_newline:
-                outfile.write(line + "\n")
-            else:
-                outfile.write(line)
 
 def pair_dedup_files(src_file, tgt_file):
     src_lines = read_lines(src_file)
@@ -36,8 +27,10 @@ def pair_dedup_files(src_file, tgt_file):
     num_duplicates = len_before - len_after
 
     print(f"Dropped duplicate pairs in {src_file} Num duplicates -> {num_duplicates}")
-    create_txt(src_file, src_dedupped)
-    create_txt(tgt_file, tgt_dedupped)
+    with open(src_file, 'w', encoding='utf-8') as out_src_file, \
+         open(tgt_file, 'w', encoding='utf-8') as out_tgt_file:
+        out_src_file.write('\n'.join(src_dedupped))
+        out_tgt_file.write('\n'.join(tgt_dedupped))
 
 
 def pair_dedup_lists(src_list, tgt_list):
@@ -76,8 +69,6 @@ def get_src_tgt_lang_lists(many2many=False):
         TGT_LANGS = INDIC_LANGS
     else:
         all_languages = INDIC_LANGS + ["en"]
-        # lang_pairs = list(permutations(all_languages, 2))
-
         SRC_LANGS, TGT_LANGS = all_languages, all_languages
 
     return SRC_LANGS, TGT_LANGS
@@ -92,8 +83,8 @@ def normalize_and_gather_all_benchmarks(devtest_dir, many2many=False):
     # so devtest_pairs_normalized[en-as][tgt] will store tgt(as lines)
     devtest_pairs_normalized = defaultdict(lambda: defaultdict(list))
     SRC_LANGS, TGT_LANGS = get_src_tgt_lang_lists(many2many)
-    benchmarks = os.listdir(devtest_dir)
-    for dataset in benchmarks:
+
+    for dataset in os.listdir(devtest_dir):
         for src_lang in SRC_LANGS:
             for tgt_lang in TGT_LANGS:
                 if src_lang == tgt_lang:
@@ -121,7 +112,6 @@ def normalize_and_gather_all_benchmarks(devtest_dir, many2many=False):
                 # if the tgt_pair data doesnt exist for a particular test set,
                 # it will be an empty list
                 if tgt_test == [] or tgt_dev == []:
-                    # print(f'{dataset} does not have {src_lang}-{tgt_lang} data')
                     continue
 
                 # combine both dev and test sets into one
@@ -162,7 +152,7 @@ def normalize_and_gather_all_benchmarks(devtest_dir, many2many=False):
     return devtest_pairs_normalized
 
 
-def remove_train_devtest_overlaps(train_dir, devtest_dir, many2many=False):
+def remove_train_devtest_overlaps(in_dir, devtest_dir, out_dir, many2many=False):
 
     devtest_pairs_normalized = normalize_and_gather_all_benchmarks(
         devtest_dir, many2many
@@ -190,8 +180,8 @@ def remove_train_devtest_overlaps(train_dir, devtest_dir, many2many=False):
             new_tgt_train = []
 
             pair = f"{src_lang}-{tgt_lang}"
-            src_train = read_lines(f"{train_dir}/{pair}/train.{src_lang}")
-            tgt_train = read_lines(f"{train_dir}/{pair}/train.{tgt_lang}")
+            src_train = read_lines(f"{in_dir}/{pair}/train.{src_lang}")
+            tgt_train = read_lines(f"{in_dir}/{pair}/train.{tgt_lang}")
 
             len_before = len(src_train)
             if len_before == 0:
@@ -228,21 +218,32 @@ def remove_train_devtest_overlaps(train_dir, devtest_dir, many2many=False):
                     new_tgt_train.append(tgt_train[idx])
 
             len_after = len(new_src_train)
-            print(
-                f"Detected overlaps between train and devtest for {pair} is {len_before - len_after}"
-            )
-            print(f"saving new files at {train_dir}/{pair}/")
-            create_txt(f"{train_dir}/{pair}/train.{src_lang}", new_src_train)
-            create_txt(f"{train_dir}/{pair}/train.{tgt_lang}", new_tgt_train)
+            print(f"Detected overlaps between train and devtest for {pair} is {len_before - len_after}")
+            
+            os.makedirs(f"{out_dir}/{pair}", exist_ok=True)
+            print(f"saving new files at {out_dir}/{pair}")
+
+            with open(f"{out_dir}/{pair}/train.{src_lang}", "w", encoding='utf-8') as out_src_file, \
+                 open(f"{out_dir}/{pair}/train.{tgt_lang}", "w", encoding='utf-8') as out_tgt_file:
+                out_src_file.write('\n'.join(new_src_train))
+                out_tgt_file.write('\n'.join(new_tgt_train))
+            
 
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="remove train_devtest overlaps")
-    parser.add_argument("-t", "--train-dir", type=str)
-    parser.add_argument("-d", "--devtest-dir", type=str)
-    parser.add_argument("-m2m", "--many2many", action="store_true")
-    parser.add_argument("-l", "--languages-list", type=str, default="as+bn+gu+hi+kn+ml+mr+or+pa+ta+te")
+    parser.add_argument("--in-dir", type=str, required=True)
+    parser.add_argument("--out-dir", type=str, required=True)
+    parser.add_argument("--devtest-dir", type=str, required=True)
+    parser.add_argument("--many2many", action="store_true")
+    parser.add_argument("--languages-list", type=str, default="as+bn+gu+hi+kn+ml+mr+or+pa+ta+te", required=True)
     args = parser.parse_args()
 
     INDIC_LANGS = args.languages_list.split('+')
-    remove_train_devtest_overlaps(args.train_dir, args.devtest_dir, args.many2many)
+
+    remove_train_devtest_overlaps(
+        in_dir=args.in_dir, 
+        devtest_dir=args.devtest_dir, 
+        many2many=args.many2many, 
+        out_dir=args.out_dir
+    )

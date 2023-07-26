@@ -18,6 +18,7 @@ from indicnlp.tokenize import indic_detokenize
 from indicnlp.transliterate import unicode_transliterate
 
 en_detok = MosesDetokenizer(lang="en")
+xliterator = unicode_transliterate.UnicodeIndicTransliterator()
 
 
 def postprocess(
@@ -60,7 +61,6 @@ def postprocess(
     if lang == "en":
         consolidated_testoutput = Parallel(n_jobs=-1)([delayed(en_detok.detokenize)(x.split(' ')) for x in consolidated_testoutput])
     else:
-        xliterator = unicode_transliterate.UnicodeIndicTransliterator()
         f = lambda sent: xliterator.transliterate(sent, "hi", lang) if transliterate else sent
         consolidated_testoutput = Parallel(n_jobs=-1)([delayed(indic_detokenize.trivial_detokenize)(f(x), lang) for x in consolidated_testoutput])
 

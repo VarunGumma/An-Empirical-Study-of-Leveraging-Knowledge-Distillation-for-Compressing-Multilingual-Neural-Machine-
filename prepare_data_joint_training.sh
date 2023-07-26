@@ -6,20 +6,24 @@ devtest_dir=$3
 vocab_dir=$4
 src_lang=$5
 tgt_lang=$6
-languages_list=$7
+languages_list=${7:-"as+bn+gu+hi+kn+ml+mr+or+ta+te"}
+
+echo -e "\nexp_dir: ${exp_dir}"
+echo -e "direction: ${src_lang}-${tgt_lang}\n"
 
 echo `date`
 # remove old copies
 rm -rf $exp_dir
-rm -rf ${train_dir}_copy
+rm -rf ${train_dir}_benchmarks_deduped
 
 echo -e "Removing overlap between train and devtest"
-echo -e "This will create a temporary copy of the train directory, but will remove it at the end of the program"
+python scripts/remove_train_devtest_overlaps.py \
+	--in-dir $train_dir \
+	--out-dir ${train_dir}_benchmarks_deduped \
+	--devtest-dir $devtest_dir \
+	--languages-list $languages_list
 
-cp -r $train_dir ${train_dir}_copy
-train_dir=${train_dir}_copy
-
-python scripts/remove_train_devtest_overlaps.py -t $train_dir -d $devtest_dir -l $languages_list
+train_dir=${train_dir}_benchmarks_deduped
 
 mkdir -p $exp_dir/data
 mkdir -p $exp_dir/final
@@ -31,21 +35,18 @@ IFS='+' read -ra langs <<< $languages_list
 for lang in ${langs[@]}; do
     # copy only data you want to work with
     # saves space and is more efficient
-	echo -e "Copying en-${lang} data"
+	echo "Copying en-${lang} data"
     cp -r $train_dir/en-$lang $exp_dir
 	cp -r $devtest_dir/en-$lang/dev.* $exp_dir/en-$lang
 done
 
 # copy the old vocab
-echo -e "Copying vocab and fairseq dictionaries"
+echo -e "\nCopying vocab and fairseq dictionaries"
 cp -r $vocab_dir/vocab $exp_dir
 cp -r $vocab_dir/final_bin/dict.* $exp_dir/final_bin
 
 
-echo -e "Preparing data"
-
-echo "exp_dir: ${exp_dir}, ${src_lang}-${tgt_lang}"
-
+echo -e "\nPreparing data"
 IFS='+' read -ra langs <<< $languages_list
 
 for lang in ${langs[@]}; do
@@ -55,7 +56,7 @@ for lang in ${langs[@]}; do
 		src_lang=$lang
 	fi
 
-	echo "Working on '$src_lang'"
+	echo -e "\nWorking on '$src_lang'"
 
 	norm_dir=$exp_dir/norm/$src_lang-$tgt_lang
 	mkdir -p $norm_dir
@@ -65,7 +66,7 @@ for lang in ${langs[@]}; do
 	train_infname_tgt=$exp_dir/en-${lang}/train.$tgt_lang
 	train_outfname_src=$norm_dir/train.$src_lang
 	train_outfname_tgt=$norm_dir/train.$tgt_lang
-	echo "Applying normalization and script conversion for train"
+	echo -e "\t- Applying normalization and script conversion for train"
 	parallel --pipe --keep-order python scripts/preprocess_translate.py $src_lang true < $train_infname_src > $train_outfname_src 
 	parallel --pipe --keep-order python scripts/preprocess_translate.py $tgt_lang true < $train_infname_tgt > $train_outfname_tgt
 
@@ -74,7 +75,7 @@ for lang in ${langs[@]}; do
 	dev_infname_tgt=$exp_dir/en-${lang}/dev.$tgt_lang
 	dev_outfname_src=$norm_dir/dev.$src_lang
 	dev_outfname_tgt=$norm_dir/dev.$tgt_lang
-	echo "Applying normalization and script conversion for dev"
+	echo -e "\t- Applying normalization and script conversion for dev"
 	parallel --pipe --keep-order python scripts/preprocess_translate.py $src_lang true < $dev_infname_src > $dev_outfname_src 
 	parallel --pipe --keep-order python scripts/preprocess_translate.py $tgt_lang true < $dev_infname_tgt > $dev_outfname_tgt 
 done
@@ -89,22 +90,23 @@ for split in train dev; do
 	# <lang1> <lang2> <number of lines>
 	# lang1-lang2 n1
 	# lang1-lang3 n2
-	echo "Merging ${split} data of all languages"
-	python scripts/concat_joint_data.sh $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list $split
+	echo -e "\nMerging ${split} data of all languages"
+	bash scripts/concat_joint_data.sh $exp_dir/norm $exp_dir/data $src_lang $tgt_lang $languages_list $split
 
 	# Apply BPE to concatenated data
-	echo "Applying bpe to ${split}"
+	echo -e "\nApplying bpe to ${split}"
 	bash scripts/apply_single_bpe.sh $exp_dir $split
 
 	# # this is only required for joint training
 	# we apply language tags to the bpe segmented data
 	# if we are translating lang1 to lang2 then <lang1 line> will become __src__ <lang1> __tgt__ <lang2> <lang1 line>
-	echo "Adding language tags to ${split}"
+	echo -e "\nAdding language tags to ${split}"
 	python scripts/add_joint_tags_translate.py $exp_dir $split
 done
 
 # Binarize the training data for using with fairseq train
+echo -e "\nBinarizing Data"
 bash scripts/fairseq_binarize.sh $exp_dir/final $exp_dir/final_bin
 
-echo -e "cleaning unnecessary files from exp dir to save space"
-rm -rf $exp_dir/bpe $exp_dir/devtest $exp_dir/final $exp_dir/data $exp_dir/norm $exp_dir/en-* $train_dir
+echo -e "\nCleaning unnecessary files from ${exp_dir} to save space"
+# rm -rf $exp_dir/bpe $exp_dir/devtest $exp_dir/final $exp_dir/data $exp_dir/norm $exp_dir/en-* $train_dir
