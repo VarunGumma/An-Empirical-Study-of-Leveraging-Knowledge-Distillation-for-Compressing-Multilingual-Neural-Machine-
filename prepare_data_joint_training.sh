@@ -109,4 +109,4 @@ echo -e "\nBinarizing Data"
 bash scripts/fairseq_binarize.sh $exp_dir/final $exp_dir/final_bin
 
 echo -e "\nCleaning unnecessary files from ${exp_dir} to save space"
-# rm -rf $exp_dir/bpe $exp_dir/devtest $exp_dir/final $exp_dir/data $exp_dir/norm $exp_dir/en-* $train_dir
+rm -rf $exp_dir/bpe $exp_dir/devtest $exp_dir/final $exp_dir/data $exp_dir/norm $exp_dir/en-* $train_dir

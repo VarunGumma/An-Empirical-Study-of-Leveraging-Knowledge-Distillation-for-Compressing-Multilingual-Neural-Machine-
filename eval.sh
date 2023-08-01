@@ -45,8 +45,7 @@ for model in "${models[@]}"; do
         #     --batch_size 256 \
         #     --gpus 1 \
         #     --quiet \
-        #     --only_system \
-        #     > $save_path/${lang}_comet.txt
+        #     --only_system > $save_path/${lang}_comet.txt
 
         rm -rf $lang_pair/predfile.* $lang_pair/*.tok $exp_dir/$model/*.out
     done

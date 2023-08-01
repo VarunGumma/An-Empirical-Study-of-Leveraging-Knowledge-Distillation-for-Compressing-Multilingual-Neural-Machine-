@@ -16,18 +16,16 @@ echo "Input size: ${input_size}"
 
 ### apply BPE to input file
 echo -e "[INFO]\tApplying BPE"
-subword-nmt apply-bpe \
+parallel --pipe --keep-order subword-nmt apply-bpe \
     --codes $exp_dir/vocab/bpe_codes.32k.SRC \
     --vocabulary $exp_dir/vocab/vocab.SRC \
-    --vocabulary-threshold 5 \
-    --num-workers -1 < $outfname.norm > $outfname._bpe
+    --vocabulary-threshold 5 < $outfname.norm > $outfname._bpe
 
 # not needed for joint training
 echo "[INFO]\tAdding language tags"
 parallel --pipe --keep-order bash scripts/add_tags_translate.sh $src_lang $tgt_lang < $outfname._bpe > $outfname.bpe
 
-### run decoder
-
+### run the model
 echo -e "[INFO]\tDecoding"
 fairseq-interactive $exp_dir/final_bin \
     --source-lang SRC \
@@ -46,6 +44,6 @@ fairseq-interactive $exp_dir/final_bin \
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.
-parallel --pipe --keep-order python scripts/postprocess_translate.py $input_size $tgt_lang true < $outfname.log > $outfname 
+python scripts/postprocess_translate.py $outfname.log $outfname $input_size $tgt_lang true 
 
 echo -e "[INFO]\tTranslation completed"

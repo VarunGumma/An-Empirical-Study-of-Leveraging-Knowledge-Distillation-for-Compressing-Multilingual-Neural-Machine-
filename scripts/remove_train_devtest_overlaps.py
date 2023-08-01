@@ -75,7 +75,6 @@ def get_src_tgt_lang_lists(many2many=False):
 
 
 def normalize_and_gather_all_benchmarks(devtest_dir, many2many=False):
-
     # This is a dict of dict of lists
     # the first keys are for lang-pair, the second keys are for src/tgt
     # the values are the devtest lines.
@@ -89,25 +88,19 @@ def normalize_and_gather_all_benchmarks(devtest_dir, many2many=False):
             for tgt_lang in TGT_LANGS:
                 if src_lang == tgt_lang:
                     continue
+
+                pair = f"{src_lang}-{tgt_lang}"
                 if dataset == "wat2021-devtest":
                     # wat2021 dev and test sets have differnet folder structure
-                    src_dev = read_lines(f"{devtest_dir}/{dataset}/dev.{src_lang}")
-                    tgt_dev = read_lines(f"{devtest_dir}/{dataset}/dev.{tgt_lang}")
-                    src_test = read_lines(f"{devtest_dir}/{dataset}/test.{src_lang}")
-                    tgt_test = read_lines(f"{devtest_dir}/{dataset}/test.{tgt_lang}")
+                    src_dev = read_lines(os.path.join(devtest_dir, dataset, f"dev.{src_lang}"))
+                    tgt_dev = read_lines(os.path.join(devtest_dir, dataset, f"dev.{tgt_lang}"))
+                    src_test = read_lines(os.path.join(devtest_dir, dataset, f"test.{src_lang}"))
+                    tgt_test = read_lines(os.path.join(devtest_dir, dataset, f"test.{tgt_lang}"))
                 else:
-                    src_dev = read_lines(
-                        f"{devtest_dir}/{dataset}/{src_lang}-{tgt_lang}/dev.{src_lang}"
-                    )
-                    tgt_dev = read_lines(
-                        f"{devtest_dir}/{dataset}/{src_lang}-{tgt_lang}/dev.{tgt_lang}"
-                    )
-                    src_test = read_lines(
-                        f"{devtest_dir}/{dataset}/{src_lang}-{tgt_lang}/test.{src_lang}"
-                    )
-                    tgt_test = read_lines(
-                        f"{devtest_dir}/{dataset}/{src_lang}-{tgt_lang}/test.{tgt_lang}"
-                    )
+                    src_dev = read_lines(os.path.join(devtest_dir, dataset, pair, f"dev.{src_lang}"))
+                    tgt_dev = read_lines(os.path.join(devtest_dir, dataset, pair, f"dev.{tgt_lang}"))
+                    src_test = read_lines(os.path.join(devtest_dir, dataset, pair, f"test.{src_lang}"))
+                    tgt_test = read_lines(os.path.join(devtest_dir, dataset, pair, f"test.{tgt_lang}"))
 
                 # if the tgt_pair data doesnt exist for a particular test set,
                 # it will be an empty list
@@ -121,29 +114,27 @@ def normalize_and_gather_all_benchmarks(devtest_dir, many2many=False):
                 src_devtest = [strip_and_normalize(line) for line in src_devtest]
                 tgt_devtest = [strip_and_normalize(line) for line in tgt_devtest]
 
-                devtest_pairs_normalized[f"{src_lang}-{tgt_lang}"]["src"].extend(
-                    src_devtest
-                )
-                devtest_pairs_normalized[f"{src_lang}-{tgt_lang}"]["tgt"].extend(
-                    tgt_devtest
-                )
+                devtest_pairs_normalized[pair]["src"].extend(src_devtest)
+                devtest_pairs_normalized[pair]["tgt"].extend(tgt_devtest)
 
     # dedup merged benchmark datasets
     for src_lang in SRC_LANGS:
         for tgt_lang in TGT_LANGS:
             if src_lang == tgt_lang:
                 continue
+
+            pair = f"{src_lang}-{tgt_lang}"
             src_devtest, tgt_devtest = (
-                devtest_pairs_normalized[f"{src_lang}-{tgt_lang}"]["src"],
-                devtest_pairs_normalized[f"{src_lang}-{tgt_lang}"]["tgt"],
+                devtest_pairs_normalized[pair]["src"],
+                devtest_pairs_normalized[pair]["tgt"],
             )
             # if the devtest data doesnt exist for the src-tgt pair then continue
             if src_devtest == [] or tgt_devtest == []:
                 continue
             src_devtest, tgt_devtest = pair_dedup_lists(src_devtest, tgt_devtest)
             (
-                devtest_pairs_normalized[f"{src_lang}-{tgt_lang}"]["src"],
-                devtest_pairs_normalized[f"{src_lang}-{tgt_lang}"]["tgt"],
+                devtest_pairs_normalized[pair]["src"],
+                devtest_pairs_normalized[pair]["tgt"],
             ) = (
                 src_devtest,
                 tgt_devtest,
@@ -154,9 +145,7 @@ def normalize_and_gather_all_benchmarks(devtest_dir, many2many=False):
 
 def remove_train_devtest_overlaps(in_dir, devtest_dir, out_dir, many2many=False):
 
-    devtest_pairs_normalized = normalize_and_gather_all_benchmarks(
-        devtest_dir, many2many
-    )
+    devtest_pairs_normalized = normalize_and_gather_all_benchmarks(devtest_dir, many2many)
 
     SRC_LANGS, TGT_LANGS = get_src_tgt_lang_lists(many2many)
 
@@ -180,8 +169,8 @@ def remove_train_devtest_overlaps(in_dir, devtest_dir, out_dir, many2many=False)
             new_tgt_train = []
 
             pair = f"{src_lang}-{tgt_lang}"
-            src_train = read_lines(f"{in_dir}/{pair}/train.{src_lang}")
-            tgt_train = read_lines(f"{in_dir}/{pair}/train.{tgt_lang}")
+            src_train = read_lines(os.path.join(in_dir, pair, f"train.{src_lang}"))
+            tgt_train = read_lines(os.path.join(in_dir, pair, f"train.{tgt_lang}"))
 
             len_before = len(src_train)
             if len_before == 0:
@@ -213,21 +202,22 @@ def remove_train_devtest_overlaps(in_dir, devtest_dir, out_dir, many2many=False)
 
             # loop to remove the ovelapped data
             for (idx, (src_line_norm, tgt_line_norm)) in tqdm(enumerate(zip(src_train_normalized, tgt_train_normalized)), total=len_before):
-                if not src_overlaps_dict.get(src_line_norm, False) and not tgt_overlaps_dict.get(tgt_line_norm, False):
+                if not src_overlaps_dict.get(src_line_norm, False) and \
+                   not tgt_overlaps_dict.get(tgt_line_norm, False):
                     new_src_train.append(src_train[idx])
                     new_tgt_train.append(tgt_train[idx])
 
             len_after = len(new_src_train)
             print(f"Detected overlaps between train and devtest for {pair} is {len_before - len_after}")
-            
-            os.makedirs(f"{out_dir}/{pair}", exist_ok=True)
-            print(f"saving new files at {out_dir}/{pair}")
 
-            with open(f"{out_dir}/{pair}/train.{src_lang}", "w", encoding='utf-8') as out_src_file, \
-                 open(f"{out_dir}/{pair}/train.{tgt_lang}", "w", encoding='utf-8') as out_tgt_file:
+            os.makedirs(os.path.join(out_dir, pair), exist_ok=True)
+            print(f"saving new files at {os.path.join(out_dir, pair)}")
+
+            with open(os.path.join(out_dir, pair, f"train.{src_lang}"), "w", encoding='utf-8') as out_src_file, \
+                 open(os.path.join(out_dir, pair, f"train.{tgt_lang}"), "w", encoding='utf-8') as out_tgt_file:
                 out_src_file.write('\n'.join(new_src_train))
                 out_tgt_file.write('\n'.join(new_tgt_train))
-            
+
 
 
 if __name__ == "__main__":

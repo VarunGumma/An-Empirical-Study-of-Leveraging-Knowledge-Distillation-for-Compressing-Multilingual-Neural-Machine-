@@ -25,7 +25,7 @@ def remove_large_sentences(src_path, tgt_path):
 
 
 def create_txt(outFile, lines):
-    with open(f"{outFile}", "w", encoding="utf-8") as outfile:
+    with open(outFile, "w", encoding="utf-8") as outfile:
         outfile.write('\n'.join([line.strip() for line in lines]))
 
 

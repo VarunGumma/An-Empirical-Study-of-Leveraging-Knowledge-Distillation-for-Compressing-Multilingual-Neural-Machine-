@@ -1,6 +1,7 @@
 from os import listdir, makedirs
 from sys import argv
 import numpy as np 
+import os
 
 total, total_hq = 0, 0
 base_path = argv[1]
@@ -9,12 +10,12 @@ k = float(argv[3])
 
 for lang_pair in sorted(listdir(base_path)):
     l = lang_pair.split('-')[-1]
-    with open(f"{base_path}/{lang_pair}/train.{l}") as fl, \
-         open(f"{base_path}/{lang_pair}/train.en") as fe:
+    with open(os.path.join(base_path, lang_pair, f"train.{l}")) as fl, \
+         open(os.path.join(base_path, lang_pair, "train.en")) as fe:
         indic = np.array(fl.readlines(), dtype=object)
         en = np.array(fe.readlines(), dtype=object)
-        labse = np.loadtxt(f"{base_path}/{lang_pair}/labse.txt", dtype=float)
-        # comet = np.loadtxt(f"{base_path}/{lang_pair}/comet.txt", dtype=float)
+        labse = np.loadtxt(os.path.join(base_path, lang_pair, "labse.txt"), dtype=float)
+        # comet = np.loadtxt(os.path.join(base_path, lang_pair, "comet.txt"), dtype=float)
 
     u, s = labse.mean(), labse.std()
     total += len(indic)
@@ -28,13 +29,13 @@ for lang_pair in sorted(listdir(base_path)):
 
     print(lang_pair, len(indic_hq), len(indic), len(indic_hq)/len(indic))
 
-    # makedirs(f"{base_path_hq}/{lang_pair}", exist_ok=True)
+    # makedirs(os.path.join(base_path_hq, lang_pair), exist_ok=True)
 
-    # with open(f"{base_path_hq}/{lang_pair}/train.{l}", 'w') as fl, \
-    #      open(f"{base_path_hq}/{lang_pair}/train.en", 'w') as fe:
+    # with open(os.path.join(base_path_hq, lang_pair, f"train.{l}"), 'w') as fl, \
+    #      open(os.path.join(base_path_hq, lang_pair, "train.en"), 'w') as fe:
         # fl.write(''.join(indic_hq))
         # fe.write(''.join(en_hq))
-        # np.savetxt(f"{base_path_hq}/{lang_pair}/labse.txt", labse_hq, delimiter='\n')
-        # np.savetxt(f"{base_path_hq}/{lang_pair}/comet.txt", comet_hq, delimiter='\n')
+        # np.savetxt(os.path.join(base_path_hq, lang_pair, "labse.txt"), labse_hq, delimiter='\n')
+        # np.savetxt(os.path.join(base_path_hq, lang_pair, "comet.txt"), comet_hq, delimiter='\n')
 
 print('total', total, total_hq, total_hq/total)

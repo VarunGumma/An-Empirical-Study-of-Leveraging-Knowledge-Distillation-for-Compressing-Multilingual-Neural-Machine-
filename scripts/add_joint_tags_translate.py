@@ -1,10 +1,9 @@
 import sys
 import concurrent.futures
 from tqdm import tqdm
-
+import os
 
 add_token = lambda sent, src_lang, tgt_lang, delimiter=' ': f"__src__{src_lang}__{delimiter}__tgt__{tgt_lang}__{delimiter}{sent}"
-
 
 def generate_lang_tag_iterator(infname):
     with open(infname, 'r', encoding='utf-8') as infile:
@@ -13,22 +12,19 @@ def generate_lang_tag_iterator(infname):
             for _ in range(int(count)):
                 yield (src, tgt)
 
-
 def process_line(data):
     (l1, l2), src_sent, tgt_sent = data
     return add_token(src_sent.strip(), l1, l2) + '\n', tgt_sent.strip() + '\n'
-
-
 
 if __name__ == '__main__':
     expdir = sys.argv[1]
     dset = sys.argv[2]
 
-    src_fname = f'{expdir}/bpe/{dset}.SRC'
-    tgt_fname = f'{expdir}/bpe/{dset}.TGT'
-    out_src_fname = f'{expdir}/final/{dset}.SRC'
-    out_tgt_fname = f'{expdir}/final/{dset}.TGT'
-    meta_fname = f'{expdir}/data/{dset}_lang_pairs.txt'
+    src_fname = os.path.join(expdir, 'bpe', f'{dset}.SRC')
+    tgt_fname = os.path.join(expdir, 'bpe', f'{dset}.TGT')
+    out_src_fname = os.path.join(expdir, 'final', f'{dset}.SRC')
+    out_tgt_fname = os.path.join(expdir, 'final', f'{dset}.TGT')
+    meta_fname = os.path.join(expdir, 'data', f'{dset}_lang_pairs.txt')
 
     lang_tag_iterator = generate_lang_tag_iterator(meta_fname)
 
