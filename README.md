@@ -16,15 +16,14 @@ cd apex
 pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" --global-option="--deprecated_fused_adam" --global-option="--xentropy" --global-option="--fast_multihead_attn" ./
 ```
 
-Install [indic_nlp_library](https://github.com/anoopkunchukuttan/indic_nlp_library), [indic_nlp_resources](https://github.com/anoopkunchukuttan/indic_nlp_resources) and [subword-nmt](https://github.com/rsennrich/subword-nmt) in the repository using the following commands:
+Install [indic_nlp_library](https://github.com/VarunGumma/indic_nlp_library), [indic_nlp_resources](https://github.com/anoopkunchukuttan/indic_nlp_resources) and [subword-nmt](https://github.com/rsennrich/subword-nmt) in the repository using the following commands:
 
 ```
 git clone https://github.com/VarunGumma/indic_nlp_library.git
-cd indic_nlp_library
-pip install --editable ./
-
 git clone https://github.com/anoopkunchukuttan/indic_nlp_resources.git
 
+cd indic_nlp_library
+pip install --editable ./
 pip install subword-nmt
 ```
 
