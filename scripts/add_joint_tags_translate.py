@@ -3,6 +3,7 @@ import concurrent.futures
 from tqdm import tqdm
 import os
 
+
 add_token = lambda sent, src_lang, tgt_lang, delimiter=' ': f"__src__{src_lang}__{delimiter}__tgt__{tgt_lang}__{delimiter}{sent}"
 
 def generate_lang_tag_iterator(infname):

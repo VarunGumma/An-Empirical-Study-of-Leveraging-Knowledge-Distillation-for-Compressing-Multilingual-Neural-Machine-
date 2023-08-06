@@ -30,17 +30,15 @@ echo -e "[INFO]\tDecoding"
 fairseq-interactive $exp_dir/final_bin \
     --source-lang SRC \
     --target-lang TGT \
-    --path $exp_dir/$model/checkpoint_best.pt \
+    --memory-efficient-fp16 \
+    --path $ckpt_dir/$model/checkpoint_best.pt \
+    --skip-invalid-size-inputs-valid-test \
     --batch-size 128 \
     --buffer-size 2500 \
     --beam 5 \
-    --max-len-a 1.2 \
-    --max-len-b 10 \
+    --num-workers 24 \
     --remove-bpe \
-    --skip-invalid-size-inputs-valid-test \
-    --input $outfname.bpe \
-    --num-workers 32 \
-    --memory-efficient-fp16 > $outfname.log 2>&1 
+    --input $outfname.bpe > $outfname.log 2>&1 
 
 echo -e "[INFO]\tExtracting translations, script conversion and detokenization"
 # this part reverses the transliteration from devnagiri script to target lang and then detokenizes it.
