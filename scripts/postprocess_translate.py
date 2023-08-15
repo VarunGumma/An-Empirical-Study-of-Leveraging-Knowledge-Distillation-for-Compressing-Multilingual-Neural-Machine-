@@ -1,5 +1,5 @@
-INDIC_NLP_LIB_HOME = "indic_nlp_library"
-INDIC_NLP_RESOURCES = "indic_nlp_resources"
+INDIC_NLP_LIB_HOME = "/home/varun/indic_nlp_library"
+INDIC_NLP_RESOURCES = "/home/varun/indic_nlp_resources"
 import sys
 
 from indicnlp import transliterate

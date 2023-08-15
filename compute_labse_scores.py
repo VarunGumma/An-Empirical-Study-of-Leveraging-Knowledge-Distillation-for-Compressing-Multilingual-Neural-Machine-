@@ -17,9 +17,9 @@ def main(args):
         src_sents = [x.strip() for x in f1]
         tgt_sents = [x.strip() for x in f2]
 
-    cos_sim, idx, L = [], 0, len(src_sents)
+    cos_sim = []
 
-    while idx < L:
+    for idx in range(0, len(src_sents), args.batch_size):
         # calculate the encoded representation for both source and target sentences
         src_embeds = model.encode(
             src_sents[idx : idx + args.batch_size], 
@@ -38,7 +38,6 @@ def main(args):
         # calculate the cosine similarity
         cos_sim.extend(torch.mul(src_embeds, tgt_embeds).sum(1).detach().tolist())
         logging.info(f" - scores calculated for {len(cos_sim)} samples")
-        idx = min(L, idx + args.batch_size)
 
     assert len(cos_sim) == len(src_sents), "size mismatch between LaBSE scores and source sentences."
 

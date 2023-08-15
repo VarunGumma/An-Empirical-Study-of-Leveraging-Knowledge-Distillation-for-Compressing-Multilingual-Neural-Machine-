@@ -15,11 +15,11 @@ for lang in as+bn+or gu+hi+mr+pa kn+ml+ta+te; do
         --arch transformer_${model_name} \
         --encoder-add-adapters \
         --encoder-adapter-reduction-factor 2 \
-        --encoder-adapter-ids as,bn,gu,hi,kn,ml,mr,or,pa,ta,te \
+        --encoder-adapter-ids as+bn+or,gu+hi+mr+pa,kn+ml+ta+te \
         --encoder-train-adapter $lang \
         --decoder-add-adapters \
         --decoder-adapter-reduction-factor 2 \
-        --decoder-adapter-ids as,bn,gu,hi,kn,ml,mr,or,pa,ta,te \
+        --decoder-adapter-ids as+bn+or,gu+hi+mr+pa,kn+ml+ta+te \
         --decoder-train-adapter $lang \
         --adapter-activation-fn gelu \
         --criterion label_smoothed_cross_entropy \
