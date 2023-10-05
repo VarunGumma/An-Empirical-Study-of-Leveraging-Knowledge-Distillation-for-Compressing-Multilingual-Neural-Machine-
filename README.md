@@ -1,5 +1,5 @@
 ## IndicDistillation
-IndicDistillation is a repository that contains scripts for distilling [IndicTrans](https://github.com/AI4Bharat/indicTrans), a multilingual machine translation model for Indic languages, and also part of our work [An Empirical Study of Leveraging Knowledge Distillation for Compressing Multilingual Neural Machine Translation Models](https://arxiv.org/abs/2304.09388)
+IndicDistillation is a repository that contains scripts for distilling [IndicTrans](https://github.com/AI4Bharat/indicTrans), a multilingual machine translation model for Indic languages, and also part of our work [An Empirical Study of Leveraging Knowledge Distillation for Compressing Multilingual Neural Machine Translation Models](https://aclanthology.org/2023.eamt-1.11/)
 
 ### Setup
 To get started, clone this repository and use it as the main experiment directory.
@@ -8,7 +8,7 @@ Install [fairseq](https://github.com/VarunGumma/fairseq) (with our mods) and [ap
 ```
 git clone https://github.com/VarunGumma/fairseq.git
 cd fairseq
-pip install --editable ./
+pip install -e ./
 ```
 ```
 git clone https://github.com/NVIDIA/apex.git
@@ -16,14 +16,12 @@ cd apex
 pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" --global-option="--deprecated_fused_adam" --global-option="--xentropy" --global-option="--fast_multihead_attn" ./
 ```
 
-Install [indic_nlp_library](https://github.com/VarunGumma/indic_nlp_library), [indic_nlp_resources](https://github.com/anoopkunchukuttan/indic_nlp_resources) and [subword-nmt](https://github.com/rsennrich/subword-nmt) in the repository using the following commands:
+Install [indic_nlp_library](https://github.com/VarunGumma/indic_nlp_library), and [subword-nmt](https://github.com/rsennrich/subword-nmt) in the repository using the following commands:
 
 ```
 git clone https://github.com/VarunGumma/indic_nlp_library.git
-git clone https://github.com/anoopkunchukuttan/indic_nlp_resources.git
-
 cd indic_nlp_library
-pip install --editable ./
+pip install -e ./
 pip install subword-nmt
 ```
 
