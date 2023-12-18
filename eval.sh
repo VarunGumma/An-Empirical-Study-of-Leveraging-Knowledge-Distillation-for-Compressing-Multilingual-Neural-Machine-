@@ -36,17 +36,6 @@ for model in "${models[@]}"; do
         # Translate and compute scores
         bash joint_translate.sh $srcfile $predfile $src_lang $tgt_lang $exp_dir $model
         bash compute_metrics.sh $predfile $tgtfile $tgt_lang > $save_path/$lang.json
-        
-        # comet-score \
-        #     -s $srcfile \
-        #     -t $predfile \
-        #     -r $tgtfile \
-        #     --num_workers 16 \
-        #     --batch_size 256 \
-        #     --gpus 1 \
-        #     --quiet \
-        #     --only_system > $save_path/${lang}_comet.txt
-
         rm -rf $lang_pair/predfile.* $lang_pair/*.tok $exp_dir/$model/*.out
     done
 done

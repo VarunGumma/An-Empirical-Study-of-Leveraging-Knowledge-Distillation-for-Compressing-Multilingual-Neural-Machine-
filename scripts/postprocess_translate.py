@@ -1,22 +1,10 @@
-INDIC_NLP_LIB_HOME = "/home/varun/indic_nlp_library"
-INDIC_NLP_RESOURCES = "/home/varun/indic_nlp_resources"
 import sys
-
-from indicnlp import transliterate
-
-sys.path.append(r"{}".format(INDIC_NLP_LIB_HOME))
-from indicnlp import common
-
-common.set_resources_path(INDIC_NLP_RESOURCES)
-from indicnlp import loader
-
-loader.load()
-from sacremoses import MosesDetokenizer
 from joblib import Parallel, delayed
-
+from indicnlp import transliterate, loader
 from indicnlp.tokenize import indic_detokenize
 from indicnlp.transliterate import unicode_transliterate
 
+loader.load()
 en_detok = MosesDetokenizer(lang="en")
 xliterator = unicode_transliterate.UnicodeIndicTransliterator()
 

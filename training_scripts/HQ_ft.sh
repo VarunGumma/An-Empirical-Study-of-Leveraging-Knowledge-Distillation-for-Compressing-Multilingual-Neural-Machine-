@@ -23,7 +23,7 @@ fairseq-train $data_dir/final_bin \
     --warmup-init-lr 1e-07 \
     --warmup-updates 4000 \
     --dropout 0.2 \
-    --save-dir $data_dir/clean_without_any_nway_ft-$model_name \
+    --save-dir $data_dir/${model_name}_hq_ft \
     --no-epoch-checkpoints \
     --keep-interval-updates 1 \
     --patience 5 \

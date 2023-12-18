@@ -1,22 +1,11 @@
-INDIC_NLP_LIB_HOME = "/home/varun/indic_nlp_library"
-INDIC_NLP_RESOURCES = "/home/varun/indic_nlp_resources"
 import sys
-
-sys.path.append(r"{}".format(INDIC_NLP_LIB_HOME))   
-from indicnlp import common
-
-common.set_resources_path(INDIC_NLP_RESOURCES)
 from indicnlp import loader
-
-loader.load()
-from sacremoses import MosesPunctNormalizer
-from sacremoses import MosesTokenizer
-
 from indicnlp.tokenize import indic_tokenize
 from indicnlp.normalize import indic_normalize
 from indicnlp.transliterate import unicode_transliterate
+from sacremoses import MosesPunctNormalizer, MosesTokenizer
 
-
+loader.load()
 en_tok = MosesTokenizer(lang="en")
 en_normalizer = MosesPunctNormalizer()
 normfactory = indic_normalize.IndicNormalizerFactory()
