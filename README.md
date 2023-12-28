@@ -38,7 +38,7 @@ This project is licensed under the MIT License.
 
 ## Citation
 If you use these code or models, please cite our work:
-```
+```bibtex
 @inproceedings{gumma-etal-2023-empirical,
     title = "An Empirical Study of Leveraging Knowledge Distillation for Compressing Multilingual Neural Machine Translation Models",
     author = "Gumma, Varun  and
