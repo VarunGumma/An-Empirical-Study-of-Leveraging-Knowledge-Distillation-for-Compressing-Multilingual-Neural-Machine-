@@ -37,13 +37,29 @@ It is recommended to use `Python 3.10+` and the latest version of [PyTorch](http
 This project is licensed under the MIT License.
 
 ## Citation
-If you use these code or models, please cite our work:
+If you use this codebase or models, please cite our work:
 ```bibtex
 @inproceedings{gumma-etal-2023-empirical,
     title = "An Empirical Study of Leveraging Knowledge Distillation for Compressing Multilingual Neural Machine Translation Models",
     author = "Gumma, Varun  and
       Dabre, Raj  and
       Kumar, Pratyush",
+    editor = "Nurminen, Mary  and
+      Brenner, Judith  and
+      Koponen, Maarit  and
+      Latomaa, Sirkku  and
+      Mikhailov, Mikhail  and
+      Schierl, Frederike  and
+      Ranasinghe, Tharindu  and
+      Vanmassenhove, Eva  and
+      Vidal, Sergi Alvarez  and
+      Aranberri, Nora  and
+      Nunziatini, Mara  and
+      Escart{\'\i}n, Carla Parra  and
+      Forcada, Mikel  and
+      Popovic, Maja  and
+      Scarton, Carolina  and
+      Moniz, Helena",
     booktitle = "Proceedings of the 24th Annual Conference of the European Association for Machine Translation",
     month = jun,
     year = "2023",
